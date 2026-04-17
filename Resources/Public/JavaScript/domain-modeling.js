@@ -1,26 +1,26 @@
-var Ge = Object.defineProperty;
-var Je = (a, e, t) => e in a ? Ge(a, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : a[e] = t;
-var f = (a, e, t) => Je(a, typeof e != "symbol" ? e + "" : e, t);
-import x from "@typo3/backend/notification.js";
-import _ from "@typo3/backend/modal.js";
+var Xe = Object.defineProperty;
+var Ge = (a, e, t) => e in a ? Xe(a, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : a[e] = t;
+var f = (a, e, t) => Ge(a, typeof e != "symbol" ? e + "" : e, t);
+import $ from "@typo3/backend/notification.js";
+import v from "@typo3/backend/modal.js";
 import U from "@typo3/backend/severity.js";
 /**
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const X = globalThis, ye = X.ShadowRoot && (X.ShadyCSS === void 0 || X.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, ve = Symbol(), xe = /* @__PURE__ */ new WeakMap();
-let ze = class {
+const X = globalThis, ge = X.ShadowRoot && (X.ShadyCSS === void 0 || X.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, ye = Symbol(), $e = /* @__PURE__ */ new WeakMap();
+let Ue = class {
   constructor(e, t, i) {
-    if (this._$cssResult$ = !0, i !== ve) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
+    if (this._$cssResult$ = !0, i !== ye) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = e, this.t = t;
   }
   get styleSheet() {
     let e = this.o;
     const t = this.t;
-    if (ye && e === void 0) {
+    if (ge && e === void 0) {
       const i = t !== void 0 && t.length === 1;
-      i && (e = xe.get(t)), e === void 0 && ((this.o = e = new CSSStyleSheet()).replaceSync(this.cssText), i && xe.set(t, e));
+      i && (e = $e.get(t)), e === void 0 && ((this.o = e = new CSSStyleSheet()).replaceSync(this.cssText), i && $e.set(t, e));
     }
     return e;
   }
@@ -28,33 +28,33 @@ let ze = class {
     return this.cssText;
   }
 };
-const Ke = (a) => new ze(typeof a == "string" ? a : a + "", void 0, ve), $ = (a, ...e) => {
+const Je = (a) => new Ue(typeof a == "string" ? a : a + "", void 0, ye), x = (a, ...e) => {
   const t = a.length === 1 ? a[0] : e.reduce((i, r, s) => i + ((n) => {
     if (n._$cssResult$ === !0) return n.cssText;
     if (typeof n == "number") return n;
     throw Error("Value passed to 'css' function must be a 'css' function result: " + n + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
   })(r) + a[s + 1], a[0]);
-  return new ze(t, a, ve);
-}, Ze = (a, e) => {
-  if (ye) a.adoptedStyleSheets = e.map((t) => t instanceof CSSStyleSheet ? t : t.styleSheet);
+  return new Ue(t, a, ye);
+}, Ke = (a, e) => {
+  if (ge) a.adoptedStyleSheets = e.map((t) => t instanceof CSSStyleSheet ? t : t.styleSheet);
   else for (const t of e) {
     const i = document.createElement("style"), r = X.litNonce;
     r !== void 0 && i.setAttribute("nonce", r), i.textContent = t.cssText, a.appendChild(i);
   }
-}, we = ye ? (a) => a : (a) => a instanceof CSSStyleSheet ? ((e) => {
+}, xe = ge ? (a) => a : (a) => a instanceof CSSStyleSheet ? ((e) => {
   let t = "";
   for (const i of e.cssRules) t += i.cssText;
-  return Ke(t);
+  return Je(t);
 })(a) : a;
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const { is: Qe, defineProperty: et, getOwnPropertyDescriptor: tt, getOwnPropertyNames: it, getOwnPropertySymbols: rt, getPrototypeOf: st } = Object, E = globalThis, Ce = E.trustedTypes, nt = Ce ? Ce.emptyScript : "", K = E.reactiveElementPolyfillSupport, W = (a, e) => a, ie = { toAttribute(a, e) {
+const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnPropertyNames: tt, getOwnPropertySymbols: it, getPrototypeOf: rt } = Object, A = globalThis, we = A.trustedTypes, st = we ? we.emptyScript : "", K = A.reactiveElementPolyfillSupport, q = (a, e) => a, ie = { toAttribute(a, e) {
   switch (e) {
     case Boolean:
-      a = a ? nt : null;
+      a = a ? st : null;
       break;
     case Object:
     case Array:
@@ -79,23 +79,23 @@ const { is: Qe, defineProperty: et, getOwnPropertyDescriptor: tt, getOwnProperty
       }
   }
   return t;
-} }, De = (a, e) => !Qe(a, e), Ae = { attribute: !0, type: String, converter: ie, reflect: !1, useDefault: !1, hasChanged: De };
-Symbol.metadata ?? (Symbol.metadata = Symbol("metadata")), E.litPropertyMetadata ?? (E.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
-let L = class extends HTMLElement {
+} }, ze = (a, e) => !Ze(a, e), Ce = { attribute: !0, type: String, converter: ie, reflect: !1, useDefault: !1, hasChanged: ze };
+Symbol.metadata ?? (Symbol.metadata = Symbol("metadata")), A.litPropertyMetadata ?? (A.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
+let O = class extends HTMLElement {
   static addInitializer(e) {
     this._$Ei(), (this.l ?? (this.l = [])).push(e);
   }
   static get observedAttributes() {
     return this.finalize(), this._$Eh && [...this._$Eh.keys()];
   }
-  static createProperty(e, t = Ae) {
+  static createProperty(e, t = Ce) {
     if (t.state && (t.attribute = !1), this._$Ei(), this.prototype.hasOwnProperty(e) && ((t = Object.create(t)).wrapped = !0), this.elementProperties.set(e, t), !t.noAccessor) {
       const i = Symbol(), r = this.getPropertyDescriptor(e, i, t);
-      r !== void 0 && et(this.prototype, e, r);
+      r !== void 0 && Qe(this.prototype, e, r);
     }
   }
   static getPropertyDescriptor(e, t, i) {
-    const { get: r, set: s } = tt(this.prototype, e) ?? { get() {
+    const { get: r, set: s } = et(this.prototype, e) ?? { get() {
       return this[t];
     }, set(n) {
       this[t] = n;
@@ -106,17 +106,17 @@ let L = class extends HTMLElement {
     }, configurable: !0, enumerable: !0 };
   }
   static getPropertyOptions(e) {
-    return this.elementProperties.get(e) ?? Ae;
+    return this.elementProperties.get(e) ?? Ce;
   }
   static _$Ei() {
-    if (this.hasOwnProperty(W("elementProperties"))) return;
-    const e = st(this);
+    if (this.hasOwnProperty(q("elementProperties"))) return;
+    const e = rt(this);
     e.finalize(), e.l !== void 0 && (this.l = [...e.l]), this.elementProperties = new Map(e.elementProperties);
   }
   static finalize() {
-    if (this.hasOwnProperty(W("finalized"))) return;
-    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(W("properties"))) {
-      const t = this.properties, i = [...it(t), ...rt(t)];
+    if (this.hasOwnProperty(q("finalized"))) return;
+    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(q("properties"))) {
+      const t = this.properties, i = [...tt(t), ...it(t)];
       for (const r of i) this.createProperty(r, t[r]);
     }
     const e = this[Symbol.metadata];
@@ -135,8 +135,8 @@ let L = class extends HTMLElement {
     const t = [];
     if (Array.isArray(e)) {
       const i = new Set(e.flat(1 / 0).reverse());
-      for (const r of i) t.unshift(we(r));
-    } else e !== void 0 && t.push(we(e));
+      for (const r of i) t.unshift(xe(r));
+    } else e !== void 0 && t.push(xe(e));
     return t;
   }
   static _$Eu(e, t) {
@@ -165,7 +165,7 @@ let L = class extends HTMLElement {
   }
   createRenderRoot() {
     const e = this.shadowRoot ?? this.attachShadow(this.constructor.shadowRootOptions);
-    return Ze(e, this.constructor.elementStyles), e;
+    return Ke(e, this.constructor.elementStyles), e;
   }
   connectedCallback() {
     var e;
@@ -200,15 +200,15 @@ let L = class extends HTMLElement {
     if (r !== void 0 && this._$Em !== r) {
       const o = i.getPropertyOptions(r), l = typeof o.converter == "function" ? { fromAttribute: o.converter } : ((s = o.converter) == null ? void 0 : s.fromAttribute) !== void 0 ? o.converter : ie;
       this._$Em = r;
-      const p = l.fromAttribute(t, o.type);
-      this[r] = p ?? ((n = this._$Ej) == null ? void 0 : n.get(r)) ?? p, this._$Em = null;
+      const c = l.fromAttribute(t, o.type);
+      this[r] = c ?? ((n = this._$Ej) == null ? void 0 : n.get(r)) ?? c, this._$Em = null;
     }
   }
   requestUpdate(e, t, i, r = !1, s) {
     var n;
     if (e !== void 0) {
       const o = this.constructor;
-      if (r === !1 && (s = this[e]), i ?? (i = o.getPropertyOptions(e)), !((i.hasChanged ?? De)(s, t) || i.useDefault && i.reflect && s === ((n = this._$Ej) == null ? void 0 : n.get(e)) && !this.hasAttribute(o._$Eu(e, i)))) return;
+      if (r === !1 && (s = this[e]), i ?? (i = o.getPropertyOptions(e)), !((i.hasChanged ?? ze)(s, t) || i.useDefault && i.reflect && s === ((n = this._$Ej) == null ? void 0 : n.get(e)) && !this.hasAttribute(o._$Eu(e, i)))) return;
       this.C(e, t, i);
     }
     this.isUpdatePending === !1 && (this._$ES = this._$EP());
@@ -284,76 +284,76 @@ let L = class extends HTMLElement {
   firstUpdated(e) {
   }
 };
-L.elementStyles = [], L.shadowRootOptions = { mode: "open" }, L[W("elementProperties")] = /* @__PURE__ */ new Map(), L[W("finalized")] = /* @__PURE__ */ new Map(), K == null || K({ ReactiveElement: L }), (E.reactiveElementVersions ?? (E.reactiveElementVersions = [])).push("2.1.2");
+O.elementStyles = [], O.shadowRootOptions = { mode: "open" }, O[q("elementProperties")] = /* @__PURE__ */ new Map(), O[q("finalized")] = /* @__PURE__ */ new Map(), K == null || K({ ReactiveElement: O }), (A.reactiveElementVersions ?? (A.reactiveElementVersions = [])).push("2.1.2");
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const F = globalThis, ke = (a) => a, G = F.trustedTypes, Se = G ? G.createPolicy("lit-html", { createHTML: (a) => a }) : void 0, qe = "$lit$", S = `lit$${Math.random().toFixed(9).slice(2)}$`, Be = "?" + S, at = `<${Be}>`, O = document, j = () => O.createComment(""), H = (a) => a === null || typeof a != "object" && typeof a != "function", _e = Array.isArray, ot = (a) => _e(a) || typeof (a == null ? void 0 : a[Symbol.iterator]) == "function", Z = `[ 	
-\f\r]`, q = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Ee = /-->/g, Pe = />/g, P = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), Te = /'/g, Me = /"/g, Ve = /^(?:script|style|textarea|title)$/i, We = (a) => (e, ...t) => ({ _$litType$: a, strings: e, values: t }), c = We(1), re = We(2), R = Symbol.for("lit-noChange"), g = Symbol.for("lit-nothing"), Ne = /* @__PURE__ */ new WeakMap(), M = O.createTreeWalker(O, 129);
-function Fe(a, e) {
-  if (!_e(a) || !a.hasOwnProperty("raw")) throw Error("invalid template strings array");
-  return Se !== void 0 ? Se.createHTML(e) : e;
+const F = globalThis, Se = (a) => a, G = F.trustedTypes, ke = G ? G.createPolicy("lit-html", { createHTML: (a) => a }) : void 0, De = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, Be = "?" + k, nt = `<${Be}>`, I = document, H = () => I.createComment(""), j = (a) => a === null || typeof a != "object" && typeof a != "function", ve = Array.isArray, at = (a) => ve(a) || typeof (a == null ? void 0 : a[Symbol.iterator]) == "function", Z = `[ 	
+\f\r]`, B = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Ae = /-->/g, Ee = />/g, P = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
+\f\r"'\`<>=]|("|')|))|$)`, "g"), Pe = /'/g, Te = /"/g, Ve = /^(?:script|style|textarea|title)$/i, We = (a) => (e, ...t) => ({ _$litType$: a, strings: e, values: t }), p = We(1), re = We(2), L = Symbol.for("lit-noChange"), g = Symbol.for("lit-nothing"), Ne = /* @__PURE__ */ new WeakMap(), N = I.createTreeWalker(I, 129);
+function qe(a, e) {
+  if (!ve(a) || !a.hasOwnProperty("raw")) throw Error("invalid template strings array");
+  return ke !== void 0 ? ke.createHTML(e) : e;
 }
-const lt = (a, e) => {
+const ot = (a, e) => {
   const t = a.length - 1, i = [];
-  let r, s = e === 2 ? "<svg>" : e === 3 ? "<math>" : "", n = q;
+  let r, s = e === 2 ? "<svg>" : e === 3 ? "<math>" : "", n = B;
   for (let o = 0; o < t; o++) {
     const l = a[o];
-    let p, b, d = -1, m = 0;
-    for (; m < l.length && (n.lastIndex = m, b = n.exec(l), b !== null); ) m = n.lastIndex, n === q ? b[1] === "!--" ? n = Ee : b[1] !== void 0 ? n = Pe : b[2] !== void 0 ? (Ve.test(b[2]) && (r = RegExp("</" + b[2], "g")), n = P) : b[3] !== void 0 && (n = P) : n === P ? b[0] === ">" ? (n = r ?? q, d = -1) : b[1] === void 0 ? d = -2 : (d = n.lastIndex - b[2].length, p = b[1], n = b[3] === void 0 ? P : b[3] === '"' ? Me : Te) : n === Me || n === Te ? n = P : n === Ee || n === Pe ? n = q : (n = P, r = void 0);
+    let c, b, d = -1, m = 0;
+    for (; m < l.length && (n.lastIndex = m, b = n.exec(l), b !== null); ) m = n.lastIndex, n === B ? b[1] === "!--" ? n = Ae : b[1] !== void 0 ? n = Ee : b[2] !== void 0 ? (Ve.test(b[2]) && (r = RegExp("</" + b[2], "g")), n = P) : b[3] !== void 0 && (n = P) : n === P ? b[0] === ">" ? (n = r ?? B, d = -1) : b[1] === void 0 ? d = -2 : (d = n.lastIndex - b[2].length, c = b[1], n = b[3] === void 0 ? P : b[3] === '"' ? Te : Pe) : n === Te || n === Pe ? n = P : n === Ae || n === Ee ? n = B : (n = P, r = void 0);
     const h = n === P && a[o + 1].startsWith("/>") ? " " : "";
-    s += n === q ? l + at : d >= 0 ? (i.push(p), l.slice(0, d) + qe + l.slice(d) + S + h) : l + S + (d === -2 ? o : h);
+    s += n === B ? l + nt : d >= 0 ? (i.push(c), l.slice(0, d) + De + l.slice(d) + k + h) : l + k + (d === -2 ? o : h);
   }
-  return [Fe(a, s + (a[t] || "<?>") + (e === 2 ? "</svg>" : e === 3 ? "</math>" : "")), i];
+  return [qe(a, s + (a[t] || "<?>") + (e === 2 ? "</svg>" : e === 3 ? "</math>" : "")), i];
 };
 class Y {
   constructor({ strings: e, _$litType$: t }, i) {
     let r;
     this.parts = [];
     let s = 0, n = 0;
-    const o = e.length - 1, l = this.parts, [p, b] = lt(e, t);
-    if (this.el = Y.createElement(p, i), M.currentNode = this.el.content, t === 2 || t === 3) {
+    const o = e.length - 1, l = this.parts, [c, b] = ot(e, t);
+    if (this.el = Y.createElement(c, i), N.currentNode = this.el.content, t === 2 || t === 3) {
       const d = this.el.content.firstChild;
       d.replaceWith(...d.childNodes);
     }
-    for (; (r = M.nextNode()) !== null && l.length < o; ) {
+    for (; (r = N.nextNode()) !== null && l.length < o; ) {
       if (r.nodeType === 1) {
-        if (r.hasAttributes()) for (const d of r.getAttributeNames()) if (d.endsWith(qe)) {
-          const m = b[n++], h = r.getAttribute(d).split(S), u = /([.?@])?(.*)/.exec(m);
-          l.push({ type: 1, index: s, name: u[2], strings: h, ctor: u[1] === "." ? ct : u[1] === "?" ? pt : u[1] === "@" ? ut : J }), r.removeAttribute(d);
-        } else d.startsWith(S) && (l.push({ type: 6, index: s }), r.removeAttribute(d));
+        if (r.hasAttributes()) for (const d of r.getAttributeNames()) if (d.endsWith(De)) {
+          const m = b[n++], h = r.getAttribute(d).split(k), u = /([.?@])?(.*)/.exec(m);
+          l.push({ type: 1, index: s, name: u[2], strings: h, ctor: u[1] === "." ? dt : u[1] === "?" ? ct : u[1] === "@" ? pt : J }), r.removeAttribute(d);
+        } else d.startsWith(k) && (l.push({ type: 6, index: s }), r.removeAttribute(d));
         if (Ve.test(r.tagName)) {
-          const d = r.textContent.split(S), m = d.length - 1;
+          const d = r.textContent.split(k), m = d.length - 1;
           if (m > 0) {
             r.textContent = G ? G.emptyScript : "";
-            for (let h = 0; h < m; h++) r.append(d[h], j()), M.nextNode(), l.push({ type: 2, index: ++s });
-            r.append(d[m], j());
+            for (let h = 0; h < m; h++) r.append(d[h], H()), N.nextNode(), l.push({ type: 2, index: ++s });
+            r.append(d[m], H());
           }
         }
       } else if (r.nodeType === 8) if (r.data === Be) l.push({ type: 2, index: s });
       else {
         let d = -1;
-        for (; (d = r.data.indexOf(S, d + 1)) !== -1; ) l.push({ type: 7, index: s }), d += S.length - 1;
+        for (; (d = r.data.indexOf(k, d + 1)) !== -1; ) l.push({ type: 7, index: s }), d += k.length - 1;
       }
       s++;
     }
   }
   static createElement(e, t) {
-    const i = O.createElement("template");
+    const i = I.createElement("template");
     return i.innerHTML = e, i;
   }
 }
 function z(a, e, t = a, i) {
   var n, o;
-  if (e === R) return e;
+  if (e === L) return e;
   let r = i !== void 0 ? (n = t._$Co) == null ? void 0 : n[i] : t._$Cl;
-  const s = H(e) ? void 0 : e._$litDirective$;
+  const s = j(e) ? void 0 : e._$litDirective$;
   return (r == null ? void 0 : r.constructor) !== s && ((o = r == null ? void 0 : r._$AO) == null || o.call(r, !1), s === void 0 ? r = void 0 : (r = new s(a), r._$AT(a, t, i)), i !== void 0 ? (t._$Co ?? (t._$Co = []))[i] = r : t._$Cl = r), r !== void 0 && (e = z(a, r._$AS(a, e.values), r, i)), e;
 }
-class dt {
+class lt {
   constructor(e, t) {
     this._$AV = [], this._$AN = void 0, this._$AD = e, this._$AM = t;
   }
@@ -364,17 +364,17 @@ class dt {
     return this._$AM._$AU;
   }
   u(e) {
-    const { el: { content: t }, parts: i } = this._$AD, r = ((e == null ? void 0 : e.creationScope) ?? O).importNode(t, !0);
-    M.currentNode = r;
-    let s = M.nextNode(), n = 0, o = 0, l = i[0];
+    const { el: { content: t }, parts: i } = this._$AD, r = ((e == null ? void 0 : e.creationScope) ?? I).importNode(t, !0);
+    N.currentNode = r;
+    let s = N.nextNode(), n = 0, o = 0, l = i[0];
     for (; l !== void 0; ) {
       if (n === l.index) {
-        let p;
-        l.type === 2 ? p = new D(s, s.nextSibling, this, e) : l.type === 1 ? p = new l.ctor(s, l.name, l.strings, this, e) : l.type === 6 && (p = new ht(s, this, e)), this._$AV.push(p), l = i[++o];
+        let c;
+        l.type === 2 ? c = new D(s, s.nextSibling, this, e) : l.type === 1 ? c = new l.ctor(s, l.name, l.strings, this, e) : l.type === 6 && (c = new ut(s, this, e)), this._$AV.push(c), l = i[++o];
       }
-      n !== (l == null ? void 0 : l.index) && (s = M.nextNode(), n++);
+      n !== (l == null ? void 0 : l.index) && (s = N.nextNode(), n++);
     }
-    return M.currentNode = O, r;
+    return N.currentNode = I, r;
   }
   p(e) {
     let t = 0;
@@ -401,7 +401,7 @@ class D {
     return this._$AB;
   }
   _$AI(e, t = this) {
-    e = z(this, e, t), H(e) ? e === g || e == null || e === "" ? (this._$AH !== g && this._$AR(), this._$AH = g) : e !== this._$AH && e !== R && this._(e) : e._$litType$ !== void 0 ? this.$(e) : e.nodeType !== void 0 ? this.T(e) : ot(e) ? this.k(e) : this._(e);
+    e = z(this, e, t), j(e) ? e === g || e == null || e === "" ? (this._$AH !== g && this._$AR(), this._$AH = g) : e !== this._$AH && e !== L && this._(e) : e._$litType$ !== void 0 ? this.$(e) : e.nodeType !== void 0 ? this.T(e) : at(e) ? this.k(e) : this._(e);
   }
   O(e) {
     return this._$AA.parentNode.insertBefore(e, this._$AB);
@@ -410,14 +410,14 @@ class D {
     this._$AH !== e && (this._$AR(), this._$AH = this.O(e));
   }
   _(e) {
-    this._$AH !== g && H(this._$AH) ? this._$AA.nextSibling.data = e : this.T(O.createTextNode(e)), this._$AH = e;
+    this._$AH !== g && j(this._$AH) ? this._$AA.nextSibling.data = e : this.T(I.createTextNode(e)), this._$AH = e;
   }
   $(e) {
     var s;
-    const { values: t, _$litType$: i } = e, r = typeof i == "number" ? this._$AC(e) : (i.el === void 0 && (i.el = Y.createElement(Fe(i.h, i.h[0]), this.options)), i);
+    const { values: t, _$litType$: i } = e, r = typeof i == "number" ? this._$AC(e) : (i.el === void 0 && (i.el = Y.createElement(qe(i.h, i.h[0]), this.options)), i);
     if (((s = this._$AH) == null ? void 0 : s._$AD) === r) this._$AH.p(t);
     else {
-      const n = new dt(r, this), o = n.u(this.options);
+      const n = new lt(r, this), o = n.u(this.options);
       n.p(t), this.T(o), this._$AH = n;
     }
   }
@@ -426,17 +426,17 @@ class D {
     return t === void 0 && Ne.set(e.strings, t = new Y(e)), t;
   }
   k(e) {
-    _e(this._$AH) || (this._$AH = [], this._$AR());
+    ve(this._$AH) || (this._$AH = [], this._$AR());
     const t = this._$AH;
     let i, r = 0;
-    for (const s of e) r === t.length ? t.push(i = new D(this.O(j()), this.O(j()), this, this.options)) : i = t[r], i._$AI(s), r++;
+    for (const s of e) r === t.length ? t.push(i = new D(this.O(H()), this.O(H()), this, this.options)) : i = t[r], i._$AI(s), r++;
     r < t.length && (this._$AR(i && i._$AB.nextSibling, r), t.length = r);
   }
   _$AR(e = this._$AA.nextSibling, t) {
     var i;
     for ((i = this._$AP) == null ? void 0 : i.call(this, !1, !0, t); e !== this._$AB; ) {
-      const r = ke(e).nextSibling;
-      ke(e).remove(), e = r;
+      const r = Se(e).nextSibling;
+      Se(e).remove(), e = r;
     }
   }
   setConnected(e) {
@@ -457,11 +457,11 @@ class J {
   _$AI(e, t = this, i, r) {
     const s = this.strings;
     let n = !1;
-    if (s === void 0) e = z(this, e, t, 0), n = !H(e) || e !== this._$AH && e !== R, n && (this._$AH = e);
+    if (s === void 0) e = z(this, e, t, 0), n = !j(e) || e !== this._$AH && e !== L, n && (this._$AH = e);
     else {
       const o = e;
-      let l, p;
-      for (e = s[0], l = 0; l < s.length - 1; l++) p = z(this, o[i + l], t, l), p === R && (p = this._$AH[l]), n || (n = !H(p) || p !== this._$AH[l]), p === g ? e = g : e !== g && (e += (p ?? "") + s[l + 1]), this._$AH[l] = p;
+      let l, c;
+      for (e = s[0], l = 0; l < s.length - 1; l++) c = z(this, o[i + l], t, l), c === L && (c = this._$AH[l]), n || (n = !j(c) || c !== this._$AH[l]), c === g ? e = g : e !== g && (e += (c ?? "") + s[l + 1]), this._$AH[l] = c;
     }
     n && !r && this.j(e);
   }
@@ -469,7 +469,7 @@ class J {
     e === g ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, e ?? "");
   }
 }
-class ct extends J {
+class dt extends J {
   constructor() {
     super(...arguments), this.type = 3;
   }
@@ -477,7 +477,7 @@ class ct extends J {
     this.element[this.name] = e === g ? void 0 : e;
   }
 }
-class pt extends J {
+class ct extends J {
   constructor() {
     super(...arguments), this.type = 4;
   }
@@ -485,12 +485,12 @@ class pt extends J {
     this.element.toggleAttribute(this.name, !!e && e !== g);
   }
 }
-class ut extends J {
+class pt extends J {
   constructor(e, t, i, r, s) {
     super(e, t, i, r, s), this.type = 5;
   }
   _$AI(e, t = this) {
-    if ((e = z(this, e, t, 0) ?? g) === R) return;
+    if ((e = z(this, e, t, 0) ?? g) === L) return;
     const i = this._$AH, r = e === g && i !== g || e.capture !== i.capture || e.once !== i.once || e.passive !== i.passive, s = e !== g && (i === g || r);
     r && this.element.removeEventListener(this.name, this, i), s && this.element.addEventListener(this.name, this, e), this._$AH = e;
   }
@@ -499,7 +499,7 @@ class ut extends J {
     typeof this._$AH == "function" ? this._$AH.call(((t = this.options) == null ? void 0 : t.host) ?? this.element, e) : this._$AH.handleEvent(e);
   }
 }
-class ht {
+class ut {
   constructor(e, t, i) {
     this.element = e, this.type = 6, this._$AN = void 0, this._$AM = t, this.options = i;
   }
@@ -510,14 +510,14 @@ class ht {
     z(this, e);
   }
 }
-const mt = { I: D }, Q = F.litHtmlPolyfillSupport;
+const ht = { I: D }, Q = F.litHtmlPolyfillSupport;
 Q == null || Q(Y, D), (F.litHtmlVersions ?? (F.litHtmlVersions = [])).push("3.3.2");
-const bt = (a, e, t) => {
+const mt = (a, e, t) => {
   const i = (t == null ? void 0 : t.renderBefore) ?? e;
   let r = i._$litPart$;
   if (r === void 0) {
     const s = (t == null ? void 0 : t.renderBefore) ?? null;
-    i._$litPart$ = r = new D(e.insertBefore(j(), s), s, void 0, t ?? {});
+    i._$litPart$ = r = new D(e.insertBefore(H(), s), s, void 0, t ?? {});
   }
   return r._$AI(a), r;
 };
@@ -526,8 +526,8 @@ const bt = (a, e, t) => {
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const N = globalThis;
-let w = class extends L {
+const M = globalThis;
+let w = class extends O {
   constructor() {
     super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
@@ -538,7 +538,7 @@ let w = class extends L {
   }
   update(e) {
     const t = this.render();
-    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(e), this._$Do = bt(t, this.renderRoot, this.renderOptions);
+    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(e), this._$Do = mt(t, this.renderRoot, this.renderOptions);
   }
   connectedCallback() {
     var e;
@@ -549,14 +549,14 @@ let w = class extends L {
     super.disconnectedCallback(), (e = this._$Do) == null || e.setConnected(!1);
   }
   render() {
-    return R;
+    return L;
   }
 };
-var Ue;
-w._$litElement$ = !0, w.finalized = !0, (Ue = N.litElementHydrateSupport) == null || Ue.call(N, { LitElement: w });
-const ee = N.litElementPolyfillSupport;
+var Oe;
+w._$litElement$ = !0, w.finalized = !0, (Oe = M.litElementHydrateSupport) == null || Oe.call(M, { LitElement: w });
+const ee = M.litElementPolyfillSupport;
 ee == null || ee({ LitElement: w });
-(N.litElementVersions ?? (N.litElementVersions = [])).push("4.2.2");
+(M.litElementVersions ?? (M.litElementVersions = [])).push("4.2.2");
 class se extends w {
   connectedCallback() {
     super.connectedCallback(), this.addEventListener("pointerdown", this._onPointerDown.bind(this));
@@ -594,7 +594,7 @@ class se extends w {
     return e ? e.getBoundingClientRect() : { left: 0, top: 0 };
   }
   render() {
-    return c``;
+    return p``;
   }
 }
 f(se, "properties", {
@@ -602,7 +602,7 @@ f(se, "properties", {
   terminalId: { type: String, attribute: "terminal-id" },
   uid: { type: String },
   droppable: { type: Boolean }
-}), f(se, "styles", $`
+}), f(se, "styles", x`
         :host {
             display: block;
             width: 12px;
@@ -675,7 +675,7 @@ f(ne, "properties", {
   tgtTerminal: { type: String, attribute: "tgt-terminal" },
   srcModuleId: { type: Number, attribute: "src-module-id" },
   tgtModuleId: { type: Number, attribute: "tgt-module-id" }
-}), f(ne, "styles", $`
+}), f(ne, "styles", x`
         :host {
             display: contents;
         }
@@ -684,412 +684,106 @@ f(ne, "properties", {
         }
     `);
 customElements.define("eb-wire", ne);
-function v(a) {
+function _(a) {
   var i, r, s;
   if (!a)
     return "";
   const e = a.replace(/\./g, "_"), t = (s = (r = (i = window.TYPO3) == null ? void 0 : i.settings) == null ? void 0 : r.extensionBuilder) == null ? void 0 : s._LOCAL_LANG;
   return t != null && t[e] ? t[e] : a.replace(/_/g, " ").replace(/([A-Z])/g, " $1").trim().replace(/\b\w/g, (n) => n.toUpperCase());
 }
-class C extends w {
-  /**
-   * Dispatches a `field-updated` CustomEvent that bubbles through Shadow DOM
-   * boundaries so parent components can collect updated values.
-   */
-  _fireUpdated() {
-    this.dispatchEvent(
-      new CustomEvent("field-updated", {
-        bubbles: !0,
-        composed: !0,
-        detail: { name: this.name, value: this.getValue() }
-      })
-    );
-  }
-  /**
-   * Returns the current field value.
-   * @returns {*} Current value
-   */
-  getValue() {
-    return this.value;
-  }
-  /**
-   * Programmatically sets the field value and requests a re-render.
-   * @param {*} v - New value
-   */
-  setValue(e) {
-    this.value = e;
-  }
-  /**
-   * Validates the current value against field constraints.
-   * @returns {boolean} true if valid
-   */
-  validate() {
-    return !0;
-  }
-}
-f(C, "properties", {
-  /** Field identifier, used as the key when collecting form values. */
-  name: { type: String },
-  /** Human-readable label rendered above the input. */
-  label: { type: String },
-  /** Current field value. */
-  value: {},
-  /** Whether the field must have a non-empty value before saving. */
-  required: { type: Boolean },
-  /** When true, the field is only shown in advanced mode. */
-  advanced: { type: Boolean }
-});
-const A = $`
-    eb-string-field,
-    eb-textarea-field,
-    eb-select-field,
-    eb-boolean-field,
-    eb-hidden-field {
-        display: block;
-        margin-bottom: 0.75rem;
-    }
-
-    .form-group {
-        margin-bottom: 0.75rem;
-    }
-
-    .form-label {
-        display: inline-block;
-        margin-bottom: 0.25rem;
-        font-size: var(--bs-body-font-size, 0.875rem);
-        font-weight: 600;
-        color: var(--bs-body-color, #495057);
-    }
-
-    .form-control {
-        display: block;
-        width: 100%;
-        padding: 0.375rem 0.75rem;
-        font-size: var(--bs-body-font-size, 0.875rem);
-        font-weight: 400;
-        line-height: 1.5;
-        color: var(--bs-body-color, #495057);
-        background-color: var(--bs-body-bg, #fff);
-        background-clip: padding-box;
-        border: 1px solid var(--bs-border-color, #ced4da);
-        border-radius: var(--bs-border-radius, 0.25rem);
-        box-sizing: border-box;
-        transition:
-            border-color 0.15s ease-in-out,
-            box-shadow 0.15s ease-in-out;
-        appearance: none;
-        -webkit-appearance: none;
-    }
-
-    .form-control:focus {
-        border-color: var(--bs-primary, #86b7fe);
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary, #0d6efd) 25%, transparent);
-    }
-
-    .form-control::placeholder {
-        color: var(--bs-secondary-color, #6c757d);
-        opacity: 1;
-    }
-
-    textarea.form-control {
-        resize: vertical;
-        min-height: calc(1.5em + 0.75rem + 2px);
-    }
-
-    .form-select {
-        display: block;
-        width: 100%;
-        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
-        font-size: var(--bs-body-font-size, 0.875rem);
-        font-weight: 400;
-        line-height: 1.5;
-        color: var(--bs-body-color, #495057);
-        background-color: var(--bs-body-bg, #fff);
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 16px 12px;
-        border: 1px solid var(--bs-border-color, #ced4da);
-        border-radius: var(--bs-border-radius, 0.25rem);
-        box-sizing: border-box;
-        appearance: none;
-        -webkit-appearance: none;
-    }
-
-    .form-select:focus {
-        border-color: var(--bs-primary, #86b7fe);
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary, #0d6efd) 25%, transparent);
-    }
-
-    .form-check {
-        display: block;
-        min-height: 1.5rem;
-        padding-left: 1.5em;
-        margin-bottom: 0.125rem;
-    }
-
-    .form-check-input {
-        width: 1em;
-        height: 1em;
-        margin-top: 0.25em;
-        margin-left: -1.5em;
-        vertical-align: top;
-        background-color: var(--bs-body-bg, #fff);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        border: 1px solid var(--bs-border-color, #adb5bd);
-        appearance: none;
-        -webkit-appearance: none;
-        float: left;
-    }
-
-    .form-check-input[type='checkbox'] {
-        border-radius: 0.25em;
-    }
-
-    .form-check-input:checked {
-        background-color: var(--bs-primary, #0d6efd);
-        border-color: var(--bs-primary, #0d6efd);
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
-    }
-
-    .form-check-input:focus {
-        border-color: var(--bs-primary, #86b7fe);
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary, #0d6efd) 25%, transparent);
-    }
-
-    .form-check-label {
-        cursor: pointer;
-        font-size: var(--bs-body-font-size, 0.875rem);
-        color: var(--bs-body-color, #495057);
-    }
-
-    .form-control.is-invalid {
-        border-color: var(--bs-danger, #dc3545);
-    }
-
-    .form-control.is-invalid:focus {
-        border-color: var(--bs-danger, #dc3545);
-        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-danger, #dc3545) 25%, transparent);
-    }
-
-    .invalid-feedback {
-        display: block;
-        width: 100%;
-        margin-top: 0.25rem;
-        font-size: 0.875em;
-        color: var(--bs-danger, #dc3545);
-    }
-`;
-class ae extends C {
-  constructor() {
-    super(), this.controllers = [], this.value = {};
-  }
-  connectedCallback() {
-    super.connectedCallback(), this.dispatchEvent(
-      new CustomEvent("eb-request-controllers", {
-        bubbles: !0,
-        composed: !0,
-        detail: {
-          set: (e) => {
-            this.controllers = e;
-          }
-        }
-      })
-    );
-  }
-  getValue() {
-    return this.value ?? {};
-  }
-  setValue(e) {
-    e && typeof e == "object" && !Array.isArray(e) ? this.value = e : this.value = {}, this.requestUpdate();
-  }
-  _isChecked(e, t) {
-    var i;
-    return Array.isArray((i = this.value) == null ? void 0 : i[e]) && this.value[e].includes(t);
-  }
-  _toggle(e, t) {
-    const i = { ...this.value ?? {} }, r = Array.isArray(i[e]) ? [...i[e]] : [], s = r.indexOf(t);
-    s >= 0 ? r.splice(s, 1) : r.push(t), r.length === 0 ? delete i[e] : i[e] = r, this.value = i, this._fireUpdated(), this.requestUpdate();
-  }
-  render() {
-    const e = this.label || v(this.name ?? ""), t = this.controllers ?? [];
-    return c`
-            ${e ? c`<span class="ca-label">${e}</span>` : g}
-            ${t.length === 0 ? c`<p class="ca-empty">No domain objects defined. Add domain objects to the canvas first.</p>` : t.map(
-      ({ name: i, actions: r }) => c`
-                          <div class="ca-controller">
-                              <div class="ca-controller-name">${i}</div>
-                              <div class="ca-actions">
-                                  ${r.length === 0 ? c`<span class="ca-empty">No actions defined.</span>` : r.map(
-        (s) => c`
-                                                <label class="ca-action">
-                                                    <input
-                                                        type="checkbox"
-                                                        .checked="${this._isChecked(i, s)}"
-                                                        @change="${() => this._toggle(i, s)}"
-                                                    />
-                                                    ${s}
-                                                </label>
-                                            `
-      )}
-                              </div>
-                          </div>
-                      `
-    )}
-        `;
-  }
-}
-f(ae, "properties", {
-  ...C.properties,
-  /** Available controllers with their actions, provided by the wiring editor. */
-  controllers: { type: Array }
-}), f(ae, "styles", [
-  A,
-  $`
-            .ca-label {
-                display: block;
-                margin-bottom: 0.25rem;
-                font-size: var(--bs-body-font-size, 0.875rem);
-                font-weight: 600;
-                color: var(--bs-body-color, #495057);
-            }
-            .ca-empty {
-                font-size: 0.8rem;
-                font-style: italic;
-                color: var(--bs-secondary-color, #6c757d);
-            }
-            .ca-controller {
-                margin-bottom: 0.5rem;
-            }
-            .ca-controller-name {
-                font-size: 0.8rem;
-                font-weight: 600;
-                color: var(--bs-body-color, #495057);
-                margin-bottom: 0.15rem;
-                padding: 0.15rem 0.3rem;
-                background: var(--bs-secondary-bg, #f8f9fa);
-                border-radius: 3px;
-            }
-            .ca-actions {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.1rem 0.5rem;
-                padding-left: 0.3rem;
-            }
-            .ca-action {
-                display: flex;
-                align-items: center;
-                gap: 0.25rem;
-                font-size: 0.8rem;
-                cursor: pointer;
-            }
-            .ca-action input[type='checkbox'] {
-                cursor: pointer;
-            }
-        `
-]);
-customElements.define("eb-controller-action-selector", ae);
-function je(a, e = {}) {
-  var r, s;
-  const t = a.inputParams ?? {}, i = a.type;
-  if (!i || (r = t.className) != null && r.includes("hiddenField"))
-    return c`<eb-hidden-field name="${t.name}"></eb-hidden-field>`;
-  if (t.wirable)
+function Fe(a) {
+  var i, r, s, n;
+  const e = a.inputParams ?? {}, t = a.type;
+  if (!t || (i = e.className) != null && i.includes("hiddenField"))
+    return p`<eb-hidden-field name="${e.name}"></eb-hidden-field>`;
+  if (e.wirable)
     return g;
-  switch (i) {
+  switch (t) {
     case "string":
-      return c`<eb-string-field
-                name="${t.name}"
-                label="${v(t.label ?? "")}"
-                ?required="${t.required}"
-                ?advanced="${t.advancedMode || !1}"
-                description="${v(t.description ?? "")}"
-                help-link="${t.helpLink ?? ""}"
-                type-invite="${t.typeInvite ?? ""}"
-                placeholder="${t.placeholder ?? ""}"
-                .value="${t.value ?? ""}"
-                ?force-alpha-numeric="${t.forceAlphaNumeric}"
-                ?force-alpha-numeric-underscore="${t.forceAlphaNumericUnderscore}"
-                ?force-lower-case="${t.forceLowerCase}"
-                ?no-spaces="${t.noSpaces}"
-                ?uc-first="${t.ucFirst}"
-                ?lc-first="${t.lcFirst}"
-                ?first-char-non-numeric="${t.firstCharNonNumeric}"
-                ?no-leading-underscore="${t.noLeadingUnderscore}"
-                ?no-trailing-underscore="${t.noTrailingUnderscore}"
-                forbidden-prefixes="${t.forbiddenPrefixes ?? ""}"
-                min-length="${t.minLength ?? ""}"
-                max-length="${t.maxLength ?? ""}"
+      return p`<eb-string-field
+                name="${e.name}"
+                label="${_(e.label ?? "")}"
+                ?required="${e.required}"
+                ?advanced="${e.advancedMode || !1}"
+                description="${_(e.description ?? "")}"
+                help-link="${e.helpLink ?? ""}"
+                type-invite="${e.typeInvite ?? ""}"
+                placeholder="${e.placeholder ?? ""}"
+                .value="${e.value ?? ""}"
+                ?force-alpha-numeric="${e.forceAlphaNumeric}"
+                ?force-alpha-numeric-underscore="${e.forceAlphaNumericUnderscore}"
+                ?force-lower-case="${e.forceLowerCase}"
+                ?no-spaces="${e.noSpaces}"
+                ?uc-first="${e.ucFirst}"
+                ?lc-first="${e.lcFirst}"
+                ?first-char-non-numeric="${e.firstCharNonNumeric}"
+                ?no-leading-underscore="${e.noLeadingUnderscore}"
+                ?no-trailing-underscore="${e.noTrailingUnderscore}"
+                forbidden-prefixes="${e.forbiddenPrefixes ?? ""}"
+                min-length="${e.minLength ?? ""}"
+                max-length="${e.maxLength ?? ""}"
+                data-visible-for="${((r = e.visibleForTypes) == null ? void 0 : r.join(" ")) ?? ""}"
             ></eb-string-field>`;
     case "text":
-      return c`<eb-textarea-field
-                name="${t.name}"
-                label="${v(t.label ?? "")}"
-                ?advanced="${t.advancedMode || !1}"
-                description="${v(t.description ?? "")}"
-                help-link="${t.helpLink ?? ""}"
-                placeholder="${t.placeholder ?? ""}"
-                .value="${t.value ?? ""}"
+      return p`<eb-textarea-field
+                name="${e.name}"
+                label="${_(e.label ?? "")}"
+                ?advanced="${e.advancedMode || !1}"
+                description="${_(e.description ?? "")}"
+                help-link="${e.helpLink ?? ""}"
+                placeholder="${e.placeholder ?? ""}"
+                .value="${e.value ?? ""}"
             ></eb-textarea-field>`;
     case "select":
-      return c`<eb-select-field
-                name="${t.name}"
-                label="${v(t.label ?? "")}"
-                ?advanced="${t.advancedMode || !1}"
-                description="${v(t.description ?? "")}"
-                help-link="${t.helpLink ?? ""}"
-                .selectValues="${t.selectValues ?? []}"
-                .selectOptions="${t.selectOptions ?? []}"
-                .value="${t.value ?? ((s = t.selectValues) == null ? void 0 : s[0]) ?? ""}"
+      return p`<eb-select-field
+                name="${e.name}"
+                label="${_(e.label ?? "")}"
+                ?advanced="${e.advancedMode || !1}"
+                description="${_(e.description ?? "")}"
+                help-link="${e.helpLink ?? ""}"
+                .selectValues="${e.selectValues ?? []}"
+                .selectOptions="${e.selectOptions ?? []}"
+                .value="${e.value ?? ((s = e.selectValues) == null ? void 0 : s[0]) ?? ""}"
             ></eb-select-field>`;
     case "boolean":
-      return c`<eb-boolean-field
-                name="${t.name}"
-                label="${v(t.label ?? "")}"
-                ?advanced="${t.advancedMode || !1}"
-                description="${v(t.description ?? "")}"
-                help-link="${t.helpLink ?? ""}"
-                .value="${t.value ?? !1}"
+      return p`<eb-boolean-field
+                name="${e.name}"
+                label="${_(e.label ?? "")}"
+                ?advanced="${e.advancedMode || !1}"
+                description="${_(e.description ?? "")}"
+                help-link="${e.helpLink ?? ""}"
+                .value="${e.value ?? !1}"
+                data-visible-for="${((n = e.visibleForTypes) == null ? void 0 : n.join(" ")) ?? ""}"
             ></eb-boolean-field>`;
-    case "controllerActionSelector":
-      return c`<eb-controller-action-selector
-                name="${t.name}"
-                label="${v(t.label ?? "")}"
-            ></eb-controller-action-selector>`;
     case "group":
-      return c`<eb-group
-                name="${t.name ?? ""}"
-                legend="${v(t.legend ?? "")}"
-                ?advanced="${t.advancedMode || !1}"
-                ?collapsible="${t.collapsible}"
-                ?collapsed="${t.collapsed}"
-                ?flatten="${t.flatten}"
-                >${$e(t.fields ?? [], e)}</eb-group
+      return p`<eb-group
+                name="${e.name ?? ""}"
+                legend="${_(e.legend ?? "")}"
+                ?advanced="${e.advancedMode || !1}"
+                ?collapsible="${e.collapsible}"
+                ?collapsed="${e.collapsed}"
+                ?flatten="${e.flatten}"
+                >${_e(e.fields ?? [])}</eb-group
             >`;
     case "list":
-      return c` ${t.label ? c`<label class="form-label" style="display:block;font-weight:600;margin-top:0.5rem"
-                          >${v(t.label)}</label
+      return p` ${e.label ? p`<label class="form-label" style="display:block;font-weight:600;margin-top:0.5rem"
+                          >${_(e.label)}</label
                       >` : ""}
                 <eb-list-field
-                    name="${t.name}"
-                    ?advanced="${t.advancedMode || !1}"
-                    ?sortable="${t.sortable}"
-                    add-label="${v("add")}"
-                    element-type="${JSON.stringify(t.elementType ?? {})}"
+                    name="${e.name}"
+                    ?advanced="${e.advancedMode || !1}"
+                    ?sortable="${e.sortable}"
+                    add-label="${_("add")}"
+                    element-type="${JSON.stringify(e.elementType ?? {})}"
                 ></eb-list-field>`;
     case "inplaceedit":
-      return c`<eb-inplace-edit name="${t.name ?? ""}" .value="${t.value ?? ""}"></eb-inplace-edit>`;
+      return p`<eb-inplace-edit name="${e.name ?? ""}" .value="${e.value ?? ""}"></eb-inplace-edit>`;
     default:
-      return c`<eb-string-field name="${t.name}" label="${v(t.label ?? "")}"></eb-string-field>`;
+      return p`<eb-string-field name="${e.name}" label="${_(e.label ?? "")}"></eb-string-field>`;
   }
 }
-function $e(a, e = {}) {
-  return a.map((t) => je(t, e));
+function _e(a) {
+  return a.map((e) => Fe(e));
 }
 const He = {
   container: {
@@ -1431,7 +1125,7 @@ const He = {
                             {
                               type: "string",
                               inputParams: {
-                                classname: "textfieldWrapper dependant fileOnly",
+                                visibleForTypes: ["File"],
                                 label: "allowedFileTypes",
                                 description: "descr_allowedFileTypes",
                                 name: "allowedFileTypes"
@@ -1440,7 +1134,7 @@ const He = {
                             {
                               type: "string",
                               inputParams: {
-                                classname: "textfieldWrapper dependant fileOnly imageOnly small",
+                                visibleForTypes: ["File", "Image"],
                                 label: "maxItems",
                                 name: "maxItems",
                                 value: 1
@@ -1457,7 +1151,27 @@ const He = {
                             {
                               type: "boolean",
                               inputParams: {
-                                classname: "dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly",
+                                visibleForTypes: [
+                                  "String",
+                                  "Text",
+                                  "RichText",
+                                  "Slug",
+                                  "ColorPicker",
+                                  "Password",
+                                  "Email",
+                                  "Integer",
+                                  "Float",
+                                  "Boolean",
+                                  "InputLink",
+                                  "NativeDate",
+                                  "NativeDateTime",
+                                  "Date",
+                                  "DateTime",
+                                  "NativeTime",
+                                  "Time",
+                                  "TimeSec",
+                                  "Select"
+                                ],
                                 label: "isNullable",
                                 name: "propertyIsNullable",
                                 value: !1
@@ -1664,8 +1378,153 @@ const He = {
       }
     ]
   }
-};
-class oe extends w {
+}, E = x`
+    eb-string-field,
+    eb-textarea-field,
+    eb-select-field,
+    eb-boolean-field,
+    eb-hidden-field {
+        display: block;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-label {
+        display: inline-block;
+        margin-bottom: 0.25rem;
+        font-size: var(--bs-body-font-size, 0.875rem);
+        font-weight: 600;
+        color: var(--bs-body-color, #495057);
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: var(--bs-body-font-size, 0.875rem);
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color, #495057);
+        background-color: var(--bs-body-bg, #fff);
+        background-clip: padding-box;
+        border: 1px solid var(--bs-border-color, #ced4da);
+        border-radius: var(--bs-border-radius, 0.25rem);
+        box-sizing: border-box;
+        transition:
+            border-color 0.15s ease-in-out,
+            box-shadow 0.15s ease-in-out;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .form-control:focus {
+        border-color: var(--bs-primary, #86b7fe);
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary, #0d6efd) 25%, transparent);
+    }
+
+    .form-control::placeholder {
+        color: var(--bs-secondary-color, #6c757d);
+        opacity: 1;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: calc(1.5em + 0.75rem + 2px);
+    }
+
+    .form-select {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+        font-size: var(--bs-body-font-size, 0.875rem);
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color, #495057);
+        background-color: var(--bs-body-bg, #fff);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+        border: 1px solid var(--bs-border-color, #ced4da);
+        border-radius: var(--bs-border-radius, 0.25rem);
+        box-sizing: border-box;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .form-select:focus {
+        border-color: var(--bs-primary, #86b7fe);
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary, #0d6efd) 25%, transparent);
+    }
+
+    .form-check {
+        display: block;
+        min-height: 1.5rem;
+        padding-left: 1.5em;
+        margin-bottom: 0.125rem;
+    }
+
+    .form-check-input {
+        width: 1em;
+        height: 1em;
+        margin-top: 0.25em;
+        margin-left: -1.5em;
+        vertical-align: top;
+        background-color: var(--bs-body-bg, #fff);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: 1px solid var(--bs-border-color, #adb5bd);
+        appearance: none;
+        -webkit-appearance: none;
+        float: left;
+    }
+
+    .form-check-input[type='checkbox'] {
+        border-radius: 0.25em;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--bs-primary, #0d6efd);
+        border-color: var(--bs-primary, #0d6efd);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+    }
+
+    .form-check-input:focus {
+        border-color: var(--bs-primary, #86b7fe);
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-primary, #0d6efd) 25%, transparent);
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        font-size: var(--bs-body-font-size, 0.875rem);
+        color: var(--bs-body-color, #495057);
+    }
+
+    .form-control.is-invalid {
+        border-color: var(--bs-danger, #dc3545);
+    }
+
+    .form-control.is-invalid:focus {
+        border-color: var(--bs-danger, #dc3545);
+        box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--bs-danger, #dc3545) 25%, transparent);
+    }
+
+    .invalid-feedback {
+        display: block;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: var(--bs-danger, #dc3545);
+    }
+`;
+class ae extends w {
   constructor() {
     super(), this.posX = 10, this.posY = 10, this.moduleData = {}, this._name = "", this._dragging = !1, this._dragOffsetX = 0, this._dragOffsetY = 0, this._resizeWidth = null, this._resizeHeight = null, this._resizing = !1, this._resizeStartX = 0, this._resizeStartY = 0, this._resizeStartW = 0, this._resizeStartH = 0;
   }
@@ -1754,7 +1613,7 @@ class oe extends w {
   }
   render() {
     var e, t, i;
-    return c`
+    return p`
             <div class="card-header">
                 <span class="drag-handle" aria-hidden="true">⠿</span>
                 <eb-terminal
@@ -1771,7 +1630,7 @@ class oe extends w {
                 </eb-inplace-edit>
                 <button class="delete-btn" @click="${this._onDeleteClick}" title="Remove model object">×</button>
             </div>
-            <div class="card-body">${$e(this._fields.slice(1))}</div>
+            <div class="card-body">${_e(this._fields.slice(1))}</div>
             <div
                 class="resize-handle"
                 @pointerdown="${this._onResizePointerDown}"
@@ -1781,7 +1640,7 @@ class oe extends w {
         `;
   }
 }
-f(oe, "properties", {
+f(ae, "properties", {
   moduleId: { type: Number, attribute: "module-id" },
   posX: { type: Number, attribute: "pos-x" },
   posY: { type: Number, attribute: "pos-y" },
@@ -1789,9 +1648,9 @@ f(oe, "properties", {
   _name: { state: !0 },
   _resizeWidth: { state: !0 },
   _resizeHeight: { state: !0 }
-}), f(oe, "styles", [
-  A,
-  $`
+}), f(ae, "styles", [
+  E,
+  x`
             :host {
                 display: block;
                 position: absolute;
@@ -1869,8 +1728,8 @@ f(oe, "properties", {
             }
         `
 ]);
-customElements.define("eb-container", oe);
-class le extends w {
+customElements.define("eb-container", ae);
+class oe extends w {
   constructor() {
     super(), this._wires = [], this._containers = [], this._drawingWire = null, this._tempWire = null, this._hoveredWireId = null, this._panOffset = { x: 0, y: 0 }, this._isPanning = !1, this._panStartX = 0, this._panStartY = 0;
   }
@@ -1886,7 +1745,7 @@ class le extends w {
   }
   _onTerminalConnect(e) {
     var d;
-    const { terminalId: t, uid: i, sourceEl: r } = e.detail, s = this.getBoundingClientRect(), n = r.getBoundingClientRect(), o = n.left - s.left + n.width / 2, l = n.top - s.top + n.height / 2, p = (d = r.getRootNode()) == null ? void 0 : d.host, b = parseInt((p == null ? void 0 : p.getAttribute("module-id")) ?? "-1");
+    const { terminalId: t, uid: i, sourceEl: r } = e.detail, s = this.getBoundingClientRect(), n = r.getBoundingClientRect(), o = n.left - s.left + n.width / 2, l = n.top - s.top + n.height / 2, c = (d = r.getRootNode()) == null ? void 0 : d.host, b = parseInt((c == null ? void 0 : c.getAttribute("module-id")) ?? "-1");
     this._drawingWire = {
       terminalId: t,
       uid: i,
@@ -1949,7 +1808,7 @@ class le extends w {
       (u) => u.srcModuleId === n && u.tgtModuleId === t.moduleId && u.srcTerminal === r
     ))
       return;
-    const p = this._findTerminalEl(r, n), b = this._findTerminalEl(t.terminalId, t.moduleId), d = p && b ? this._getWirePositions(p, b) : { x1: 0, y1: 0, x2: 0, y2: 0 };
+    const c = this._findTerminalEl(r, n), b = this._findTerminalEl(t.terminalId, t.moduleId), d = c && b ? this._getWirePositions(c, b) : { x1: 0, y1: 0, x2: 0, y2: 0 };
     this._wires = [
       ...this._wires,
       {
@@ -2078,11 +1937,11 @@ class le extends w {
   }
   render() {
     const { x: e, y: t } = this._panOffset;
-    return c`
+    return p`
             <div id="canvas" @pointerdown="${this._onCanvasPointerDown}">
                 <div id="pan-surface" style="transform: translate(${e}px, ${t}px)">
                     ${this._containers.map(
-      (i) => c`
+      (i) => p`
                             <eb-container
                                 module-id="${i.moduleId}"
                                 pos-x="${i.posX}"
@@ -2138,14 +1997,14 @@ class le extends w {
         `;
   }
 }
-f(le, "properties", {
+f(oe, "properties", {
   _wires: { state: !0 },
   _containers: { state: !0 },
   _drawingWire: { state: !0 },
   _tempWire: { state: !0 },
   _hoveredWireId: { state: !0 },
   _panOffset: { state: !0 }
-}), f(le, "styles", $`
+}), f(oe, "styles", x`
         :host {
             display: flex;
             flex-direction: column;
@@ -2210,8 +2069,8 @@ f(le, "properties", {
             opacity: 1;
         }
     `);
-customElements.define("eb-layer", le);
-const Ye = $`
+customElements.define("eb-layer", oe);
+const je = x`
     .btn {
         display: inline-block;
         font-weight: 400;
@@ -2296,7 +2155,55 @@ const Ye = $`
         border-color: color-mix(in srgb, var(--bs-warning, #ffc107) 80%, #000);
     }
 `;
-class de extends C {
+class C extends w {
+  /**
+   * Dispatches a `field-updated` CustomEvent that bubbles through Shadow DOM
+   * boundaries so parent components can collect updated values.
+   */
+  _fireUpdated() {
+    this.dispatchEvent(
+      new CustomEvent("field-updated", {
+        bubbles: !0,
+        composed: !0,
+        detail: { name: this.name, value: this.getValue() }
+      })
+    );
+  }
+  /**
+   * Returns the current field value.
+   * @returns {*} Current value
+   */
+  getValue() {
+    return this.value;
+  }
+  /**
+   * Programmatically sets the field value and requests a re-render.
+   * @param {*} v - New value
+   */
+  setValue(e) {
+    this.value = e;
+  }
+  /**
+   * Validates the current value against field constraints.
+   * @returns {boolean} true if valid
+   */
+  validate() {
+    return !0;
+  }
+}
+f(C, "properties", {
+  /** Field identifier, used as the key when collecting form values. */
+  name: { type: String },
+  /** Human-readable label rendered above the input. */
+  label: { type: String },
+  /** Current field value. */
+  value: {},
+  /** Whether the field must have a non-empty value before saving. */
+  required: { type: Boolean },
+  /** When true, the field is only shown in advanced mode. */
+  advanced: { type: Boolean }
+});
+class le extends C {
   _getValidationError(e) {
     if (this.required && !e)
       return "Required";
@@ -2334,9 +2241,9 @@ class de extends C {
   }
   render() {
     const e = this.placeholder || this.typeInvite || "", t = `eb-str-${this.name}`, i = `${t}-error`;
-    return c`
-            ${this.label ? c`<label class="form-label" for="${t}">${this.label}</label>` : ""}
-            ${this.helpLink ? c`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
+    return p`
+            ${this.label ? p`<label class="form-label" for="${t}">${this.label}</label>` : ""}
+            ${this.helpLink ? p`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
             <input
                 id="${t}"
                 class="form-control${this._error ? " is-invalid" : ""}"
@@ -2348,12 +2255,12 @@ class de extends C {
                 aria-describedby="${this._error ? i : ""}"
                 @input="${this._onInput}"
             />
-            ${this._error ? c`<div id="${i}" class="invalid-feedback" role="alert">${this._error}</div>` : ""}
-            ${this.description ? c`<small class="help-text">${v(this.description)}</small>` : ""}
+            ${this._error ? p`<div id="${i}" class="invalid-feedback" role="alert">${this._error}</div>` : ""}
+            ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
         `;
   }
 }
-f(de, "properties", {
+f(le, "properties", {
   ...C.properties,
   placeholder: { type: String },
   typeInvite: { type: String, attribute: "type-invite" },
@@ -2372,9 +2279,9 @@ f(de, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" },
   _error: { state: !0 }
-}), f(de, "styles", [
-  A,
-  $`
+}), f(le, "styles", [
+  E,
+  x`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2394,8 +2301,8 @@ f(de, "properties", {
             }
         `
 ]);
-customElements.define("eb-string-field", de);
-class ce extends C {
+customElements.define("eb-string-field", le);
+class de extends C {
   constructor() {
     super(), this.rows = 4;
   }
@@ -2410,10 +2317,10 @@ class ce extends C {
   }
   render() {
     const e = `eb-ta-${this.name}`;
-    return c`
+    return p`
             <div class="form-group">
-                ${this.label ? c`<label class="form-label" for="${e}">${this.label}</label>` : ""}
-                ${this.helpLink ? c`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
+                ${this.label ? p`<label class="form-label" for="${e}">${this.label}</label>` : ""}
+                ${this.helpLink ? p`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
                 <textarea
                     id="${e}"
                     class="form-control"
@@ -2423,20 +2330,20 @@ class ce extends C {
                 >
 ${this.value ?? ""}</textarea
                 >
-                ${this.description ? c`<small class="help-text">${v(this.description)}</small>` : ""}
+                ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
             </div>
         `;
   }
 }
-f(ce, "properties", {
+f(de, "properties", {
   ...C.properties,
   /** Number of visible text rows. Defaults to 4. */
   rows: { type: Number },
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
-}), f(ce, "styles", [
-  A,
-  $`
+}), f(de, "styles", [
+  E,
+  x`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2456,14 +2363,14 @@ f(ce, "properties", {
             }
         `
 ]);
-customElements.define("eb-textarea-field", ce);
+customElements.define("eb-textarea-field", de);
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const ft = { CHILD: 2 }, gt = (a) => (...e) => ({ _$litDirective$: a, values: e });
-let yt = class {
+const bt = { CHILD: 2 }, ft = (a) => (...e) => ({ _$litDirective$: a, values: e });
+let gt = class {
   constructor(e) {
   }
   get _$AU() {
@@ -2484,28 +2391,28 @@ let yt = class {
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const { I: vt } = mt, Oe = (a) => a, Re = () => document.createComment(""), B = (a, e, t) => {
+const { I: yt } = ht, Me = (a) => a, Ie = () => document.createComment(""), V = (a, e, t) => {
   var s;
   const i = a._$AA.parentNode, r = e === void 0 ? a._$AB : e._$AA;
   if (t === void 0) {
-    const n = i.insertBefore(Re(), r), o = i.insertBefore(Re(), r);
-    t = new vt(n, o, a, a.options);
+    const n = i.insertBefore(Ie(), r), o = i.insertBefore(Ie(), r);
+    t = new yt(n, o, a, a.options);
   } else {
     const n = t._$AB.nextSibling, o = t._$AM, l = o !== a;
     if (l) {
-      let p;
-      (s = t._$AQ) == null || s.call(t, a), t._$AM = a, t._$AP !== void 0 && (p = a._$AU) !== o._$AU && t._$AP(p);
+      let c;
+      (s = t._$AQ) == null || s.call(t, a), t._$AM = a, t._$AP !== void 0 && (c = a._$AU) !== o._$AU && t._$AP(c);
     }
     if (n !== r || l) {
-      let p = t._$AA;
-      for (; p !== n; ) {
-        const b = Oe(p).nextSibling;
-        Oe(i).insertBefore(p, r), p = b;
+      let c = t._$AA;
+      for (; c !== n; ) {
+        const b = Me(c).nextSibling;
+        Me(i).insertBefore(c, r), c = b;
       }
     }
   }
   return t;
-}, T = (a, e, t = a) => (a._$AI(e, t), a), _t = {}, $t = (a, e = _t) => a._$AH = e, xt = (a) => a._$AH, te = (a) => {
+}, T = (a, e, t = a) => (a._$AI(e, t), a), vt = {}, _t = (a, e = vt) => a._$AH = e, $t = (a) => a._$AH, te = (a) => {
   a._$AR(), a._$AA.remove();
 };
 /**
@@ -2513,13 +2420,13 @@ const { I: vt } = mt, Oe = (a) => a, Re = () => document.createComment(""), B = 
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const Ie = (a, e, t) => {
+const Le = (a, e, t) => {
   const i = /* @__PURE__ */ new Map();
   for (let r = e; r <= t; r++) i.set(a[r], r);
   return i;
-}, Xe = gt(class extends yt {
+}, Ye = ft(class extends gt {
   constructor(a) {
-    if (super(a), a.type !== ft.CHILD) throw Error("repeat() can only be used in text expressions");
+    if (super(a), a.type !== bt.CHILD) throw Error("repeat() can only be used in text expressions");
   }
   dt(a, e, t) {
     let i;
@@ -2533,37 +2440,37 @@ const Ie = (a, e, t) => {
     return this.dt(a, e, t).values;
   }
   update(a, [e, t, i]) {
-    const r = xt(a), { values: s, keys: n } = this.dt(e, t, i);
+    const r = $t(a), { values: s, keys: n } = this.dt(e, t, i);
     if (!Array.isArray(r)) return this.ut = n, s;
     const o = this.ut ?? (this.ut = []), l = [];
-    let p, b, d = 0, m = r.length - 1, h = 0, u = s.length - 1;
+    let c, b, d = 0, m = r.length - 1, h = 0, u = s.length - 1;
     for (; d <= m && h <= u; ) if (r[d] === null) d++;
     else if (r[m] === null) m--;
     else if (o[d] === n[h]) l[h] = T(r[d], s[h]), d++, h++;
     else if (o[m] === n[u]) l[u] = T(r[m], s[u]), m--, u--;
-    else if (o[d] === n[u]) l[u] = T(r[d], s[u]), B(a, l[u + 1], r[d]), d++, u--;
-    else if (o[m] === n[h]) l[h] = T(r[m], s[h]), B(a, r[d], r[m]), m--, h++;
-    else if (p === void 0 && (p = Ie(n, h, u), b = Ie(o, d, m)), p.has(o[d])) if (p.has(o[m])) {
-      const y = b.get(n[h]), k = y !== void 0 ? r[y] : null;
-      if (k === null) {
-        const I = B(a, r[d]);
-        T(I, s[h]), l[h] = I;
-      } else l[h] = T(k, s[h]), B(a, r[d], k), r[y] = null;
+    else if (o[d] === n[u]) l[u] = T(r[d], s[u]), V(a, l[u + 1], r[d]), d++, u--;
+    else if (o[m] === n[h]) l[h] = T(r[m], s[h]), V(a, r[d], r[m]), m--, h++;
+    else if (c === void 0 && (c = Le(n, h, u), b = Le(o, d, m)), c.has(o[d])) if (c.has(o[m])) {
+      const y = b.get(n[h]), S = y !== void 0 ? r[y] : null;
+      if (S === null) {
+        const R = V(a, r[d]);
+        T(R, s[h]), l[h] = R;
+      } else l[h] = T(S, s[h]), V(a, r[d], S), r[y] = null;
       h++;
     } else te(r[m]), m--;
     else te(r[d]), d++;
     for (; h <= u; ) {
-      const y = B(a, l[u + 1]);
+      const y = V(a, l[u + 1]);
       T(y, s[h]), l[h++] = y;
     }
     for (; d <= m; ) {
       const y = r[d++];
       y !== null && te(y);
     }
-    return this.ut = n, $t(a, l), R;
+    return this.ut = n, _t(a, l), L;
   }
 });
-class pe extends C {
+class ce extends C {
   _getOptions() {
     const e = this.selectValues ?? [], t = this.selectOptions ?? e;
     return e.map((i, r) => ({ value: i, label: t[r] ?? i }));
@@ -2589,30 +2496,30 @@ class pe extends C {
   }
   render() {
     const e = this._visibleOptions(), t = `eb-sel-${this.name}`;
-    return c`
+    return p`
             <div class="form-group">
-                ${this.label ? c`<label class="form-label" for="${t}">${this.label}</label>` : ""}
-                ${this.helpLink ? c`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
+                ${this.label ? p`<label class="form-label" for="${t}">${this.label}</label>` : ""}
+                ${this.helpLink ? p`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
                 <select
                     id="${t}"
                     class="form-select"
                     aria-label="${this.label || this.name}"
                     @change="${this._onChange}"
                 >
-                    ${Xe(
+                    ${Ye(
       e,
       (i) => i.value,
-      (i) => c`
+      (i) => p`
                             <option value="${i.value}" ?selected="${this.value === i.value}">${i.label}</option>
                         `
     )}
                 </select>
-                ${this.description ? c`<small class="help-text">${v(this.description)}</small>` : ""}
+                ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
             </div>
         `;
   }
 }
-f(pe, "properties", {
+f(ce, "properties", {
   ...C.properties,
   /** Array of option values (e.g. ['inline', 'selectSingle']). */
   selectValues: { type: Array, attribute: "select-values" },
@@ -2622,9 +2529,9 @@ f(pe, "properties", {
   allowedValues: { type: Array },
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
-}), f(pe, "styles", [
-  A,
-  $`
+}), f(ce, "styles", [
+  E,
+  x`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2644,8 +2551,8 @@ f(pe, "properties", {
             }
         `
 ]);
-customElements.define("eb-select-field", pe);
-class ue extends C {
+customElements.define("eb-select-field", ce);
+class pe extends C {
   _onChange(e) {
     this.value = e.target.checked, this._fireUpdated();
   }
@@ -2656,7 +2563,7 @@ class ue extends C {
     this.value = !!e, this.requestUpdate();
   }
   render() {
-    return c`
+    return p`
             <div class="form-check form-check-type-toggle">
                 <input
                     class="form-check-input"
@@ -2667,19 +2574,19 @@ class ue extends C {
                     id="eb-bool-${this.name}"
                 />
                 <label class="form-check-label" for="eb-bool-${this.name}"> ${this.label || ""} </label>
-                ${this.helpLink ? c`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
+                ${this.helpLink ? p`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
             </div>
-            ${this.description ? c`<small class="help-text">${v(this.description)}</small>` : ""}
+            ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
         `;
   }
 }
-f(ue, "properties", {
+f(pe, "properties", {
   ...C.properties,
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
-}), f(ue, "styles", [
-  A,
-  $`
+}), f(pe, "styles", [
+  E,
+  x`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2699,8 +2606,8 @@ f(ue, "properties", {
             }
         `
 ]);
-customElements.define("eb-boolean-field", ue);
-class he extends C {
+customElements.define("eb-boolean-field", pe);
+class ue extends C {
   getValue() {
     return this.value ?? "";
   }
@@ -2708,18 +2615,18 @@ class he extends C {
     this.value = e;
   }
   render() {
-    return c`<input type="hidden" .value="${this.value ?? ""}" />`;
+    return p`<input type="hidden" .value="${this.value ?? ""}" />`;
   }
 }
-f(he, "properties", {
+f(ue, "properties", {
   ...C.properties
-}), f(he, "styles", $`
+}), f(ue, "styles", x`
         :host {
             display: none;
         }
     `);
-customElements.define("eb-hidden-field", he);
-class me extends w {
+customElements.define("eb-hidden-field", ue);
+class he extends w {
   connectedCallback() {
     super.connectedCallback(), this.addEventListener("field-updated", this._onFieldUpdated), this._onAdvancedModeChanged = (e) => {
       this.advancedMode = e.detail.enabled;
@@ -2729,19 +2636,34 @@ class me extends w {
     super.disconnectedCallback(), this.removeEventListener("field-updated", this._onFieldUpdated), window.removeEventListener("eb-advanced-mode-changed", this._onAdvancedModeChanged);
   }
   _onFieldUpdated(e) {
-    var r;
-    if (((r = e.detail) == null ? void 0 : r.name) !== "relationType")
+    var t, i;
+    if (((t = e.detail) == null ? void 0 : t.name) === "relationType") {
+      const r = this.querySelector("[name=renderType]");
+      if (!r)
+        return;
+      const s = {
+        zeroToOne: ["selectSingle", "selectMultipleSideBySide", "inline"],
+        manyToOne: ["selectSingle", "selectMultipleSideBySide"],
+        zeroToMany: ["inline", "selectMultipleSideBySide"],
+        manyToMany: ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
+      };
+      r.allowedValues = s[e.detail.value] ?? null;
+    }
+    ((i = e.detail) == null ? void 0 : i.name) === "propertyType" && this._applyPropertyTypeVisibility(e.detail.value);
+  }
+  _applyPropertyTypeVisibility(e) {
+    this.querySelectorAll("[data-visible-for]").forEach((t) => {
+      const i = (t.getAttribute("data-visible-for") || "").split(" ").filter(Boolean);
+      i.length > 0 && (t.style.display = i.includes(e) ? "" : "none");
+    });
+  }
+  _initPropertyTypes() {
+    var i;
+    const e = this.querySelector("[name=propertyType]");
+    if (!e)
       return;
-    const t = this.querySelector("[name=renderType]");
-    if (!t)
-      return;
-    const i = {
-      zeroToOne: ["selectSingle", "selectMultipleSideBySide", "inline"],
-      manyToOne: ["selectSingle", "selectMultipleSideBySide"],
-      zeroToMany: ["inline", "selectMultipleSideBySide"],
-      manyToMany: ["selectMultipleSideBySide", "selectSingleBox", "selectCheckBox"]
-    };
-    t.allowedValues = i[e.detail.value] ?? null;
+    const t = ((i = e.getValue) == null ? void 0 : i.call(e)) ?? e.value;
+    t && this._applyPropertyTypeVisibility(t);
   }
   _initRelationTypes() {
     this.querySelectorAll("[name=relationType]").forEach((e) => {
@@ -2768,7 +2690,7 @@ class me extends w {
     (e.key === "Enter" || e.key === " ") && (e.preventDefault(), this._toggleCollapse());
   }
   _onSlotChange() {
-    this.requestUpdate(), this._initRelationTypes();
+    this.requestUpdate(), this._initRelationTypes(), this._initPropertyTypes();
   }
   /**
    * Collects values from direct slotted children only (not deep descendants)
@@ -2817,12 +2739,12 @@ class me extends w {
       }
       const n = s.getAttribute("name");
       n !== null && e[n] !== void 0 && s.setValue(e[n]);
-    });
+    }), this._initPropertyTypes();
   }
   render() {
-    return c`
+    return p`
             <div class="card" role="group" aria-label="${this.legend || this.name || "Group"}">
-                ${this.legend ? c`
+                ${this.legend ? p`
                           <div
                               class="card-header"
                               @click="${this._toggleCollapse}"
@@ -2841,7 +2763,7 @@ class me extends w {
         `;
   }
 }
-f(me, "properties", {
+f(he, "properties", {
   name: { type: String },
   legend: { type: String },
   collapsible: { type: Boolean },
@@ -2853,7 +2775,7 @@ f(me, "properties", {
    * expected to spread these values into its own result object.
    */
   flatten: { type: Boolean }
-}), f(me, "styles", $`
+}), f(he, "styles", x`
         :host {
             display: block;
         }
@@ -2893,29 +2815,29 @@ f(me, "properties", {
             display: block;
         }
     `);
-customElements.define("eb-group", me);
-function wt(a) {
+customElements.define("eb-group", he);
+function xt(a) {
   var t, i, r, s;
   const e = ((s = (r = (i = (t = window.TYPO3) == null ? void 0 : t.settings) == null ? void 0 : i.extensionBuilder) == null ? void 0 : r.publicResourceWebPath) == null ? void 0 : s.core) ?? "";
   return e ? `${e}Icons/T3Icons/sprites/actions.svg#${a}` : "";
 }
-const Ct = {
+const wt = {
   "actions-caret-up": "↑",
   "actions-caret-down": "↓",
   "actions-delete": "✕",
   "actions-view-list-collapse": "▼",
   "actions-view-list-expand": "▶"
 };
-function V(a) {
-  const e = wt(a);
-  return e ? c`
+function W(a) {
+  const e = xt(a);
+  return e ? p`
         <svg width="16" height="16" aria-hidden="true">
             <use href="${e}"></use>
         </svg>
-    ` : c`<span aria-hidden="true">${Ct[a] ?? a}</span>`;
+    ` : p`<span aria-hidden="true">${wt[a] ?? a}</span>`;
 }
-const At = /* @__PURE__ */ new Set(["propertyName", "relationName", "customAction", "name"]);
-class be extends w {
+const Ct = /* @__PURE__ */ new Set(["propertyName", "relationName", "customAction", "name"]);
+class me extends w {
   constructor() {
     super(), this.sortable = !0, this.addLabel = "add", this._items = [], this._boundOnFieldUpdated = this._onFieldUpdated.bind(this);
   }
@@ -2927,11 +2849,11 @@ class be extends w {
   }
   _onFieldUpdated(e) {
     var n, o;
-    if (!At.has((n = e.detail) == null ? void 0 : n.name))
+    if (!Ct.has((n = e.detail) == null ? void 0 : n.name))
       return;
     const t = e.composedPath().find((l) => {
-      var p;
-      return l instanceof Element && ((p = l.classList) == null ? void 0 : p.contains("item-content"));
+      var c;
+      return l instanceof Element && ((c = l.classList) == null ? void 0 : c.contains("item-content"));
     });
     if (!t)
       return;
@@ -3011,7 +2933,7 @@ class be extends w {
       var i;
       const t = ((i = this.shadowRoot) == null ? void 0 : i.querySelectorAll(".item-content")) ?? [];
       e.forEach((r, s) => {
-        var p;
+        var c;
         if (!r)
           return;
         const n = t[s];
@@ -3023,49 +2945,49 @@ class be extends w {
           return;
         }
         const l = n.querySelector("[name]");
-        (p = l == null ? void 0 : l.setValue) == null || p.call(l, r);
+        (c = l == null ? void 0 : l.setValue) == null || c.call(l, r);
       });
     }));
   }
   render() {
     const e = this._elementTypeDef, t = this._isWirable;
-    return c`
-            ${Xe(
+    return p`
+            ${Ye(
       this._items,
       (i) => i.uid,
-      (i, r) => c`
+      (i, r) => p`
                     <div class="item-row">
-                        ${t ? c`
+                        ${t ? p`
                                   <div class="item-terminal">
                                       <eb-terminal droppable terminal-id="REL_${r}"></eb-terminal>
                                   </div>
                               ` : g}
                         <div class="item-content ${i.collapsed ? "is-collapsed" : ""}">
-                            ${e ? je(e) : g}
+                            ${e ? Fe(e) : g}
                         </div>
-                        ${i.collapsed ? c`<span class="item-collapsed-label">${i.label || `Item ${r + 1}`}</span>` : g}
+                        ${i.collapsed ? p`<span class="item-collapsed-label">${i.label || `Item ${r + 1}`}</span>` : g}
                         <div class="item-actions">
                             <button
                                 class="btn btn-default btn-sm btn-collapse"
                                 @click="${() => this._toggleCollapse(r)}"
                                 title="${i.collapsed ? "Expand" : "Collapse"}"
                             >
-                                ${i.collapsed ? V("actions-view-list-expand") : V("actions-view-list-collapse")}
+                                ${i.collapsed ? W("actions-view-list-expand") : W("actions-view-list-collapse")}
                             </button>
-                            ${this.sortable ? c`
+                            ${this.sortable ? p`
                                       <button
                                           class="btn btn-default btn-sm"
                                           @click="${() => this._moveUp(r)}"
                                           title="Move up"
                                       >
-                                          ${V("actions-caret-up")}
+                                          ${W("actions-caret-up")}
                                       </button>
                                       <button
                                           class="btn btn-default btn-sm"
                                           @click="${() => this._moveDown(r)}"
                                           title="Move down"
                                       >
-                                          ${V("actions-caret-down")}
+                                          ${W("actions-caret-down")}
                                       </button>
                                   ` : g}
                             <button
@@ -3073,7 +2995,7 @@ class be extends w {
                                 @click="${() => this._removeItem(r)}"
                                 title="Remove"
                             >
-                                ${V("actions-delete")}
+                                ${W("actions-delete")}
                             </button>
                         </div>
                     </div>
@@ -3083,16 +3005,16 @@ class be extends w {
         `;
   }
 }
-f(be, "properties", {
+f(me, "properties", {
   name: { type: String },
   sortable: { type: Boolean },
   addLabel: { type: String, attribute: "add-label" },
   elementType: { type: String, attribute: "element-type" },
   _items: { state: !0 }
-}), f(be, "styles", [
-  Ye,
-  A,
-  $`
+}), f(me, "styles", [
+  je,
+  E,
+  x`
             :host {
                 display: block;
             }
@@ -3138,8 +3060,8 @@ f(be, "properties", {
             }
         `
 ]);
-customElements.define("eb-list-field", be);
-const kt = [
+customElements.define("eb-list-field", me);
+const St = [
   {
     type: "string",
     inputParams: {
@@ -3466,19 +3388,28 @@ const kt = [
                 collapsed: !0,
                 legend: "advancedOptions",
                 name: "actions",
+                className: "wideTextfields",
                 fields: [
                   {
-                    type: "controllerActionSelector",
+                    type: "text",
                     inputParams: {
                       name: "controllerActionCombinations",
-                      label: "controller_action_combinations"
+                      label: "controller_action_combinations",
+                      description: "descr_controller_action_combinations",
+                      placeholder: "ControllerName => action1,action2",
+                      cols: 38,
+                      rows: 3
                     }
                   },
                   {
-                    type: "controllerActionSelector",
+                    type: "text",
                     inputParams: {
                       name: "noncacheableActions",
-                      label: "noncacheable_actions"
+                      label: "noncacheable_actions",
+                      placeholder: "ControllerName => action1,action2",
+                      description: "descr_noncacheable_actions",
+                      cols: 38,
+                      rows: 3
                     }
                   }
                 ]
@@ -3555,12 +3486,17 @@ const kt = [
                 collapsed: !0,
                 legend: "advancedOptions",
                 name: "actions",
+                className: "wideTextfields",
                 fields: [
                   {
-                    type: "controllerActionSelector",
+                    type: "text",
                     inputParams: {
                       name: "controllerActionCombinations",
-                      label: "controller_action_combinations"
+                      label: "controller_action_combinations",
+                      placeholder: "ControllerName => action1,action2",
+                      description: "descr_controller_action_combinations",
+                      cols: 38,
+                      rows: 3
                     }
                   }
                 ]
@@ -3572,49 +3508,9 @@ const kt = [
     }
   }
 ];
-class fe extends w {
+class be extends w {
   constructor() {
-    super(), this.smdUrl = "", this.extensionName = "", this.initialWarnings = [], this.composerWarning = "", this._loading = !1, this._extensionData = null, this._advancedMode = !1, this._leftCollapsed = !1, this._boundOnRequestControllers = this._onRequestControllers.bind(this);
-  }
-  /**
-   * Responds to `eb-request-controllers` events fired by eb-controller-action-selector
-   * components. Provides the current list of domain objects (as controllers with their
-   * defined actions) derived from the loaded extension data.
-   */
-  _onRequestControllers(e) {
-    var t;
-    typeof ((t = e.detail) == null ? void 0 : t.set) == "function" && e.detail.set(this._getControllersFromModules());
-  }
-  /**
-   * Derives controller definitions from the extension's domain object modules.
-   * Each domain object becomes a controller; its enabled actions become the
-   * action list shown in the eb-controller-action-selector.
-   *
-   * Note: reflects the last loaded _extensionData snapshot. Newly added domain
-   * objects on the canvas appear after the next save + reload.
-   *
-   * @returns {Array<{name: string, actions: string[]}>}
-   */
-  _getControllersFromModules() {
-    var t;
-    return (((t = this._extensionData) == null ? void 0 : t.modules) ?? []).map((i) => {
-      const r = i.value ?? {}, s = r.name ?? "";
-      if (!s)
-        return null;
-      const n = r.actionGroup ?? {}, o = [], l = {
-        _default0_index: "index",
-        _default1_list: "list",
-        _default2_show: "show",
-        _default3_new_create: "new",
-        _default4_edit_update: "edit",
-        _default5_delete: "delete"
-      };
-      for (const [p, b] of Object.entries(l))
-        n[p] && o.push(b);
-      for (const p of n.customActions ?? [])
-        p && o.push(p);
-      return { name: s, actions: o };
-    }).filter(Boolean);
+    super(), this.smdUrl = "", this.extensionName = "", this.initialWarnings = [], this.composerWarning = "", this._loading = !1, this._extensionData = null, this._advancedMode = !1, this._leftCollapsed = !1;
   }
   async firstUpdated() {
     this.composerWarning && this._showComposerWarningModal();
@@ -3629,20 +3525,20 @@ class fe extends w {
     const i = document.createElement("p");
     i.textContent = "Run the following command in your project root to fix this:";
     const r = document.createElement("pre");
-    r.style.cssText = "background:var(--bs-tertiary-bg);color:var(--bs-body-color);border:1px solid var(--bs-border-color);padding:0.75rem 1rem;border-radius:4px;font-size:0.9em;white-space:pre-wrap;", r.textContent = 'mkdir -p packages && composer config repositories.local path "packages/*"', e.appendChild(t), e.appendChild(i), e.appendChild(r), _.confirm("Composer Mode — Configuration Required", e, U.warning, [
+    r.style.cssText = "background:var(--bs-tertiary-bg);color:var(--bs-body-color);border:1px solid var(--bs-border-color);padding:0.75rem 1rem;border-radius:4px;font-size:0.9em;white-space:pre-wrap;", r.textContent = 'mkdir -p packages && composer config repositories.local path "packages/*"', e.appendChild(t), e.appendChild(i), e.appendChild(r), v.confirm("Composer Mode — Configuration Required", e, U.warning, [
       {
         text: "Close",
         btnClass: "btn-warning",
-        trigger: () => _.dismiss()
+        trigger: () => v.dismiss()
       }
     ]);
   }
   async connectedCallback() {
     var e;
-    super.connectedCallback(), ((e = this.initialWarnings) == null ? void 0 : e.length) > 0 && this.initialWarnings.forEach((t) => x.warning("Configuration", t)), this.addEventListener("field-updated", this._onFieldUpdated), this.addEventListener("eb-request-controllers", this._boundOnRequestControllers), this.extensionName && await this.load();
+    super.connectedCallback(), ((e = this.initialWarnings) == null ? void 0 : e.length) > 0 && this.initialWarnings.forEach((t) => $.warning("Configuration", t)), this.addEventListener("field-updated", this._onFieldUpdated), this.extensionName && await this.load();
   }
   disconnectedCallback() {
-    super.disconnectedCallback(), this.removeEventListener("field-updated", this._onFieldUpdated), this.removeEventListener("eb-request-controllers", this._boundOnRequestControllers);
+    super.disconnectedCallback(), this.removeEventListener("field-updated", this._onFieldUpdated);
   }
   _onFieldUpdated(e) {
     var s, n, o;
@@ -3682,7 +3578,7 @@ class fe extends w {
           throw new Error(`Extension "${this.extensionName}" not found`);
         this._extensionData = JSON.parse(r.working);
       } catch (e) {
-        x.error("Load failed", e.message);
+        $.error("Load failed", e.message);
       } finally {
         this._loading = !1;
       }
@@ -3763,17 +3659,17 @@ Files that will be deleted:
     if (!e._previewDone) {
       const n = await this._fetchPreviewChanges(t);
       if (n != null && n.hasChanges) {
-        _.confirm(
+        v.confirm(
           "Review changes before generating",
           this._buildPreviewContent(n),
           U.warning,
           [
-            { text: "Cancel", btnClass: "btn-default", trigger: () => _.dismiss() },
+            { text: "Cancel", btnClass: "btn-default", trigger: () => v.dismiss() },
             {
               text: "Generate",
               btnClass: "btn-warning",
               trigger: () => {
-                _.dismiss(), this.save({ ...e, _previewDone: !0 });
+                v.dismiss(), this.save({ ...e, _previewDone: !0 });
               }
             }
           ]
@@ -3790,27 +3686,27 @@ Files that will be deleted:
       })
     })).json();
     if ((s = r.errors) != null && s.length) {
-      r.errors.forEach((n) => x.error("Validation error", n));
+      r.errors.forEach((n) => $.error("Validation error", n));
       return;
     }
     if (r.error) {
-      x.error("Error", r.error);
+      $.error("Error", r.error);
       return;
     }
     if (r.confirm) {
-      _.confirm("Warning", r.confirm, U.warning, [
-        { text: "Cancel", btnClass: "btn-default", trigger: () => _.dismiss() },
+      v.confirm("Warning", r.confirm, U.warning, [
+        { text: "Cancel", btnClass: "btn-default", trigger: () => v.dismiss() },
         {
           text: "Save anyway",
           btnClass: "btn-warning",
           trigger: () => {
-            _.dismiss(), this._saveWithConfirmation(r.confirmFieldName);
+            v.dismiss(), this._saveWithConfirmation(r.confirmFieldName);
           }
         }
       ]);
       return;
     }
-    r.warning && x.warning("Warning", r.warning), (r.warnings ?? []).forEach((n) => x.warning("Roundtrip warning", n)), r.success && (x.success("Saved", r.success), (r.installationHints ?? []).forEach((n) => x.info("Next steps", n)));
+    r.warning && $.warning("Warning", r.warning), (r.warnings ?? []).forEach((n) => $.warning("Roundtrip warning", n)), r.success && ($.success("Saved", r.success), (r.installationHints ?? []).forEach((n) => $.info("Next steps", n)));
   }
   _saveWithConfirmation(e) {
     this.save({ [e]: !0 });
@@ -3828,7 +3724,7 @@ Files that will be deleted:
     e && e.addContainer(He.container);
   }
   render() {
-    return c`
+    return p`
             <div class="toolbar">
                 <button class="btn btn-primary btn-sm" @click="${this.addModelObject}">+ Model Object</button>
                 <button
@@ -3851,16 +3747,16 @@ Files that will be deleted:
                             <span aria-hidden="true">☰</span>
                         </button>
                     </div>
-                    <div class="left-panel-content">${$e(kt)}</div>
+                    <div class="left-panel-content">${_e(St)}</div>
                 </div>
                 <div class="center-panel" role="main">
-                    ${this._loading ? c`<div class="loading">Loading...</div>` : c`<eb-layer></eb-layer>`}
+                    ${this._loading ? p`<div class="loading">Loading...</div>` : p`<eb-layer></eb-layer>`}
                 </div>
             </div>
         `;
   }
 }
-f(fe, "properties", {
+f(be, "properties", {
   smdUrl: { type: String, attribute: "smd-url" },
   extensionName: { type: String, attribute: "extension-name" },
   initialWarnings: { type: Array, attribute: "initial-warnings" },
@@ -3869,10 +3765,10 @@ f(fe, "properties", {
   _extensionData: { state: !0 },
   _advancedMode: { state: !0 },
   _leftCollapsed: { state: !0 }
-}), f(fe, "styles", [
-  Ye,
-  A,
-  $`
+}), f(be, "styles", [
+  je,
+  E,
+  x`
             :host {
                 display: flex;
                 flex-direction: column;
@@ -3964,8 +3860,8 @@ f(fe, "properties", {
             }
         `
 ]);
-customElements.define("eb-wiring-editor", fe);
-class ge extends w {
+customElements.define("eb-wiring-editor", be);
+class fe extends w {
   constructor() {
     super(), this._editing = !1;
   }
@@ -3998,7 +3894,7 @@ class ge extends w {
     this.value = e;
   }
   render() {
-    return this._editing ? c`
+    return this._editing ? p`
                 <div aria-live="polite">
                     <input
                         class="form-control form-control-sm"
@@ -4007,7 +3903,7 @@ class ge extends w {
                         @keydown="${this._onKey}"
                     />
                 </div>
-            ` : c`
+            ` : p`
             <div aria-live="polite">
                 <span
                     style="cursor:pointer;border-bottom:1px dashed currentColor;min-width:1em;display:inline-block;"
@@ -4022,12 +3918,12 @@ class ge extends w {
         `;
   }
 }
-f(ge, "properties", {
+f(fe, "properties", {
   value: { type: String },
   _editing: { type: Boolean, state: !0 }
-}), f(ge, "styles", [A]);
-customElements.define("eb-inplace-edit", ge);
-function Le() {
+}), f(fe, "styles", [E]);
+customElements.define("eb-inplace-edit", fe);
+function Re() {
   var e, t, i, r, s;
   const a = document.querySelector("eb-wiring-editor");
   a && ((e = document.getElementById("WiringEditor-saveButton-button")) == null || e.addEventListener("click", (n) => {
@@ -4044,7 +3940,7 @@ function Le() {
       body: JSON.stringify({ method: "listWirings", params: {} })
     })).json()).result ?? [];
     if (b.length === 0) {
-      x.info("Open Extension", "No extensions found.");
+      $.info("Open Extension", "No extensions found.");
       return;
     }
     const d = document.createElement("select");
@@ -4052,9 +3948,9 @@ function Le() {
       const u = document.createElement("option");
       u.value = h.name, u.textContent = h.name, d.appendChild(u);
     });
-    const m = _.advanced({
+    const m = v.advanced({
       title: "Open Extension",
-      content: c``,
+      content: p``,
       severity: U.info,
       size: "small",
       staticBackdrop: !1,
@@ -4062,7 +3958,7 @@ function Le() {
         {
           text: "Cancel",
           btnClass: "btn-default",
-          trigger: () => _.dismiss()
+          trigger: () => v.dismiss()
         },
         {
           text: "Open",
@@ -4071,7 +3967,7 @@ function Le() {
           trigger: () => {
             var u;
             const h = (u = m.querySelector(".t3js-modal-body select")) == null ? void 0 : u.value;
-            _.dismiss(), h && (a.extensionName = h, a.load());
+            v.dismiss(), h && (a.extensionName = h, a.load());
           }
         }
       ],
@@ -4084,12 +3980,12 @@ function Le() {
     n.preventDefault();
     const o = a.getAttribute("smd-url");
     if (!a.extensionName) {
-      x.info("Restore backup", "Please load an extension first.");
+      $.info("Restore backup", "Please load an extension first.");
       return;
     }
     const l = a._serializeWorking();
     if (!l) {
-      x.info("Restore backup", "No extension loaded.");
+      $.info("Restore backup", "No extension loaded.");
       return;
     }
     const d = (await (await fetch(o, {
@@ -4098,7 +3994,7 @@ function Le() {
       body: JSON.stringify({ method: "listBackups", params: { name: a.extensionName, working: l } })
     })).json()).result ?? [];
     if (d.length === 0) {
-      x.info("Restore backup", "No backups found for this extension.");
+      $.info("Restore backup", "No backups found for this extension.");
       return;
     }
     const m = document.createElement("select");
@@ -4106,16 +4002,16 @@ function Le() {
       const y = document.createElement("option");
       y.value = u.directory, y.textContent = u.label + "  (" + u.fileCount + " files)", m.appendChild(y);
     });
-    const h = _.advanced({
+    const h = v.advanced({
       title: "Restore backup",
-      content: c``,
+      content: p``,
       severity: U.warning,
       staticBackdrop: !1,
       buttons: [
         {
           text: "Cancel",
           btnClass: "btn-default",
-          trigger: () => _.dismiss()
+          trigger: () => v.dismiss()
         },
         {
           text: "Restore",
@@ -4123,18 +4019,18 @@ function Le() {
           trigger: async () => {
             var y;
             const u = (y = h.querySelector(".t3js-modal-body select")) == null ? void 0 : y.value;
-            _.dismiss(), u && _.confirm(
+            v.dismiss(), u && v.confirm(
               "Confirm restore",
               "Restore backup from " + u + "? The current extension will be overwritten.",
               U.warning,
               [
-                { text: "Cancel", btnClass: "btn-default", trigger: () => _.dismiss() },
+                { text: "Cancel", btnClass: "btn-default", trigger: () => v.dismiss() },
                 {
                   text: "Restore",
                   btnClass: "btn-danger",
                   trigger: async () => {
-                    _.dismiss();
-                    const I = await (await fetch(o, {
+                    v.dismiss();
+                    const R = await (await fetch(o, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({
@@ -4142,9 +4038,9 @@ function Le() {
                         params: { name: a.extensionName, working: l, backupDirectory: u }
                       })
                     })).json();
-                    I.error ? x.error("Restore failed", I.error) : x.success(
+                    R.error ? $.error("Restore failed", R.error) : $.success(
                       "Backup restored",
-                      I.success ?? "Extension restored."
+                      R.success ?? "Extension restored."
                     );
                   }
                 }
@@ -4156,11 +4052,11 @@ function Le() {
       callback: (u) => {
         const y = u.querySelector(".t3js-modal-body");
         if (y) {
-          const k = document.createElement("p");
-          k.textContent = "Restoring a backup will overwrite all current extension files. The current state will be backed up first.", k.className = "text-danger", y.replaceChildren(k, m);
+          const S = document.createElement("p");
+          S.textContent = "Restoring a backup will overwrite all current extension files. The current state will be backed up first.", S.className = "text-danger", y.replaceChildren(S, m);
         }
       }
     });
   }));
 }
-document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", Le) : Le();
+document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", Re) : Re();

@@ -339,7 +339,7 @@ export const modelObjectModule = {
                                                         {
                                                             type: 'string',
                                                             inputParams: {
-                                                                classname: 'textfieldWrapper dependant fileOnly',
+                                                                visibleForTypes: ['File'],
                                                                 label: 'allowedFileTypes',
                                                                 description: 'descr_allowedFileTypes',
                                                                 name: 'allowedFileTypes',
@@ -348,8 +348,7 @@ export const modelObjectModule = {
                                                         {
                                                             type: 'string',
                                                             inputParams: {
-                                                                classname:
-                                                                    'textfieldWrapper dependant fileOnly imageOnly small',
+                                                                visibleForTypes: ['File', 'Image'],
                                                                 label: 'maxItems',
                                                                 name: 'maxItems',
                                                                 value: 1,
@@ -366,8 +365,27 @@ export const modelObjectModule = {
                                                         {
                                                             type: 'boolean',
                                                             inputParams: {
-                                                                classname:
-                                                                    'dependant stringOnly textOnly passwordOnly emailOnly integerOnly floatOnly dateOnly dateTimeOnly dateTimeStampOnly timeOnly timeTimeStampOnly timeSecOnly',
+                                                                visibleForTypes: [
+                                                                    'String',
+                                                                    'Text',
+                                                                    'RichText',
+                                                                    'Slug',
+                                                                    'ColorPicker',
+                                                                    'Password',
+                                                                    'Email',
+                                                                    'Integer',
+                                                                    'Float',
+                                                                    'Boolean',
+                                                                    'InputLink',
+                                                                    'NativeDate',
+                                                                    'NativeDateTime',
+                                                                    'Date',
+                                                                    'DateTime',
+                                                                    'NativeTime',
+                                                                    'Time',
+                                                                    'TimeSec',
+                                                                    'Select',
+                                                                ],
                                                                 label: 'isNullable',
                                                                 name: 'propertyIsNullable',
                                                                 value: false,
