@@ -145,8 +145,12 @@ class ExtensionSchemaBuilder implements SingletonInterface
                 }
             }
             $srcModuleId = $wire['src']['moduleId'];
+            if (!isset($wire['src']['terminal'])) {
+                // Orphaned wire: relation was deleted but wire remained in JSON — skip gracefully.
+                continue;
+            }
             $relationId = substr($wire['src']['terminal'], 13); // strip "relationWire_"
-            $relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId];
+            $relationJsonConfiguration = $extensionBuildConfiguration['modules'][$srcModuleId]['value']['relationGroup']['relations'][$relationId] ?? null;
 
             if (!is_array($relationJsonConfiguration)) {
                 throw new Exception('Missing relation config in domain object: ' . $extensionBuildConfiguration['modules'][$srcModuleId]['value']['name']);

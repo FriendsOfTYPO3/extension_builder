@@ -388,12 +388,16 @@ export class EbLayer extends LitElement {
     }
 
     serialize() {
-        const containers = Array.from(this.shadowRoot.querySelectorAll('eb-container'));
-        const modules = containers.map((c) => c.serialize());
-        const wires = this._wires.map((w) => ({
-            src: { moduleId: w.srcModuleId, terminal: w.srcTerminal, uid: w.srcUid },
-            tgt: { moduleId: w.tgtModuleId, terminal: w.tgtTerminal, uid: w.tgtUid },
-        }));
+        const containerEls = Array.from(this.shadowRoot.querySelectorAll('eb-container'));
+        const modules = containerEls.map((c) => c.serialize());
+
+        const wires = this._wires
+            .filter((w) => w.srcTerminal && this._findTerminalEl(w.srcTerminal, w.srcModuleId) !== null)
+            .map((w) => ({
+                src: { moduleId: w.srcModuleId, terminal: w.srcTerminal, uid: w.srcUid },
+                tgt: { moduleId: w.tgtModuleId, terminal: w.tgtTerminal, uid: w.tgtUid },
+            }));
+
         return { modules, wires };
     }
 

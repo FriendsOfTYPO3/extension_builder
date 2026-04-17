@@ -51,7 +51,7 @@ const Je = (a) => new Ue(typeof a == "string" ? a : a + "", void 0, ye), x = (a,
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnPropertyNames: tt, getOwnPropertySymbols: it, getPrototypeOf: rt } = Object, S = globalThis, we = S.trustedTypes, st = we ? we.emptyScript : "", K = S.reactiveElementPolyfillSupport, q = (a, e) => a, ie = { toAttribute(a, e) {
+const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnPropertyNames: tt, getOwnPropertySymbols: it, getPrototypeOf: rt } = Object, E = globalThis, we = E.trustedTypes, st = we ? we.emptyScript : "", K = E.reactiveElementPolyfillSupport, q = (a, e) => a, ie = { toAttribute(a, e) {
   switch (e) {
     case Boolean:
       a = a ? st : null;
@@ -80,7 +80,7 @@ const { is: Ze, defineProperty: Qe, getOwnPropertyDescriptor: et, getOwnProperty
   }
   return t;
 } }, ze = (a, e) => !Ze(a, e), Ce = { attribute: !0, type: String, converter: ie, reflect: !1, useDefault: !1, hasChanged: ze };
-Symbol.metadata ?? (Symbol.metadata = Symbol("metadata")), S.litPropertyMetadata ?? (S.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
+Symbol.metadata ?? (Symbol.metadata = Symbol("metadata")), E.litPropertyMetadata ?? (E.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
 let R = class extends HTMLElement {
   static addInitializer(e) {
     this._$Ei(), (this.l ?? (this.l = [])).push(e);
@@ -284,14 +284,14 @@ let R = class extends HTMLElement {
   firstUpdated(e) {
   }
 };
-R.elementStyles = [], R.shadowRootOptions = { mode: "open" }, R[q("elementProperties")] = /* @__PURE__ */ new Map(), R[q("finalized")] = /* @__PURE__ */ new Map(), K == null || K({ ReactiveElement: R }), (S.reactiveElementVersions ?? (S.reactiveElementVersions = [])).push("2.1.2");
+R.elementStyles = [], R.shadowRootOptions = { mode: "open" }, R[q("elementProperties")] = /* @__PURE__ */ new Map(), R[q("finalized")] = /* @__PURE__ */ new Map(), K == null || K({ ReactiveElement: R }), (E.reactiveElementVersions ?? (E.reactiveElementVersions = [])).push("2.1.2");
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const F = globalThis, Ae = (a) => a, G = F.trustedTypes, ke = G ? G.createPolicy("lit-html", { createHTML: (a) => a }) : void 0, De = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, Be = "?" + k, nt = `<${Be}>`, I = document, j = () => I.createComment(""), H = (a) => a === null || typeof a != "object" && typeof a != "function", ve = Array.isArray, at = (a) => ve(a) || typeof (a == null ? void 0 : a[Symbol.iterator]) == "function", Z = `[ 	
-\f\r]`, B = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Se = /-->/g, Ee = />/g, P = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
+\f\r]`, B = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Ee = /-->/g, Se = />/g, P = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g"), Pe = /'/g, Te = /"/g, Ve = /^(?:script|style|textarea|title)$/i, We = (a) => (e, ...t) => ({ _$litType$: a, strings: e, values: t }), p = We(1), re = We(2), L = Symbol.for("lit-noChange"), g = Symbol.for("lit-nothing"), Ne = /* @__PURE__ */ new WeakMap(), N = I.createTreeWalker(I, 129);
 function qe(a, e) {
   if (!ve(a) || !a.hasOwnProperty("raw")) throw Error("invalid template strings array");
@@ -303,7 +303,7 @@ const ot = (a, e) => {
   for (let o = 0; o < t; o++) {
     const l = a[o];
     let c, b, d = -1, m = 0;
-    for (; m < l.length && (n.lastIndex = m, b = n.exec(l), b !== null); ) m = n.lastIndex, n === B ? b[1] === "!--" ? n = Se : b[1] !== void 0 ? n = Ee : b[2] !== void 0 ? (Ve.test(b[2]) && (r = RegExp("</" + b[2], "g")), n = P) : b[3] !== void 0 && (n = P) : n === P ? b[0] === ">" ? (n = r ?? B, d = -1) : b[1] === void 0 ? d = -2 : (d = n.lastIndex - b[2].length, c = b[1], n = b[3] === void 0 ? P : b[3] === '"' ? Te : Pe) : n === Te || n === Pe ? n = P : n === Se || n === Ee ? n = B : (n = P, r = void 0);
+    for (; m < l.length && (n.lastIndex = m, b = n.exec(l), b !== null); ) m = n.lastIndex, n === B ? b[1] === "!--" ? n = Ee : b[1] !== void 0 ? n = Se : b[2] !== void 0 ? (Ve.test(b[2]) && (r = RegExp("</" + b[2], "g")), n = P) : b[3] !== void 0 && (n = P) : n === P ? b[0] === ">" ? (n = r ?? B, d = -1) : b[1] === void 0 ? d = -2 : (d = n.lastIndex - b[2].length, c = b[1], n = b[3] === void 0 ? P : b[3] === '"' ? Te : Pe) : n === Te || n === Pe ? n = P : n === Ee || n === Se ? n = B : (n = P, r = void 0);
     const h = n === P && a[o + 1].startsWith("/>") ? " " : "";
     s += n === B ? l + nt : d >= 0 ? (i.push(c), l.slice(0, d) + De + l.slice(d) + k + h) : l + k + (d === -2 ? o : h);
   }
@@ -1377,7 +1377,7 @@ const je = {
       }
     ]
   }
-}, E = x`
+}, S = x`
     eb-string-field,
     eb-textarea-field,
     eb-select-field,
@@ -1648,7 +1648,7 @@ f(ae, "properties", {
   _resizeWidth: { state: !0 },
   _resizeHeight: { state: !0 }
 }), f(ae, "styles", [
-  E,
+  S,
   x`
             :host {
                 display: block;
@@ -1922,7 +1922,7 @@ class oe extends w {
     });
   }
   serialize() {
-    const t = Array.from(this.shadowRoot.querySelectorAll("eb-container")).map((r) => r.serialize()), i = this._wires.map((r) => ({
+    const t = Array.from(this.shadowRoot.querySelectorAll("eb-container")).map((r) => r.serialize()), i = this._wires.filter((r) => r.srcTerminal && this._findTerminalEl(r.srcTerminal, r.srcModuleId) !== null).map((r) => ({
       src: { moduleId: r.srcModuleId, terminal: r.srcTerminal, uid: r.srcUid },
       tgt: { moduleId: r.tgtModuleId, terminal: r.tgtTerminal, uid: r.tgtUid }
     }));
@@ -2279,7 +2279,7 @@ f(le, "properties", {
   helpLink: { type: String, attribute: "help-link" },
   _error: { state: !0 }
 }), f(le, "styles", [
-  E,
+  S,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2341,7 +2341,7 @@ f(de, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
 }), f(de, "styles", [
-  E,
+  S,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2529,7 +2529,7 @@ f(ce, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
 }), f(ce, "styles", [
-  E,
+  S,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2584,7 +2584,7 @@ f(pe, "properties", {
   description: { type: String },
   helpLink: { type: String, attribute: "help-link" }
 }), f(pe, "styles", [
-  E,
+  S,
   x`
             .help-link {
                 font-size: 0.75em;
@@ -2958,7 +2958,7 @@ class me extends w {
                     <div class="item-row">
                         ${t ? p`
                                   <div class="item-terminal">
-                                      <eb-terminal droppable terminal-id="REL_${r}"></eb-terminal>
+                                      <eb-terminal droppable terminal-id="REL_${r}" uid="${i.uid}"></eb-terminal>
                                   </div>
                               ` : g}
                         <div class="item-content ${i.collapsed ? "is-collapsed" : ""}">
@@ -3012,7 +3012,7 @@ f(me, "properties", {
   _items: { state: !0 }
 }), f(me, "styles", [
   He,
-  E,
+  S,
   x`
             :host {
                 display: block;
@@ -3776,7 +3776,7 @@ f(be, "properties", {
   _leftCollapsed: { state: !0 }
 }), f(be, "styles", [
   He,
-  E,
+  S,
   x`
             :host {
                 display: flex;
@@ -3930,7 +3930,7 @@ class fe extends w {
 f(fe, "properties", {
   value: { type: String },
   _editing: { type: Boolean, state: !0 }
-}), f(fe, "styles", [E]);
+}), f(fe, "styles", [S]);
 customElements.define("eb-inplace-edit", fe);
 function Oe() {
   var e, t, i, r, s;
