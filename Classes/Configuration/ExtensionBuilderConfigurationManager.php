@@ -293,7 +293,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings'] = [];
                         foreach ($fieldsToMap as $fieldToMap) {
                             $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] =
-                                $module['value']['relationGroup']['relations'][$i][$fieldToMap];
+                                $module['value']['relationGroup']['relations'][$i][$fieldToMap] ?? null;
                         }
 
                         $module['value']['relationGroup']['relations'][$i]['advancedSettings']['propertyIsExcludeField'] =
@@ -308,7 +308,7 @@ class ExtensionBuilderConfigurationManager implements SingletonInterface
                 } elseif (isset($module['value']['relationGroup']['relations'][$i]['advancedSettings'])) {
                     foreach ($fieldsToMap as $fieldToMap) {
                         $module['value']['relationGroup']['relations'][$i][$fieldToMap] =
-                            $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap];
+                            $module['value']['relationGroup']['relations'][$i]['advancedSettings'][$fieldToMap] ?? null;
                     }
                     unset($module['value']['relationGroup']['relations'][$i]['advancedSettings']);
                 }
