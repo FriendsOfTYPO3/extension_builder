@@ -263,8 +263,29 @@ export class EbWiringEditor extends LitElement {
     _populateProperties() {
         const props = this._extensionData?.properties ?? {};
         this.shadowRoot.querySelectorAll('[name]').forEach((field) => {
-            if (props[field.name] !== undefined && typeof field.setValue === 'function') {
-                field.setValue(props[field.name]);
+            if (typeof field.setValue !== 'function') {
+                return;
+            }
+            // Groups are not populated directly — their leaf fields are resolved
+            // via the group-aware path lookup below.
+            if (field.tagName?.toLowerCase() === 'eb-group') {
+                return;
+            }
+            const name = field.name;
+            // Resolve the value from the correct path: nested under the parent
+            // group name (e.g. props.emConf.generateEmptyGitRepository) or at the
+            // top level (e.g. props.name). This handles both old JSON formats
+            // (without top-level duplicates) and the current format.
+            const groupEl = field.parentElement?.closest('eb-group[name]');
+            let value;
+            if (groupEl) {
+                const groupName = groupEl.getAttribute('name');
+                value = props[groupName]?.[name];
+            } else {
+                value = props[name];
+            }
+            if (value !== undefined) {
+                field.setValue(value);
             }
         });
     }
