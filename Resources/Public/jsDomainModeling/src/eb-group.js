@@ -82,20 +82,48 @@ export class EbGroup extends LitElement {
     }
 
     _onFieldUpdated(e) {
-        if (e.detail?.name !== 'relationType') {
+        if (e.detail?.name === 'relationType') {
+            const renderTypeField = this.querySelector('[name=renderType]');
+            if (!renderTypeField) {
+                return;
+            }
+            const optionMap = {
+                zeroToOne: ['selectSingle', 'selectMultipleSideBySide', 'inline'],
+                manyToOne: ['selectSingle', 'selectMultipleSideBySide'],
+                zeroToMany: ['inline', 'selectMultipleSideBySide'],
+                manyToMany: ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox'],
+            };
+            renderTypeField.allowedValues = optionMap[e.detail.value] ?? null;
+        }
+        if (e.detail?.name === 'propertyType') {
+            this._applyPropertyTypeVisibility(e.detail.value);
+        }
+    }
+
+    _applyPropertyTypeVisibility(selectedType) {
+        this.querySelectorAll('[data-visible-for]').forEach((el) => {
+            const allowedTypes = (el.getAttribute('data-visible-for') || '').split(' ').filter(Boolean);
+            if (allowedTypes.length > 0) {
+                el.style.display = allowedTypes.includes(selectedType) ? '' : 'none';
+            }
+        });
+        this.querySelectorAll('[data-hidden-for]').forEach((el) => {
+            const hiddenTypes = (el.getAttribute('data-hidden-for') || '').split(' ').filter(Boolean);
+            if (hiddenTypes.length > 0) {
+                el.style.display = hiddenTypes.includes(selectedType) ? 'none' : '';
+            }
+        });
+    }
+
+    _initPropertyTypes() {
+        const field = this.querySelector('[name=propertyType]');
+        if (!field) {
             return;
         }
-        const renderTypeField = this.querySelector('[name=renderType]');
-        if (!renderTypeField) {
-            return;
+        const value = field.getValue?.() ?? field.value;
+        if (value) {
+            this._applyPropertyTypeVisibility(value);
         }
-        const optionMap = {
-            zeroToOne: ['selectSingle', 'selectMultipleSideBySide', 'inline'],
-            manyToOne: ['selectSingle', 'selectMultipleSideBySide'],
-            zeroToMany: ['inline', 'selectMultipleSideBySide'],
-            manyToMany: ['selectMultipleSideBySide', 'selectSingleBox', 'selectCheckBox'],
-        };
-        renderTypeField.allowedValues = optionMap[e.detail.value] ?? null;
     }
 
     _initRelationTypes() {
@@ -134,6 +162,7 @@ export class EbGroup extends LitElement {
     _onSlotChange() {
         this.requestUpdate();
         this._initRelationTypes();
+        this._initPropertyTypes();
     }
 
     /**
@@ -198,6 +227,7 @@ export class EbGroup extends LitElement {
                 el.setValue(obj[name]);
             }
         });
+        this._initPropertyTypes();
     }
 
     render() {

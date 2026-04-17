@@ -46,6 +46,8 @@ export function renderFieldDef(fieldDef) {
                 forbidden-prefixes="${p.forbiddenPrefixes ?? ''}"
                 min-length="${p.minLength ?? ''}"
                 max-length="${p.maxLength ?? ''}"
+                data-visible-for="${p.visibleForTypes?.join(' ') ?? ''}"
+                data-hidden-for="${p.hiddenForTypes?.join(' ') ?? ''}"
             ></eb-string-field>`;
 
         case 'text':
@@ -79,6 +81,8 @@ export function renderFieldDef(fieldDef) {
                 description="${translate(p.description ?? '')}"
                 help-link="${p.helpLink ?? ''}"
                 .value="${p.value ?? false}"
+                data-visible-for="${p.visibleForTypes?.join(' ') ?? ''}"
+                data-hidden-for="${p.hiddenForTypes?.join(' ') ?? ''}"
             ></eb-boolean-field>`;
 
         case 'group':
