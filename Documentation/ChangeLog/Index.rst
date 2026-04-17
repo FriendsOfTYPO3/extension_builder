@@ -9,14 +9,40 @@ Change log
 Version 13.2.0
 --------------
 
+* [FEATURE] TCA ``select`` properties can now have custom items configured directly in the domain modeling editor — each item has a label and a value.
 * [TASK] ``locallang_csh_*.xlf`` files are no longer generated. CSH (Context Sensitive Help) was removed in TYPO3 v12; field descriptions are now written exclusively to ``locallang_db.xlf`` and referenced via the TCA ``description`` key. When a domain object is removed via RoundTrip, any leftover ``locallang_csh_*.xml`` and ``locallang_csh_*.xlf`` files are cleaned up automatically. Existing generated extensions may have orphaned CSH files that can be deleted manually.
+* [BUGFIX] Renaming a domain object no longer corrupts the controller constructor and action parameter names.
+* [BUGFIX] Property settings panel now correctly shows and hides fields based on the selected property type.
+* [BUGFIX] Boolean properties no longer always appear as checked after loading an existing extension.
+* [BUGFIX] Saving an extension no longer fails after a relation has been deleted.
+* [BUGFIX] Opening old ``ExtensionBuilder.json`` files that are missing the ``renderType`` key no longer causes an error — the field is silently ignored.
+* [BUGFIX] Indentation of nested method calls is preserved correctly during RoundTrip.
+* [BUGFIX] Field descriptions are now preserved with their original casing in generated XLF files.
+* [BUGFIX] ``SelectProperty`` type is now stored as a string instead of an integer, fixing issues when loading extensions that use select fields.
+* [BUGFIX] Fixed undefined array key ``excludeField`` warning in ``ObjectSchemaBuilder``.
 
 Version 13.1.0
 --------------
 
 * [BUGFIX] ``ext_tables.sql`` now includes a ``CREATE TABLE`` statement for models that have no own properties but are the target of a ``ZeroToMany inline`` relation — previously the FK column was silently dropped, leaving the database table uncreated.
 * [BUGFIX] A validation warning is now shown when a domain object has no properties, informing the user that no ``CREATE TABLE`` statement will be generated in ``ext_tables.sql``.
+* [BUGFIX] Generated controller actions now declare ``ResponseInterface`` as their return type, matching the TYPO3 v13 standard.
+* [BUGFIX] ``f:image`` ViewHelper calls in generated templates now use the ``image`` attribute instead of ``src``, fixing rendering of filenames with Umlauts or special characters.
 * [FEATURE] XLF files are no longer rewritten when only the ``date=`` attribute changed — avoids VCS noise on every regeneration. The ``staticDateInXliffFiles`` setting is removed as it is no longer needed.
+* [FEATURE] Generated backend module extensions now include a ``user.tsconfig`` file that makes the backend module accessible without manual TSconfig setup.
+* [FEATURE] ``extbase`` is now automatically added as a dependency to generated extensions that use Extbase controllers or domain objects.
+
+Version 13.0.0
+--------------
+
+**Breaking changes and migrations (v12 → v13):**
+
+* [TASK] Update dependencies to TYPO3 ^13.4, PHP ^8.3.
+* [TASK] Frontend plugins are now registered as ``CType`` content elements using ``PLUGIN_TYPE_CONTENT_ELEMENT`` — the deprecated ``list_type`` approach is no longer used. ``page.tsconfig`` wizard entries are no longer generated because ``registerPlugin()`` with ``CType`` automatically adds the plugin to the content element wizard. Existing generated extensions using ``list_type`` must be regenerated to adopt the new registration.
+* [TASK] TypoScript is no longer loaded via ``ext_typoscript_setup.typoscript`` (which was dropped in TYPO3 v13) — the extension now registers its TypoScript paths via ``addTypoScriptSetup()`` in ``ext_localconf.php``.
+* [FEATURE] Extensions with frontend plugins can now optionally generate a **Site Set** (``Configuration/Sets/``). When the *Generate Site Set* option is enabled in the editor, the generator creates ``config.yaml``, ``setup.typoscript``, and ``constants.typoscript`` instead of the classic ``addStaticFile`` approach. The classic behavior is unchanged when the option is not enabled.
+* [BUGFIX] Constructor property promotion flags (``readonly``, visibility modifiers) are now preserved correctly during RoundTrip code generation.
+* [TASK] Generated TypoScript setup templates no longer include a ``storagePid`` setting — the line is commented out so integrators can enable it deliberately.
 
 Version 12.0.0
 --------------
