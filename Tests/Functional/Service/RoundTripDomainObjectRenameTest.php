@@ -81,4 +81,68 @@ class RoundTripDomainObjectRenameTest extends BaseFunctionalTest
         self::assertStringNotContainsString('Foo', $controllerClass->getName());
         self::assertStringNotContainsString('Foo', $repositoryClass->getName());
     }
+
+    /**
+     * @test
+     */
+    public function renameAggregateRootUpdatesInjectMethodAndActionParameters(): void
+    {
+        $oldName = 'Entries';
+        $newName = 'Entry';
+        $uid = md5('rename-entries-entry');
+
+        $this->generateInitialModelClassFile($oldName);
+
+        $oldDomainObject = $this->buildDomainObject($oldName, true, true);
+
+        $controllerDir = $this->extension->getExtensionDir() . 'Classes/Controller/';
+        mkdir($controllerDir, 0777, true);
+        $controllerCode = $this->fileGenerator->generateActionControllerCode($oldDomainObject);
+        file_put_contents($controllerDir . $oldName . 'Controller.php', $controllerCode);
+
+        $repositoryDir = $this->extension->getExtensionDir() . 'Classes/Domain/Repository/';
+        mkdir($repositoryDir, 0777, true);
+        file_put_contents(
+            $repositoryDir . $oldName . 'Repository.php',
+            "<?php\nnamespace EBT\\Dummy\\Domain\\Repository;\nclass EntriesRepository extends \\TYPO3\\CMS\\Extbase\\Persistence\\Repository {}\n"
+        );
+
+        $oldDomainObject->setUniqueIdentifier($uid);
+        $this->roundTripService->_set('previousDomainObjects', [$uid => $oldDomainObject]);
+        $this->roundTripService->_set('previousExtensionDirectory', $this->extension->getExtensionDir());
+
+        $newDomainObject = $this->buildDomainObject($newName, true, true);
+        $newDomainObject->setUniqueIdentifier($uid);
+
+        $controllerFile = $this->roundTripService->getControllerClassFile($newDomainObject);
+
+        self::assertNotNull($controllerFile, 'Controller class file must not be null');
+
+        $controllerClass = $controllerFile->getFirstClass();
+        self::assertSame($newName . 'Controller', $controllerClass->getName());
+
+        // Constructor injection parameter must reference the new repository (TYPO3 v12+)
+        $constructor = $controllerClass->getMethod('__construct');
+        self::assertNotNull($constructor, 'Controller must have a constructor');
+        $constructorParam = $constructor->getParameterByPosition(0);
+        self::assertNotNull($constructorParam, 'Constructor must have a parameter');
+        self::assertSame('entryRepository', $constructorParam->getName(), 'Constructor parameter must be renamed');
+        self::assertStringContainsString('EntryRepository', $constructorParam->getTypeHint(), 'Constructor parameter type must reference new repository');
+        self::assertStringNotContainsString('EntriesRepository', $constructorParam->getTypeHint(), 'Constructor parameter must not reference old repository');
+
+        // Action method parameters must use the new domain class, not the old one
+        foreach (['showAction', 'editAction', 'updateAction', 'deleteAction'] as $actionName) {
+            $actionMethod = $controllerClass->getMethod($actionName);
+            if ($actionMethod === null) {
+                continue;
+            }
+            foreach ($actionMethod->getParameters() as $param) {
+                self::assertStringNotContainsString(
+                    'Entries',
+                    $param->getTypeHint(),
+                    "Parameter type hint in {$actionName} must not reference old class"
+                );
+            }
+        }
+    }
 }

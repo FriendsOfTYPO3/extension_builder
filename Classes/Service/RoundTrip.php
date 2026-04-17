@@ -751,7 +751,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $this->classObject->removeMethod($injectMethodName);
                     $initializeMethodBodyStmts = $this->parserService->replaceNodeProperty(
                         $injectMethod->getBodyStmts(),
-                        [lcfirst($oldName) => lcfirst($newName)]
+                        [lcfirst($oldName) . 'Repository' => lcfirst($newName) . 'Repository']
                     );
                     $injectMethod->setBodyStmts($initializeMethodBodyStmts);
                     $injectMethod->setTag(
@@ -764,6 +764,20 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
                     $parameter->setPosition(0);
                     $injectMethod->replaceParameter($parameter);
                     $this->classObject->setMethod($injectMethod);
+                }
+
+                // Handle constructor injection (TYPO3 v12+)
+                $constructor = $this->classObject->getMethod('__construct');
+                if ($constructor !== null) {
+                    $oldRepositoryClass = $oldDomainObject->getFullyQualifiedDomainRepositoryClassName();
+                    foreach ($constructor->getParameters() as $constructorParam) {
+                        if ($oldRepositoryClass !== '' && strpos($constructorParam->getTypeHint(), $oldRepositoryClass) !== false) {
+                            $constructorParam->setTypeHint($currentDomainObject->getFullyQualifiedDomainRepositoryClassName());
+                            $constructorParam->setName(lcfirst($newName) . 'Repository');
+                            $constructor->replaceParameter($constructorParam);
+                        }
+                    }
+                    $this->classObject->setMethod($constructor);
                 }
 
                 foreach ($oldDomainObject->getActions() as $action) {
@@ -779,7 +793,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
 
                         $parameters = $actionMethod->getParameters();
                         foreach ($parameters as &$parameter) {
-                            if (strpos($parameter->getTypeHint(), $oldDomainObject->getFullQualifiedClassName()) > -1) {
+                            if (strpos($parameter->getTypeHint(), $oldDomainObject->getFullQualifiedClassName()) !== false) {
                                 $parameter->setTypeHint($currentDomainObject->getFullQualifiedClassName());
                                 $parameter->setName(
                                     $this->replaceUpperAndLowerCase(
@@ -1193,7 +1207,7 @@ class RoundTrip implements SingletonInterface, LoggerAwareInterface
      *
      * @return string with replaced values
      */
-    protected function replaceUpperAndLowerCase(string $search, string $replace, $haystack): string
+    protected function replaceUpperAndLowerCase(string $search, string $replace, string $haystack): string
     {
         $result = str_replace(ucfirst($search), ucfirst($replace), $haystack);
         return str_replace(lcfirst($search), lcfirst($replace), $result);
