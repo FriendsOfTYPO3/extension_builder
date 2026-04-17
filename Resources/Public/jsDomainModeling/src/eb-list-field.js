@@ -251,7 +251,7 @@ export class EbListField extends LitElement {
                         ${wirable
                             ? html`
                                   <div class="item-terminal">
-                                      <eb-terminal droppable terminal-id="REL_${index}"></eb-terminal>
+                                      <eb-terminal droppable terminal-id="REL_${index}" uid="${item.uid}"></eb-terminal>
                                   </div>
                               `
                             : nothing}

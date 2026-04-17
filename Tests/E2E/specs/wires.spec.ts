@@ -222,4 +222,77 @@ test.describe('Wire loading on extension open', () => {
     });
     expect(wires[0].src.moduleId).not.toBe(wires[0].tgt.moduleId);
   });
+
+  // GitHub #634: Deleting a relation must not cause a save error.
+  // The orphaned wire must be filtered out of serialize() so PHP never sees it.
+  test('deleting a relation removes its wire and save succeeds', async ({ page }) => {
+    const frame = new BackendPage(page).getContentFrame();
+    await openExtensionViaUI(page, frame, TEST_EXT_KEY);
+
+    // Wait for load, then delete the relation via the list-field delete button.
+    const wireCountAfterDelete = await frame.locator('eb-wiring-editor').evaluate(async (el: any) => {
+      if (el._loading) {
+        await new Promise<void>((resolve) => {
+          const check = setInterval(() => {
+            if (!el._loading) { clearInterval(check); resolve(); }
+          }, 100);
+          setTimeout(() => { clearInterval(check); resolve(); }, 5000);
+        });
+      }
+      const layer = el.shadowRoot?.querySelector('eb-layer') as any;
+      if (!layer) return -1;
+      await layer.updateComplete;
+
+      // Wait for wires to be populated by addWires()
+      await new Promise<void>((resolve) => {
+        if ((layer._wires?.length ?? 0) > 0) { resolve(); return; }
+        const check = setInterval(() => {
+          if ((layer._wires?.length ?? 0) > 0) { clearInterval(check); resolve(); }
+        }, 100);
+        setTimeout(() => { clearInterval(check); resolve(); }, 5000);
+      });
+
+      // Find the Foo container (module-id=0) and click the relation delete button.
+      const containers = Array.from(layer.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[];
+      let deleted = false;
+      for (const c of containers) {
+        await c.updateComplete;
+        // Deep-search for the list-field delete button (first relation item).
+        const findDeleteBtn = (root: any): HTMLElement | null => {
+          if (!root?.shadowRoot) return null;
+          const btn = root.shadowRoot.querySelector('.btn-delete');
+          if (btn) return btn;
+          for (const child of root.shadowRoot.querySelectorAll('*')) {
+            const found = findDeleteBtn(child);
+            if (found) return found;
+          }
+          return null;
+        };
+        const deleteBtn = findDeleteBtn(c);
+        if (deleteBtn) {
+          (deleteBtn as HTMLElement).click();
+          deleted = true;
+          break;
+        }
+      }
+      if (!deleted) return -2;
+
+      // Allow Lit to re-render after the deletion.
+      await layer.updateComplete;
+      await Promise.all((Array.from(layer.shadowRoot?.querySelectorAll('eb-container') ?? []) as any[]).map((c: any) => c.updateComplete));
+
+      return layer.serialize()?.wires?.length ?? -3;
+    });
+
+    // After deleting the only relation, the wire must be gone from serialize().
+    expect(wireCountAfterDelete).toBe(0);
+
+    // Save and expect no error — the orphaned wire must not reach PHP.
+    await frame.locator('#WiringEditor-saveButton-button').click();
+
+    // The extension has no existing files to roundtrip against, so save should
+    // succeed immediately (no "Save anyway" modal needed for a fresh extension).
+    const extBuilder = new ExtensionBuilderPage(frame, page);
+    await expect(extBuilder.getSuccessMessage()).toBeVisible({ timeout: 15000 });
+  });
 });
