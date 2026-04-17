@@ -23,7 +23,6 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
 class ObjectSchemaBuilderSelectItemsTest extends BaseUnitTest
 {
-
     /**
      * @test
      */
