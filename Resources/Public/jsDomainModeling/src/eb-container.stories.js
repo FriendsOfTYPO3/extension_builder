@@ -6,7 +6,7 @@ function makeModuleData(name, overrides = {}) {
         value: {
             name,
             objectsettings: {
-                uid: String(Math.floor(Math.random() * 1000)),
+                uid: String(globalThis.crypto.getRandomValues(new Uint32Array(1))[0] % 1000),
                 type: 'Entity',
                 aggregateRoot: false,
                 addDeletedField: true,
