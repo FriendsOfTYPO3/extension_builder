@@ -22,6 +22,7 @@ use EBT\ExtensionBuilder\Domain\Model\DomainObject\Action;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\BooleanProperty;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\Relation;
 use EBT\ExtensionBuilder\Domain\Model\DomainObject\StringProperty;
+use EBT\ExtensionBuilder\Domain\Model\Person;
 use EBT\ExtensionBuilder\Domain\Model\Plugin;
 use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 use EBT\ExtensionBuilder\Utility\Inflector;
@@ -663,5 +664,76 @@ class FileGeneratorTest extends BaseFunctionalTest
 
         self::assertFileExists($extensionDir . 'Configuration/TypoScript/setup.' . $deprecatedExtension);
         self::assertFileDoesNotExist($extensionDir . 'Configuration/TypoScript/setup.typoscript');
+    }
+
+    /**
+     * @test
+     */
+    public function generateComposerJsonWritesAuthorEmailOnFirstBuild(): void
+    {
+        $person = (new Person())->setName('John Doe')->setEmail('john@example.com')->setRole('developer');
+        $this->extension->setPersons([$person]);
+
+        $this->fileGenerator->build($this->extension);
+
+        $composerFile = $this->extension->getExtensionDir() . 'composer.json';
+        self::assertFileExists($composerFile);
+
+        $data = json_decode(file_get_contents($composerFile), true);
+        self::assertSame('John Doe', $data['authors'][0]['name']);
+        self::assertSame('john@example.com', $data['authors'][0]['email']);
+        self::assertSame('developer', $data['authors'][0]['role']);
+    }
+
+    /**
+     * @test
+     */
+    public function generateComposerJsonWritesAllAuthors(): void
+    {
+        $person1 = (new Person())->setName('Alice')->setEmail('alice@example.com');
+        $person2 = (new Person())->setName('Bob')->setEmail('bob@example.com');
+        $this->extension->setPersons([$person1, $person2]);
+
+        $this->fileGenerator->build($this->extension);
+
+        $data = json_decode(file_get_contents($this->extension->getExtensionDir() . 'composer.json'), true);
+        self::assertCount(2, $data['authors']);
+        self::assertSame('Alice', $data['authors'][0]['name']);
+        self::assertSame('alice@example.com', $data['authors'][0]['email']);
+        self::assertSame('Bob', $data['authors'][1]['name']);
+        self::assertSame('bob@example.com', $data['authors'][1]['email']);
+    }
+
+    /**
+     * @test
+     */
+    public function generateComposerJsonUpdatesAuthorsOnRebuildWithoutOverwritingManualRequire(): void
+    {
+        // First build: creates composer.json
+        $person = (new Person())->setName('Original Author')->setEmail('original@example.com');
+        $this->extension->setPersons([$person]);
+        $this->fileGenerator->build($this->extension);
+
+        // Simulate developer adding a manual require entry
+        $composerFile = $this->extension->getExtensionDir() . 'composer.json';
+        $data = json_decode(file_get_contents($composerFile), true);
+        $data['require']['vendor/some-package'] = '^1.0';
+        file_put_contents($composerFile, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+
+        // Second build: add a new author
+        $person2 = (new Person())->setName('New Author')->setEmail('new@example.com');
+        $this->extension->setPersons([$person, $person2]);
+        $this->fileGenerator->build($this->extension);
+
+        $updated = json_decode(file_get_contents($composerFile), true);
+
+        // Authors are updated
+        self::assertCount(2, $updated['authors']);
+        self::assertSame('Original Author', $updated['authors'][0]['name']);
+        self::assertSame('New Author', $updated['authors'][1]['name']);
+
+        // Manually added require is preserved
+        self::assertArrayHasKey('vendor/some-package', $updated['require']);
+        self::assertSame('^1.0', $updated['require']['vendor/some-package']);
     }
 }

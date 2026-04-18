@@ -142,4 +142,70 @@ class ExtensionTest extends BaseUnitTest
 
         self::assertArrayHasKey('php', $composerInfo['require']);
     }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoIncludesAuthorEmailWhenSet(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $person = (new Person())->setName('John Doe')->setEmail('john@example.com');
+        $this->extension->setPersons([$person]);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertSame('John Doe', $composerInfo['authors'][0]['name']);
+        self::assertSame('john@example.com', $composerInfo['authors'][0]['email']);
+    }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoOmitsEmailKeyWhenEmpty(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $person = (new Person())->setName('Jane Doe');
+        $this->extension->setPersons([$person]);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertArrayNotHasKey('email', $composerInfo['authors'][0]);
+    }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoIncludesHomepageFromCompanyWhenSet(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $person = (new Person())->setName('Jane Doe')->setCompany('https://example.com');
+        $this->extension->setPersons([$person]);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertSame('https://example.com', $composerInfo['authors'][0]['homepage']);
+    }
+
+    /**
+     * @test
+     */
+    public function getComposerInfoIncludesAllAuthors(): void
+    {
+        $this->extension->setExtensionKey('test_extension');
+        $this->extension->setVendorName('TestVendor');
+        $person1 = (new Person())->setName('Alice')->setEmail('alice@example.com');
+        $person2 = (new Person())->setName('Bob')->setEmail('bob@example.com');
+        $this->extension->setPersons([$person1, $person2]);
+
+        $composerInfo = $this->extension->getComposerInfo();
+
+        self::assertCount(2, $composerInfo['authors']);
+        self::assertSame('Alice', $composerInfo['authors'][0]['name']);
+        self::assertSame('alice@example.com', $composerInfo['authors'][0]['email']);
+        self::assertSame('Bob', $composerInfo['authors'][1]['name']);
+        self::assertSame('bob@example.com', $composerInfo['authors'][1]['email']);
+    }
 }

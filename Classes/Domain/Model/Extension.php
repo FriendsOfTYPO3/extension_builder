@@ -702,6 +702,12 @@ class Extension
             if ($person->getRole() !== '') {
                 $author['role'] = $person->getRole();
             }
+            if ($person->getEmail() !== '') {
+                $author['email'] = $person->getEmail();
+            }
+            if ($person->getCompany() !== '') {
+                $author['homepage'] = $person->getCompany();
+            }
             $info['authors'][] = $author;
         }
         return $info;
