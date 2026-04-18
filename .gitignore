@@ -42,6 +42,9 @@ CLAUDE.md
 Tests/E2E/.auth/
 playwright-report/
 test-results/
+
+# Storybook
+storybook-static/
 .playwright-cli
 .playwright-screenshots
 docs/superpowers
