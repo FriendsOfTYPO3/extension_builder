@@ -1,4 +1,6 @@
 import { LitElement, html, css, svg } from 'lit';
+import Modal from '@typo3/backend/modal.js';
+import Severity from '@typo3/backend/severity.js';
 import './eb-container.js';
 import './eb-wire.js';
 
@@ -161,8 +163,33 @@ export class EbLayer extends LitElement {
 
     _onContainerRemoved(e) {
         const { moduleId } = e.detail;
+        const connectedWires = this._wires.filter((w) => w.srcModuleId === moduleId || w.tgtModuleId === moduleId);
+        if (connectedWires.length === 0) {
+            this._removeContainer(moduleId);
+            return;
+        }
+        Modal.confirm(
+            'Delete model object',
+            `This model object has ${connectedWires.length} relation(s) connected to it. Deleting it will also remove those relations. Continue?`,
+            Severity.warning,
+            [
+                { text: 'Cancel', btnClass: 'btn-default', trigger: () => Modal.dismiss() },
+                {
+                    text: 'Delete',
+                    btnClass: 'btn-danger',
+                    trigger: () => {
+                        Modal.dismiss();
+                        this._removeContainer(moduleId);
+                    },
+                },
+            ]
+        );
+    }
+
+    _removeContainer(moduleId) {
         this._containers = this._containers.filter((c) => c.moduleId !== moduleId);
         this._wires = this._wires.filter((w) => w.srcModuleId !== moduleId && w.tgtModuleId !== moduleId);
+        this._dispatchChanged();
     }
 
     _onPointerMove(e) {
