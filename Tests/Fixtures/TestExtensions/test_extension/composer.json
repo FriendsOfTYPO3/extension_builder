@@ -5,7 +5,9 @@
 	"authors": [
 		{
 			"name": "John Doe",
-			"role": "Developer"
+			"role": "Developer",
+			"email": "mail@typo3.com",
+			"homepage": "TYPO3"
 		}
 	],
 	"license": "GPL-2.0-or-later",

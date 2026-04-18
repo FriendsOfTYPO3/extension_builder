@@ -160,7 +160,9 @@ class FileGenerator
 
         $this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
 
-        mkdir($this->extensionDirectory . 'Resources/Private', 0777, true);
+        if (!is_dir($this->extensionDirectory . 'Resources/Private')) {
+            mkdir($this->extensionDirectory . 'Resources/Private', 0777, true);
+        }
 
         $this->privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
 
@@ -1122,19 +1124,32 @@ class FileGenerator
     }
 
     /**
-     * create a basic composer file (only if none exists)
+     * Create or update the composer.json file.
+     *
+     * On first creation, the full generated structure is written.
+     * On subsequent saves, only EB-controlled fields (name, description, authors)
+     * are updated — any manual additions (require, scripts, config, etc.) are preserved.
      *
      * @throws Exception
      */
     public function generateComposerJson(): void
     {
-        if (!file_exists($this->extensionDirectory . 'composer.json')) {
-            $composerInfo = $this->extension->getComposerInfo();
-            $this->writeFile(
-                $this->extension->getExtensionDir() . 'composer.json',
-                json_encode($composerInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
-            );
+        $composerFile = $this->extensionDirectory . 'composer.json';
+        $newInfo = $this->extension->getComposerInfo();
+
+        if (file_exists($composerFile)) {
+            $existing = json_decode((string)file_get_contents($composerFile), true) ?? [];
+            $newInfo = array_merge($existing, [
+                'name'        => $newInfo['name'],
+                'description' => $newInfo['description'],
+                'authors'     => $newInfo['authors'],
+            ]);
         }
+
+        $this->writeFile(
+            $this->extension->getExtensionDir() . 'composer.json',
+            json_encode($newInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
+        );
     }
 
     /**
