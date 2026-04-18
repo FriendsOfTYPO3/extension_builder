@@ -367,6 +367,32 @@ class PrinterTest extends BaseUnitTest
         );
     }
 
+    /**
+     * @test
+     *
+     * Regression test for https://github.com/FriendsOfTYPO3/extension_builder/issues/130
+     * Verifies that a newline is preserved after a case label, so statements appear on
+     * their own line instead of being concatenated onto the same line as the colon.
+     */
+    public function renderPreservesNewlineAfterCaseLabel(): void
+    {
+        $fileName = 'ClassWithSwitchStatement.php';
+        $originalPath = $this->fixturesPath . $fileName;
+        $classFileObject = $this->parserService->parseFile($originalPath);
+        $rendered = $this->printerService->renderFileObject($classFileObject);
+
+        self::assertStringContainsString(
+            "case 'foo':" . "\n",
+            $rendered,
+            'case label must be followed by a newline'
+        );
+        self::assertStringContainsString(
+            "case 'bar':" . "\n",
+            $rendered,
+            'case label must be followed by a newline'
+        );
+    }
+
     private function parseAndWrite(string $fileName, string $subFolder = ''): File
     {
         $classFilePath = $this->fixturesPath . $subFolder . $fileName;
