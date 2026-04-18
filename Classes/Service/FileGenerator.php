@@ -160,7 +160,9 @@ class FileGenerator
 
         $this->configurationDirectory = $this->extensionDirectory . 'Configuration/';
 
-        mkdir($this->extensionDirectory . 'Resources/Private', 0777, true);
+        if (!is_dir($this->extensionDirectory . 'Resources/Private')) {
+            mkdir($this->extensionDirectory . 'Resources/Private', 0777, true);
+        }
 
         $this->privateResourcesDirectory = $this->extensionDirectory . 'Resources/Private/';
 
