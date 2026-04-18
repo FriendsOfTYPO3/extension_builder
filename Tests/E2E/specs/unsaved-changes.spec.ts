@@ -122,11 +122,8 @@ test.describe('Unsaved changes warning', () => {
             }
         });
 
-        // Modify a field to mark dirty
-        await editor.evaluate((el: any) => {
-            const field = el.shadowRoot?.querySelector('[name="description"]');
-            field?.setValue?.('modified by test');
-        });
+        // Mark dirty directly (setValue does not dispatch field-updated)
+        await editor.evaluate((el: any) => el._markDirty());
 
         // Click Open — should show unsaved changes warning
         await frame.locator('#WiringEditor-loadButton-button').click();
@@ -157,11 +154,8 @@ test.describe('Unsaved changes warning', () => {
             }
         });
 
-        // Modify a field to mark dirty
-        await editor.evaluate((el: any) => {
-            const field = el.shadowRoot?.querySelector('[name="description"]');
-            field?.setValue?.('modified by test');
-        });
+        // Mark dirty directly (setValue does not dispatch field-updated)
+        await editor.evaluate((el: any) => el._markDirty());
 
         // Click Open → Discard → select EXT_B → Open
         await frame.locator('#WiringEditor-loadButton-button').click();
@@ -169,11 +163,11 @@ test.describe('Unsaved changes warning', () => {
         await expect(modal).toBeVisible();
         await expect(modal.locator('.t3js-modal-title')).toHaveText('Unsaved changes');
         await modal.locator('.t3js-modal-footer .btn-warning').click();
-        await expect(modal).not.toBeVisible();
+        // Don't assert the unsaved-changes modal is gone — the Open Extension modal
+        // opens immediately, so two .t3js-modal elements briefly co-exist in the DOM.
 
         // Now the Open Extension dialog should appear
-        modal = page.locator('.t3js-modal');
-        await expect(modal).toBeVisible();
+        modal = page.locator('.t3js-modal').filter({ hasText: 'Open Extension' });
         await expect(modal.locator('.t3js-modal-title')).toHaveText('Open Extension');
         await modal.locator('select').selectOption(EXT_B);
         await modal.locator('.t3js-modal-footer .btn-primary').click();
