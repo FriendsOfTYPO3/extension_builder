@@ -17,9 +17,8 @@ declare(strict_types=1);
 
 namespace EBT\ExtensionBuilder\Utility;
 
-use Sho_Inflect;
-
-require(__DIR__ . '/../../Resources/Private/PHP/Sho_Inflect.php');
+use Doctrine\Inflector\Inflector as DoctrineInflector;
+use Doctrine\Inflector\InflectorFactory;
 
 /**
  * Inflector utilities for the Extension Builder. This is a basic conversion from PHP
@@ -27,14 +26,23 @@ require(__DIR__ . '/../../Resources/Private/PHP/Sho_Inflect.php');
  */
 class Inflector
 {
+    private static ?DoctrineInflector $instance = null;
+
+    private static function getInstance(): DoctrineInflector
+    {
+        if (self::$instance === null) {
+            self::$instance = InflectorFactory::create()->build();
+        }
+        return self::$instance;
+    }
+
     /**
      * @param string $word The word to pluralize
      * @return string The pluralized word
      */
-    // TODO: These methods are static now, this breaks other places.
     public static function pluralize(string $word): string
     {
-        return Sho_Inflect::pluralize($word);
+        return self::getInstance()->pluralize($word);
     }
 
     /**
@@ -43,7 +51,7 @@ class Inflector
      */
     public static function singularize(string $word): string
     {
-        return Sho_Inflect::singularize($word);
+        return self::getInstance()->singularize($word);
     }
 
     /**
