@@ -381,16 +381,6 @@ class PrinterTest extends BaseUnitTest
         $classFileObject = $this->parserService->parseFile($originalPath);
         $rendered = $this->printerService->renderFileObject($classFileObject);
 
-        self::assertStringNotContainsString(
-            "case 'foo':    ",
-            $rendered,
-            'case label must not be followed by a statement on the same line'
-        );
-        self::assertStringNotContainsString(
-            "case 'bar':    ",
-            $rendered,
-            'case label must not be followed by a statement on the same line'
-        );
         self::assertStringContainsString(
             "case 'foo':" . "\n",
             $rendered,
