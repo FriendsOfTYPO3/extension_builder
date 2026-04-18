@@ -163,9 +163,7 @@ export class EbLayer extends LitElement {
 
     _onContainerRemoved(e) {
         const { moduleId } = e.detail;
-        const connectedWires = this._wires.filter(
-            (w) => w.srcModuleId === moduleId || w.tgtModuleId === moduleId
-        );
+        const connectedWires = this._wires.filter((w) => w.srcModuleId === moduleId || w.tgtModuleId === moduleId);
         if (connectedWires.length === 0) {
             this._removeContainer(moduleId);
             return;

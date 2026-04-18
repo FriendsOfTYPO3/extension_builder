@@ -1793,9 +1793,7 @@ class oe extends x {
     this._updateWirePositions();
   }
   _onContainerRemoved(e) {
-    const { moduleId: t } = e.detail, i = this._wires.filter(
-      (r) => r.srcModuleId === t || r.tgtModuleId === t
-    );
+    const { moduleId: t } = e.detail, i = this._wires.filter((r) => r.srcModuleId === t || r.tgtModuleId === t);
     if (i.length === 0) {
       this._removeContainer(t);
       return;
