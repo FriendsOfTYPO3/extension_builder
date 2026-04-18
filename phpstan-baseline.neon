@@ -571,18 +571,6 @@ parameters:
 			path: Classes/Template/Components/Buttons/LinkButtonWithId.php
 
 		-
-			message: '#^Call to static method pluralize\(\) on an unknown class Sho_Inflect\.$#'
-			identifier: class.notFound
-			count: 1
-			path: Classes/Utility/Inflector.php
-
-		-
-			message: '#^Call to static method singularize\(\) on an unknown class Sho_Inflect\.$#'
-			identifier: class.notFound
-			count: 1
-			path: Classes/Utility/Inflector.php
-
-		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
