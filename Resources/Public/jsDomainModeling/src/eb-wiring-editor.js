@@ -35,6 +35,7 @@ export class EbWiringEditor extends LitElement {
         _extensionData: { state: true },
         _advancedMode: { state: true },
         _leftCollapsed: { state: true },
+        _isDirty: { state: true },
     };
 
     static styles = [
@@ -143,6 +144,7 @@ export class EbWiringEditor extends LitElement {
         this._extensionData = null;
         this._advancedMode = false;
         this._leftCollapsed = false;
+        this._isDirty = false;
     }
 
     async firstUpdated() {
@@ -186,6 +188,17 @@ export class EbWiringEditor extends LitElement {
             this.initialWarnings.forEach((msg) => Notification.warning('Configuration', msg));
         }
         this.addEventListener('field-updated', this._onFieldUpdated);
+        this._boundMarkDirty = this._markDirty.bind(this);
+        this.addEventListener('container-moved', this._boundMarkDirty);
+        this.addEventListener('container-removed', this._boundMarkDirty);
+        this.addEventListener('container-resized', this._boundMarkDirty);
+        this.addEventListener('eb-layer-changed', this._boundMarkDirty);
+        this._beforeUnload = (e) => {
+            if (this._isDirty) {
+                e.preventDefault();
+            }
+        };
+        window.addEventListener('beforeunload', this._beforeUnload);
         if (this.extensionName) {
             await this.load();
         }
@@ -194,9 +207,45 @@ export class EbWiringEditor extends LitElement {
     disconnectedCallback() {
         super.disconnectedCallback();
         this.removeEventListener('field-updated', this._onFieldUpdated);
+        this.removeEventListener('container-moved', this._boundMarkDirty);
+        this.removeEventListener('container-removed', this._boundMarkDirty);
+        this.removeEventListener('container-resized', this._boundMarkDirty);
+        this.removeEventListener('eb-layer-changed', this._boundMarkDirty);
+        window.removeEventListener('beforeunload', this._beforeUnload);
+    }
+
+    _markDirty() {
+        this._isDirty = true;
+    }
+
+    async confirmDiscard() {
+        if (!this._isDirty) {
+            return true;
+        }
+        return new Promise((resolve) => {
+            Modal.confirm('Unsaved changes', 'You have unsaved changes. Discard them and continue?', Severity.warning, [
+                {
+                    text: 'Cancel',
+                    btnClass: 'btn-default',
+                    trigger: () => {
+                        Modal.dismiss();
+                        resolve(false);
+                    },
+                },
+                {
+                    text: 'Discard',
+                    btnClass: 'btn-warning',
+                    trigger: () => {
+                        Modal.dismiss();
+                        resolve(true);
+                    },
+                },
+            ]);
+        });
     }
 
     _onFieldUpdated(e) {
+        this._markDirty();
         if (e.detail?.name !== 'targetVersion') {
             return;
         }
@@ -257,6 +306,7 @@ export class EbWiringEditor extends LitElement {
             await this.updateComplete;
             this._populateLayer();
             this._populateProperties();
+            this._isDirty = false;
         }
     }
 
@@ -435,6 +485,7 @@ export class EbWiringEditor extends LitElement {
         (data.warnings ?? []).forEach((msg) => Notification.warning('Roundtrip warning', msg));
         if (data.success) {
             Notification.success('Saved', data.success);
+            this._isDirty = false;
             (data.installationHints ?? []).forEach((hint) => Notification.info('Next steps', hint));
         }
     }
@@ -446,6 +497,7 @@ export class EbWiringEditor extends LitElement {
     reset() {
         this.extensionName = '';
         this._extensionData = null;
+        this._isDirty = false;
         const layer = this.shadowRoot.querySelector('eb-layer');
         if (layer) {
             layer._containers = [];

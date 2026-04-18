@@ -31,8 +31,12 @@ function initEditor() {
     });
 
     // New
-    document.getElementById('WiringEditor-newButton-button')?.addEventListener('click', (e) => {
+    document.getElementById('WiringEditor-newButton-button')?.addEventListener('click', async (e) => {
         e.preventDefault();
+        const ok = await editor.confirmDiscard();
+        if (!ok) {
+            return;
+        }
         editor.reset();
     });
 
@@ -45,6 +49,10 @@ function initEditor() {
     // Open → Liste laden → TYPO3 Modal → Extension auswählen
     document.getElementById('WiringEditor-loadButton-button')?.addEventListener('click', async (e) => {
         e.preventDefault();
+        const ok = await editor.confirmDiscard();
+        if (!ok) {
+            return;
+        }
         const smdUrl = editor.getAttribute('smd-url');
         const resp = await fetch(smdUrl, {
             method: 'POST',

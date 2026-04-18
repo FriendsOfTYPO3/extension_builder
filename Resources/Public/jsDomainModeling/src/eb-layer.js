@@ -254,10 +254,12 @@ export class EbLayer extends LitElement {
                 ...pos,
             },
         ];
+        this._dispatchChanged();
     }
 
     _deleteWire(wireId) {
         this._wires = this._wires.filter((w) => w.id !== wireId);
+        this._dispatchChanged();
     }
 
     _updateWirePositions() {
@@ -317,6 +319,10 @@ export class EbLayer extends LitElement {
         };
     }
 
+    _dispatchChanged() {
+        this.dispatchEvent(new CustomEvent('eb-layer-changed', { bubbles: true, composed: true }));
+    }
+
     addContainer(moduleData) {
         const nextId = this._containers.length;
         const uid = parseInt(Date.now() * Math.random()) || Date.now();
@@ -339,6 +345,7 @@ export class EbLayer extends LitElement {
                 moduleData: moduleDataWithUid,
             },
         ];
+        this._dispatchChanged();
     }
 
     addContainers(modules) {
