@@ -4,7 +4,6 @@
 /dist/
 /var/
 .DS_Store
-/composer.lock
 /.php_cs.cache
 sass-lint.html
 
@@ -50,3 +49,5 @@ storybook-static/
 docs/superpowers
 
 
+.playwright-mcp
+.devbox/config/sites/styleguide-demo-2
