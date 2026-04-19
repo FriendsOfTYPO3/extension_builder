@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 .. _configuration:
 
@@ -47,4 +47,4 @@ don't hesitate to cross-link to the TypoScript Reference as shown below.
 
 See :ref:`h2document:how-to-document-hyperlinks` for information about how to use cross-references.
 
-See the :file:`Settings.cfg` file for the declaration of cross-linking keys.
+See the :file:`guides.xml` file for the declaration of cross-referencing inventories.

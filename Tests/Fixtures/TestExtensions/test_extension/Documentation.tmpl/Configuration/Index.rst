@@ -1,4 +1,4 @@
-﻿.. include:: ../Includes.txt
+﻿.. include:: /Includes.rst.txt
 
 
 .. _configuration:
@@ -50,5 +50,5 @@ Reference.
 Information about how to use cross-references:
 https://docs.typo3.org/typo3cms/HowToDocument/WritingReST/Hyperlinks.html
 
-See the :file:`Settings.cfg` file for the declaration of cross-linking keys.
+See the :file:`guides.xml` file for the declaration of cross-referencing inventories.
 You can add more keys besides tsref.

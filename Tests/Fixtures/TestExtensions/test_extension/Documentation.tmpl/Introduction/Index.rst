@@ -1,4 +1,4 @@
-﻿.. include:: ../Includes.txt
+﻿.. include:: /Includes.rst.txt
 
 
 .. _introduction:
@@ -36,7 +36,7 @@ install and use this extension.
 .. important::
 
    Don't forget to repeat your extension's version number in the
-   :file:`Settings.cfg` file, in the :code:`release` property. It will be
+   :file:`guides.xml`, in the :code:`release` attribute of the :code:`<project>` element. It will be
    automatically picked up on the cover page by the :code:`|release|`
    substitution.
 
