@@ -58,6 +58,9 @@
 		},
 		"audit": {
 			"block-insecure": false
+		},
+		"platform": {
+			"php": "8.3.0"
 		}
 	},
 	"scripts": {
