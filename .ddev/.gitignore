@@ -8,7 +8,8 @@
 .start-synced
 addon-metadata/
 apache/
-commands/
+commands/.gitattributes
+commands/*/README.txt
 db-build/
 db_snapshots/
 homeadditions/

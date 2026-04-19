@@ -1,0 +1,15 @@
+#!/bin/bash
+
+## Description: Run PHPStan static analysis
+## Usage: phpstan [flags] [args]
+## Example: ddev phpstan
+## Example: ddev phpstan --level 6
+
+cd /var/www/html
+
+if [ ! -f ".Build/bin/phpstan" ]; then
+    echo "Installing test dependencies..."
+    composer install --no-interaction
+fi
+
+.Build/bin/phpstan analyse --no-progress "$@"

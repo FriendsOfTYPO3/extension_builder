@@ -1,0 +1,26 @@
+#!/bin/bash
+
+## Description: Run PHPUnit functional tests
+## Usage: test-functional [flags] [args]
+## Example: ddev test-functional
+## Example: ddev test-functional --filter testMethodName
+
+cd /var/www/html
+
+if [ ! -f ".Build/bin/phpunit" ]; then
+    echo "Installing test dependencies..."
+    composer install --no-interaction
+fi
+
+# Ensure extension symlink resolves inside the container
+LINK=".Build/public/typo3conf/ext/extension_builder"
+if [ -L "$LINK" ] && [ "$(readlink "$LINK")" != "/var/www/html" ]; then
+    rm "$LINK"
+    ln -s /var/www/html "$LINK"
+fi
+
+TYPO3_PATH_ROOT=/var/www/html/.Build/public \
+typo3DatabaseDriver=pdo_sqlite \
+    .Build/bin/phpunit --colors \
+    -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml \
+    Tests/Functional "$@"
