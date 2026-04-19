@@ -19,6 +19,7 @@ if [ -L "$LINK" ] && [ "$(readlink "$LINK")" != "/var/www/html" ]; then
     ln -s /var/www/html "$LINK"
 fi
 
-.Build/bin/phpunit --colors \
+TYPO3_PATH_ROOT=/var/www/html/.Build/public \
+    .Build/bin/phpunit --colors \
     -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml \
     Tests/Unit "$@"

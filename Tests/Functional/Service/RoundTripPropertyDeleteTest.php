@@ -32,9 +32,7 @@ class RoundTripPropertyDeleteTest extends BaseFunctionalTest
         $this->objectSchemaBuilder = GeneralUtility::makeInstance(ObjectSchemaBuilder::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function propertyDeleteRemovesGetterAndSetter(): void
     {
         $modelName = 'PropertyDeleteModel';
@@ -75,9 +73,7 @@ class RoundTripPropertyDeleteTest extends BaseFunctionalTest
         self::assertNull($classObject->getProperty('title'), 'title property must be removed after deletion');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function relationDeleteRemovesAllFourMethods(): void
     {
         $modelName = 'RelationDeleteModel';

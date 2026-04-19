@@ -21,9 +21,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripObjectTypeChangeTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function entityToValueObjectRemovesControllerAndRepositoryFiles(): void
     {
         $modelName = 'Foo';
@@ -72,9 +70,7 @@ class RoundTripObjectTypeChangeTest extends BaseFunctionalTest
         self::assertFileDoesNotExist($repositoryDir . $modelName . 'Repository.php', 'Repository file must be deleted');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function valueObjectToEntityReturnsNullForControllerAndRepositoryWithoutPreviousFiles(): void
     {
         $modelName = 'Bar';

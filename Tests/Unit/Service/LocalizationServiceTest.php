@@ -34,9 +34,7 @@ class LocalizationServiceTest extends BaseUnitTest
         $this->localizationService->injectXliffParser($this->createMock(XliffParser::class));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function prepareLabelArrayPreservesDescriptionCaseForProperties(): void
     {
         $domainObject = $this->buildDomainObject('MyModel', true);
@@ -57,9 +55,7 @@ class LocalizationServiceTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function prepareLabelArrayPreservesDescriptionCaseForDomainObjects(): void
     {
         $domainObject = $this->buildDomainObject('MyModel', true);
@@ -75,9 +71,7 @@ class LocalizationServiceTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function prepareLabelArrayStillHumanizesNames(): void
     {
         $domainObject = $this->buildDomainObject('myModel', true);

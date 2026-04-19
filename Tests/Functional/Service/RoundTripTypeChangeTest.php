@@ -33,9 +33,7 @@ class RoundTripTypeChangeTest extends BaseFunctionalTest
         $this->objectSchemaBuilder = GeneralUtility::makeInstance(ObjectSchemaBuilder::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function propertyTypeChangeUpdatesVarTagInClassObject(): void
     {
         $modelName = 'TypeChangeModel';
@@ -76,9 +74,7 @@ class RoundTripTypeChangeTest extends BaseFunctionalTest
         self::assertStringContainsString('bool', $classProperty->getTagValue('var'), '@var tag must reflect Boolean type after type change');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function relationTypeChangeFromManyToManyToManyToOneRemovesAddAndRemoveMethods(): void
     {
         $modelName = 'RelationTypeChangeModel';

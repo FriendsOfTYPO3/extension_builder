@@ -52,9 +52,7 @@ class ClassBuilderTest extends BaseUnitTest
         $this->classBuilder->initialize($this->extension);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function classBuilderGeneratesSetterMethodForSimpleProperty(): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
@@ -79,9 +77,7 @@ class ClassBuilderTest extends BaseUnitTest
         self::assertEquals('name', $firstParameter->getName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function classBuilderGeneratesGetterMethodForSimpleProperty(): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
@@ -98,9 +94,7 @@ class ClassBuilderTest extends BaseUnitTest
         self::assertTrue($modelClassObject->methodExists('getName'), 'No method: getName');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function classBuilderGeneratesIsMethodForBooleanProperty(): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);
@@ -117,9 +111,7 @@ class ClassBuilderTest extends BaseUnitTest
         self::assertTrue($modelClassObject->methodExists('isBlue'), 'No method: isBlue');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function classBuilderGeneratesMethodsForRelationProperty(): void
     {
         $modelName2 = 'Model2';
@@ -206,13 +198,13 @@ class ClassBuilderTest extends BaseUnitTest
     }
 
     /**
-     * @test
-     * @dataProvider propertyDefaultTypesProviderTypes
      * @param string $propertyName
      * @param mixed $propertyDefaultValue
      * @throws FileNotFoundException
      * @throws SyntaxError
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('propertyDefaultTypesProviderTypes')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function classBuilderGeneratesPropertyDefault(string $propertyName, $propertyDefaultValue): void
     {
         $domainObject = $this->buildDomainObject($this->modelName, true, true);

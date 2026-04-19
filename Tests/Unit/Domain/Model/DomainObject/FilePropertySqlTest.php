@@ -27,9 +27,7 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
  */
 class FilePropertySqlTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function filePropertyReturnsEmptySqlDefinition(): void
     {
         $property = new FileProperty();
@@ -39,9 +37,7 @@ class FilePropertySqlTest extends BaseUnitTest
         self::assertSame('', $property->getSqlDefinition());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function imagePropertyReturnsEmptySqlDefinition(): void
     {
         $property = new ImageProperty();

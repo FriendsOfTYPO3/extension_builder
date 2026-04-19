@@ -82,9 +82,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         // overwrite parent tearDown to avoid deletion of fixture extension
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function changeVendorNameResultsInNewNamespace(): void
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
@@ -92,9 +90,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         self::assertEquals('VENDOR\TestExtension', $this->fixtureExtension->getNamespaceName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function changeVendorNameResultsInUpdatedTagsInControllerClass(): void
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');
@@ -123,9 +119,7 @@ class RoundTripRenameVendorTest extends BaseFunctionalTest
         self::assertEquals('\VENDOR\TestExtension\Domain\Repository\MainRepository', $typeHint);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function changeVendorNameResultsInUpdatedTagsInModelClass(): void
     {
         $this->fixtureExtension->setOriginalVendorName('FIXTURE');

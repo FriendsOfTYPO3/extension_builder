@@ -22,9 +22,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class GeneratedSelectPropertyTcaTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function tcaContainsPlaceholderItemWhenNoItemsConfigured(): void
     {
         $domainObject = $this->buildDomainObject('ModelWithSelect');
@@ -41,9 +39,7 @@ class GeneratedSelectPropertyTcaTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function tcaContainsConfiguredItemsWithAssociativeFormat(): void
     {
         $domainObject = $this->buildDomainObject('ModelWithSelect');
@@ -74,9 +70,7 @@ class GeneratedSelectPropertyTcaTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function tcaItemsUseAssociativeArrayFormat(): void
     {
         $domainObject = $this->buildDomainObject('ModelWithSelect');

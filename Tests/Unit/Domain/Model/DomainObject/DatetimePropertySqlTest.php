@@ -29,9 +29,7 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
  */
 class DatetimePropertySqlTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function dateTimePropertyReturnsEmptySqlDefinition(): void
     {
         $property = new DateTimeProperty();
@@ -41,9 +39,7 @@ class DatetimePropertySqlTest extends BaseUnitTest
         self::assertSame('', $property->getSqlDefinition());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function datePropertyReturnsEmptySqlDefinition(): void
     {
         $property = new DateProperty();
@@ -53,9 +49,7 @@ class DatetimePropertySqlTest extends BaseUnitTest
         self::assertSame('', $property->getSqlDefinition());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function timePropertyReturnsEmptySqlDefinition(): void
     {
         $property = new TimeProperty();
@@ -65,9 +59,7 @@ class DatetimePropertySqlTest extends BaseUnitTest
         self::assertSame('', $property->getSqlDefinition());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function timeSecPropertyReturnsEmptySqlDefinition(): void
     {
         $property = new TimeSecProperty();

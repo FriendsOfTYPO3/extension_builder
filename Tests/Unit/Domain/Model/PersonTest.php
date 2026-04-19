@@ -31,9 +31,7 @@ class PersonTest extends BaseUnitTest
         $this->person = GeneralUtility::makeInstance(Person::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function gettersSettersTest(): void
     {
         $name = 'John Doe';

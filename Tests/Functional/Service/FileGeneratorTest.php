@@ -36,9 +36,8 @@ class FileGeneratorTest extends BaseFunctionalTest
     /**
      * Generate the appropriate code for a simple model class
      * for a non aggregate root domain object with one boolean property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateCodeForModelClassWithBooleanProperty(): void
     {
         $modelName = 'ModelCgt1';
@@ -91,9 +90,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one boolean property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithBooleanProperty(): void
     {
         $modelName = 'ModelCgt1';
@@ -136,9 +134,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one string property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithStringProperty(): void
     {
         $modelName = 'ModelCgt2';
@@ -178,9 +175,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one to one relation
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithZeroToOneRelation(): void
     {
         $modelName = 'ModelCgt3';
@@ -236,9 +232,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with zero to many relation
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithZeroToManyRelation(): void
     {
         $modelName = 'ModelCgt4';
@@ -323,9 +318,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one to one relation
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithManyToManyRelation(): void
     {
         $modelName = 'ModelCgt5';
@@ -398,9 +392,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeSimpleControllerClassFromDomainObject(): void
     {
         $domainObject = $this->buildDomainObject('ModelCgt6', true);
@@ -429,9 +422,8 @@ class FileGeneratorTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeRepositoryClassFromDomainObject(): void
     {
         $domainObject = $this->buildDomainObject('ModelCgt6', true, true);
@@ -460,9 +452,8 @@ class FileGeneratorTest extends BaseFunctionalTest
      * This test is too generic, since it creates the required classes
      * with a whole fileGenerator->build call
      *
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeAggregateRootClassesFromDomainObject(): void
     {
         $domainObject = $this->buildDomainObject('ModelCgt7', true, true);
@@ -485,9 +476,8 @@ class FileGeneratorTest extends BaseFunctionalTest
     /**
      * Verify that ext_tables.sql contains a CREATE TABLE for a child model that has no own properties
      * but is the target of a ZeroToMany inline relation (requires FK column in its table).
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function extTablesSqlContainsForeignKeyForChildModelWithNoProperties(): void
     {
         $ownerModelName = 'OwnerModel';
@@ -528,9 +518,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeExtensionFiles(): void
     {
         $modelName = 'ModelCgt8';
@@ -588,9 +576,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         }
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateSiteSetFilesWhenActive(): void
     {
         $plugin = new Plugin();
@@ -611,9 +597,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertFileDoesNotExist($extensionDir . 'Configuration/TCA/Overrides/sys_template.php');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateClassicFilesWhenSiteSetInactive(): void
     {
         $plugin = new Plugin();
@@ -638,11 +622,11 @@ class FileGeneratorTest extends BaseFunctionalTest
     }
 
     /**
-     * @test
-     * @dataProvider getDeprecatedTypoScriptExtensionsDataProvider
      * @param string $deprecatedExtension
      * @throws ExtensionException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDeprecatedTypoScriptExtensionsDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeExtensionFilesOverWritesFilesWithDeprecatedExtensions(string $deprecatedExtension): void
     {
         $plugin = new Plugin();
@@ -666,9 +650,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertFileDoesNotExist($extensionDir . 'Configuration/TypoScript/setup.typoscript');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateComposerJsonWritesAuthorEmailOnFirstBuild(): void
     {
         $person = (new Person())->setName('John Doe')->setEmail('john@example.com')->setRole('developer');
@@ -685,9 +667,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertSame('developer', $data['authors'][0]['role']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateComposerJsonWritesAllAuthors(): void
     {
         $person1 = (new Person())->setName('Alice')->setEmail('alice@example.com');
@@ -704,9 +684,7 @@ class FileGeneratorTest extends BaseFunctionalTest
         self::assertSame('bob@example.com', $data['authors'][1]['email']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateComposerJsonUpdatesAuthorsOnRebuildWithoutOverwritingManualRequire(): void
     {
         // First build: creates composer.json

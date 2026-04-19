@@ -37,9 +37,7 @@ class ExtensionBuilderConfigurationManagerTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function mapAdvancedModeToleratesRelationWithoutRenderType(): void
     {
         $jsonConfig = [
@@ -67,9 +65,7 @@ class ExtensionBuilderConfigurationManagerTest extends BaseUnitTest
         self::assertNull($result[0]['value']['relationGroup']['relations'][0]['advancedSettings']['renderType']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function mapAdvancedModeBackwardToleratesRelationWithoutRenderType(): void
     {
         $jsonConfig = [

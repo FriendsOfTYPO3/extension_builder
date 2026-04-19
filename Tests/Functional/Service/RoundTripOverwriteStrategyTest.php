@@ -28,9 +28,7 @@ class RoundTripOverwriteStrategyTest extends BaseFunctionalTest
         $this->fileGenerator->_set('roundTripEnabled', true);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function keepStrategyPreventsFileOverwrite(): void
     {
         $this->extension->setSettings([
@@ -62,9 +60,7 @@ class RoundTripOverwriteStrategyTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function mergeStrategyAppliesSplitTokenAndPreservesCustomContent(): void
     {
         $this->extension->setSettings([
@@ -100,9 +96,7 @@ class RoundTripOverwriteStrategyTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function noSettingMeansFileIsOverwritten(): void
     {
         $this->extension->setSettings([

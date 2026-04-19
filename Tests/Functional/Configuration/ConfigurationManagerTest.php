@@ -31,18 +31,14 @@ class ConfigurationManagerTest extends BaseFunctionalTest
         $this->configurationManager = GeneralUtility::makeInstance(ExtensionBuilderConfigurationManager::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getParentClassForValueObject(): void
     {
         $parentClassForValueObject = $this->configurationManager->getParentClassForValueObject($this->extension);
         self::assertSame('\TYPO3\CMS\Extbase\DomainObject\AbstractValueObject', $parentClassForValueObject);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getParentClassForEntityObject(): void
     {
         $parentClassForValueObject = $this->configurationManager->getParentClassForEntityObject($this->extension);

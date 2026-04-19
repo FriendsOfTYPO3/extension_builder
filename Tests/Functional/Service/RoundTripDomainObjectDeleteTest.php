@@ -26,9 +26,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RoundTripDomainObjectDeleteTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function deletedDomainObjectFilesAreRemovedDuringInitialize(): void
     {
         $modelName = 'Foo';

@@ -26,9 +26,7 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
  */
 class SelectPropertySqlTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function selectPropertyReturnsVarcharSqlDefinition(): void
     {
         $property = new SelectProperty();
@@ -41,18 +39,14 @@ class SelectPropertySqlTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function selectPropertyTypeForCommentIsString(): void
     {
         $property = new SelectProperty();
         self::assertSame('string', $property->getTypeForComment());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function selectPropertyTypeHintIsString(): void
     {
         $property = new SelectProperty();

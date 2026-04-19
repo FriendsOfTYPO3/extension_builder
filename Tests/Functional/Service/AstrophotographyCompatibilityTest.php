@@ -37,9 +37,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class AstrophotographyCompatibilityTest extends BaseFunctionalTest
 {
     /**
-     * @test
      * @throws ExtensionException
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateExtensionFromAstrophotographyConfiguration(): void
     {
         $configurationManager = GeneralUtility::makeInstance(ExtensionBuilderConfigurationManager::class);

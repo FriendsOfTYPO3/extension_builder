@@ -33,10 +33,8 @@ class PregReplaceViewHelperTest extends ViewHelperBaseTestcase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider renderDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('renderDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderWithContentArgument(string $match, string $replace, string $subject, string $expected): void
     {
         $viewHelper = new PregReplaceViewHelper();
@@ -51,10 +49,8 @@ class PregReplaceViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expected, $viewHelper->initializeArgumentsAndRender());
     }
 
-    /**
-     * @test
-     * @dataProvider renderDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('renderDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderWithChildren(string $match, string $replace, string $subject, string $expected): void
     {
         $viewHelper = new PregReplaceViewHelper();

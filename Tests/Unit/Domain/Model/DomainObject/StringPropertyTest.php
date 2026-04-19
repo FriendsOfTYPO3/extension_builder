@@ -22,9 +22,7 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
 class StringPropertyTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function propertyRenamesFieldIfItMatchesReservedWord(): void
     {
         $domainObject = $this->buildDomainObject('SomeModel', true, true);

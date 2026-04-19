@@ -34,9 +34,7 @@ class ParserTest extends BaseUnitTest
         $this->parserService = new ParserService();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseSimpleProperty(): void
     {
         $classFileObject = $this->parseFile('SimpleProperty.php');
@@ -49,9 +47,7 @@ class ParserTest extends BaseUnitTest
         self::assertEquals(['protected'], $classObject->getProperty('property')->getModifierNames());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseSimplePropertyWithGetterAndSetter(): void
     {
         $this->parserService->setTraverser(new Traverser());
@@ -65,9 +61,7 @@ class ParserTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseDocComments(): void
     {
         $classFileObject = $this->parseFile('SimpleProperty.php');
@@ -80,9 +74,7 @@ class ParserTest extends BaseUnitTest
         self::assertTrue($classObject->getProperty('property')->isTaggedWith('var'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseArrayProperty(): void
     {
         $this->parserService->setTraverser(new Traverser());
@@ -94,18 +86,14 @@ class ParserTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseSimpleNonBracedNamespace(): void
     {
         $classFileObject = $this->parseFile('Namespaces/SimpleNamespace.php');
         self::assertEquals('Parser\\Test\\Model', $classFileObject->getFirstClass()->getNamespaceName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseClassMethodWithManyParameter(): void
     {
         $classFileObject = $this->parseFile('ClassMethodWithManyParameter.php');
@@ -116,9 +104,7 @@ class ParserTest extends BaseUnitTest
         self::assertEquals('?\\EBT\\ExtensionBuilder\\Parser\\Utility\\NodeConverter', $parameters[5]->getTypeHint());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseClassWithVariousModifiers(): void
     {
         $classFileObject = $this->parseFile('ClassWithVariousModifiers.php');
@@ -159,9 +145,7 @@ class ParserTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parserFindsFunction(): void
     {
         $fileObject = $this->parseFile('FunctionsWithoutClasses.php');
@@ -175,18 +159,14 @@ class ParserTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parserFindsAliasDeclarations(): void
     {
         $fileObject = $this->parseFile('Namespaces/SimpleNamespaceWithUseStatement.php');
         self::assertSame(count($fileObject->getNamespace()->getAliasDeclarations()), 2, 'Alias declaration not found!');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parsePromotedConstructorPropertyPreservesFlags(): void
     {
         $classFileObject = $this->parseFile('ClassWithPromotedConstructorProperty.php');

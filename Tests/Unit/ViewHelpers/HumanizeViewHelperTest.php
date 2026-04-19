@@ -39,10 +39,8 @@ class HumanizeViewHelperTest extends ViewHelperBaseTestcase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider renderDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('renderDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderWithContentArgument(string $string, string $expected): void
     {
         $viewHelper = new HumanizeViewHelper();
@@ -55,10 +53,8 @@ class HumanizeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expected, $viewHelper->initializeArgumentsAndRender());
     }
 
-    /**
-     * @test
-     * @dataProvider renderDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('renderDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderWithChildren(string $string, string $expected): void
     {
         $viewHelper = new HumanizeViewHelper();

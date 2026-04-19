@@ -31,9 +31,7 @@ class RoundTripMmTableWarningTest extends BaseFunctionalTest
         $this->objectSchemaBuilder = GeneralUtility::makeInstance(ObjectSchemaBuilder::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function manyToManyToManyToOneAddsDataLossWarning(): void
     {
         $modelName = 'WarnMmLoss';
@@ -88,9 +86,7 @@ class RoundTripMmTableWarningTest extends BaseFunctionalTest
         self::assertStringContainsString('_mm', $combined);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function manyToOneToManyToManyAddsNewMmTableWarning(): void
     {
         $modelName = 'WarnMmNew';

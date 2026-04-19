@@ -44,18 +44,14 @@ class RoundTripBackupRestoreTest extends BaseFunctionalTest
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function listBackupsReturnsEmptyArrayWhenNoBackupsExist(): void
     {
         $result = RoundTrip::listBackups('my_extension', $this->backupRelDir);
         self::assertSame([], $result);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function listBackupsReturnsBackupEntries(): void
     {
         $backup1 = $this->backupAbsDir . '/my_extension/2026-04-01-1000000';
@@ -76,9 +72,7 @@ class RoundTripBackupRestoreTest extends BaseFunctionalTest
         self::assertEquals(1, $result[1]['fileCount']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function listBackupsFormatsDatesFromTimestamp(): void
     {
         $timestamp = mktime(14, 30, 0, 4, 1, 2026);
@@ -91,9 +85,7 @@ class RoundTripBackupRestoreTest extends BaseFunctionalTest
         self::assertEquals(date('Y-m-d H:i:s', $timestamp), $result[0]['label']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function restoreBackupCopiesFilesFromBackup(): void
     {
         $extensionDir = $this->extension->getExtensionDir();
@@ -111,9 +103,7 @@ class RoundTripBackupRestoreTest extends BaseFunctionalTest
         self::assertStringContainsString('from backup', $restoredContent);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function restoreBackupCreatesNestedBackupBeforeRestoring(): void
     {
         $extensionDir = $this->extension->getExtensionDir();
@@ -133,9 +123,7 @@ class RoundTripBackupRestoreTest extends BaseFunctionalTest
         self::assertNotEmpty($dirs, 'Expected a safety backup to be created before restore');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function restoreBackupThrowsExceptionForInvalidDirectoryName(): void
     {
         $this->expectException(Exception::class);

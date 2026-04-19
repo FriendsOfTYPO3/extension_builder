@@ -35,9 +35,7 @@ class ParseAndPrintTest extends BaseFunctionalTest
         $this->fixturesPath .= 'ClassParser/';
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseAndPrintSimplePropertyClass(): void
     {
         $this->parseAndPrint('SimpleProperty.php');

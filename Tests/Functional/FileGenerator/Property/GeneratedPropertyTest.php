@@ -46,9 +46,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 {
     /**
      * Write a simple model class for a non aggregate root domain object with one boolean property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithBooleanProperty(): void
     {
         $modelName = 'ModelWithBooleanProperty';
@@ -91,9 +90,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one color picker property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithColorPickerProperty(): void
     {
         $modelName = 'ModelWithColorPickerProperty';
@@ -131,9 +129,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one date property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithDateProperty(): void
     {
         $modelName = 'ModelWithDateProperty';
@@ -171,9 +168,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one date time property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithDateTimeProperty(): void
     {
         $modelName = 'ModelWithDateTimeProperty';
@@ -211,9 +207,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one email property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithEmailProperty(): void
     {
         $modelName = 'ModelWithEmailProperty';
@@ -251,9 +246,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable email property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableEmailProperty(): void
     {
         $modelName = 'ModelWithNullableEmailProperty';
@@ -292,9 +286,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one file property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithFileProperty(): void
     {
         $modelName = 'ModelWithFileProperty';
@@ -337,9 +330,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one float property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithFloatProperty(): void
     {
         $modelName = 'ModelWithFloatProperty';
@@ -377,9 +369,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable float property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableFloatProperty(): void
     {
         $modelName = 'ModelWithNullableFloatProperty';
@@ -418,9 +409,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one image property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithImageProperty(): void
     {
         $modelName = 'ModelWithImageProperty';
@@ -463,9 +453,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one link property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithInputLinkProperty(): void
     {
         $modelName = 'ModelWithInputLinkProperty';
@@ -503,9 +492,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one int property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithIntegerProperty(): void
     {
         $modelName = 'ModelWithIntegerProperty';
@@ -543,9 +531,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable int property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableIntegerProperty(): void
     {
         $modelName = 'ModelWithNullableIntegerProperty';
@@ -584,9 +571,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one native date property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNativeDateProperty(): void
     {
         $modelName = 'ModelWithNativeDateProperty';
@@ -624,9 +610,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one native date time property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNativeDateTimeProperty(): void
     {
         $modelName = 'ModelWithNativeDateTimeProperty';
@@ -664,9 +649,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one native time property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNativeTimeProperty(): void
     {
         $modelName = 'ModelWithNativeTimeProperty';
@@ -704,9 +688,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one none property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNoneProperty(): void
     {
         $modelName = 'ModelWithNoneProperty';
@@ -744,9 +727,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one pass through property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithPassThroughProperty(): void
     {
         $modelName = 'ModelWithPassThroughProperty';
@@ -784,9 +766,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one password property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithPasswordProperty(): void
     {
         $modelName = 'ModelWithPasswordProperty';
@@ -824,9 +805,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable password property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullablePasswordProperty(): void
     {
         $modelName = 'ModelWithNullablePasswordProperty';
@@ -865,9 +845,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one rich text property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithRichTextProperty(): void
     {
         $modelName = 'ModelWithRichTextProperty';
@@ -905,9 +884,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one select property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithSelectProperty(): void
     {
         $modelName = 'ModelWithSelectProperty';
@@ -945,9 +923,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one slug property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithSlugProperty(): void
     {
         $modelName = 'ModelWithSlugProperty';
@@ -985,9 +962,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one string property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithStringProperty(): void
     {
         $modelName = 'ModelWithStringProperty';
@@ -1025,9 +1001,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable string property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableStringProperty(): void
     {
         $modelName = 'ModelWithNullableStringProperty';
@@ -1066,9 +1041,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one text property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithTextProperty(): void
     {
         $modelName = 'ModelWithTextProperty';
@@ -1106,9 +1080,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable text property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableTextProperty(): void
     {
         $modelName = 'ModelWithNullableTextProperty';
@@ -1147,9 +1120,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one time property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithTimeProperty(): void
     {
         $modelName = 'ModelWithTimeProperty';
@@ -1187,9 +1159,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable time property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableTimeProperty(): void
     {
         $modelName = 'ModelWithNullableTimeProperty';
@@ -1228,9 +1199,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one time sec property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithTimeSecProperty(): void
     {
         $modelName = 'ModelWithTimeSecProperty';
@@ -1268,9 +1238,8 @@ class GeneratedPropertyTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object with one nullable time sec property
-     *
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function writeModelClassWithNullableTimeSecProperty(): void
     {
         $modelName = 'ModelWithNullableTimeSecProperty';

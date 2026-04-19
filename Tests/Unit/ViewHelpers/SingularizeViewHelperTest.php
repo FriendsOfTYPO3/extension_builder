@@ -39,10 +39,8 @@ class SingularizeViewHelperTest extends ViewHelperBaseTestcase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider renderDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('renderDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderWithChildren(string $singular, string $expected): void
     {
         $viewHelper = new SingularizeViewHelper();

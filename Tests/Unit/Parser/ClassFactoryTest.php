@@ -37,9 +37,7 @@ class ClassFactoryTest extends BaseUnitTest
         $this->classFactory = new ClassFactory();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildParameterNodePreservesPromotedPropertyFlags(): void
     {
         $nodeFactory = new NodeFactory();
@@ -56,9 +54,7 @@ class ClassFactoryTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildClassMethodObjectPreservesIdentifierReturnType(): void
     {
         $factory = new BuilderFactory();
@@ -73,9 +69,7 @@ class ClassFactoryTest extends BaseUnitTest
         self::assertSame('void', $methodObject->getReturnType());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildMethodNodeUsesNameNodeForRelativeNamespacedReturnType(): void
     {
         $nodeFactory = new NodeFactory();
@@ -89,9 +83,7 @@ class ClassFactoryTest extends BaseUnitTest
         self::assertNotInstanceOf(FullyQualified::class, $methodNode->getReturnType());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildMethodNodeUsesFullyQualifiedNodeForLeadingBackslashReturnType(): void
     {
         $nodeFactory = new NodeFactory();
@@ -104,9 +96,7 @@ class ClassFactoryTest extends BaseUnitTest
         self::assertInstanceOf(FullyQualified::class, $methodNode->getReturnType());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildClassObject(): void
     {
         $builderFactory = new BuilderFactory();

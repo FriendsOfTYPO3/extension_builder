@@ -22,9 +22,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripPreviewChangesTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function previewChangesReturnsNoChangesWhenPropertiesUnchanged(): void
     {
         $modelName = 'PreviewUnchanged';
@@ -56,9 +54,7 @@ class RoundTripPreviewChangesTest extends BaseFunctionalTest
         self::assertEmpty($result['deletedFiles']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function previewChangesDetectsRenamedProperty(): void
     {
         $modelName = 'PreviewRename';
@@ -94,9 +90,7 @@ class RoundTripPreviewChangesTest extends BaseFunctionalTest
         self::assertEquals('getNewName', $renames[0]['to']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function previewChangesDetectsRemovedProperty(): void
     {
         $modelName = 'PreviewRemoved';
@@ -126,9 +120,7 @@ class RoundTripPreviewChangesTest extends BaseFunctionalTest
         self::assertNotEmpty($removed);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function previewChangesDetectsDeletedDomainObject(): void
     {
         $modelName = 'PreviewDeleted';

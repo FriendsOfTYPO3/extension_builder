@@ -46,9 +46,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         $this->extensionKey = 'dummy';
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function conversionExtractsExtensionProperties(): void
     {
         $description = 'My cool fancy description';
@@ -85,9 +83,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         self::assertEquals($extension, $actual, 'Extension properties were not extracted.');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function conversionExtractsPersons(): void
     {
         $persons = [];
@@ -135,9 +131,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         self::assertEquals($persons, $extension->getPersons(), 'Persons set wrong in ObjectBuilder.');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function conversionMapsGenerateSiteSet(): void
     {
         $input = [
@@ -159,9 +153,7 @@ class ExtensionSchemaBuilderTest extends BaseUnitTest
         self::assertTrue($extension->getGenerateSiteSet());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function conversionExtractsWholeExtensionMetadataWithRelations(): void
     {
         $input = [

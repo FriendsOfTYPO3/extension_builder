@@ -74,18 +74,14 @@ class FileGeneratorXlfTest extends UnitTestCase
             XML;
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function returnsFalseWhenFileDoesNotExist(): void
     {
         $path = vfsStream::url('root/locallang.xlf');
         self::assertFalse($this->callXlfContentIsUnchanged($path, $this->xlf('2025-01-01T00:00:00Z')));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function returnsTrueWhenOnlyDateAttributeDiffers(): void
     {
         $path = vfsStream::url('root/locallang.xlf');
@@ -96,9 +92,7 @@ class FileGeneratorXlfTest extends UnitTestCase
         self::assertTrue($this->callXlfContentIsUnchanged($path, $this->xlf('2026-04-11T12:00:00Z')));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function returnsFalseWhenLabelChanged(): void
     {
         $path = vfsStream::url('root/locallang.xlf');

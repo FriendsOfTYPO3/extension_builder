@@ -42,9 +42,9 @@ class CompatibilityTest extends BaseFunctionalTest
      * generated files with the originally created ones
      * This test should help, to find compatibility breaking changes
      *
-     * @test
      * @throws ExtensionException
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateExtensionFromVersion3Configuration(): void
     {
         $configurationManager = GeneralUtility::makeInstance(ExtensionBuilderConfigurationManager::class);

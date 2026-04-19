@@ -41,9 +41,7 @@ abstract class BaseUnitTest extends UnitTestCase
 
         $settings = SpycYAMLParser::YAMLLoadString(file_get_contents($this->fixturesPath . 'Settings/settings1.yaml'));
 
-        $this->extension = $this->getMockBuilder(Extension::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        $this->extension = new Extension();
         $this->extension->setVendorName('EBT');
 
         $this->extension->setExtensionKey('dummy');

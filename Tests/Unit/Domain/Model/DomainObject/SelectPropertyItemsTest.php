@@ -22,18 +22,14 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
 class SelectPropertyItemsTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function selectItemsDefaultsToEmptyArray(): void
     {
         $property = new SelectProperty();
         self::assertSame([], $property->getSelectItems());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function selectItemsCanBeSetAndRetrieved(): void
     {
         $property = new SelectProperty();
@@ -45,18 +41,14 @@ class SelectPropertyItemsTest extends BaseUnitTest
         self::assertSame($items, $property->getSelectItems());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function hasSelectItemsReturnsFalseWhenEmpty(): void
     {
         $property = new SelectProperty();
         self::assertFalse($property->hasSelectItems());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function hasSelectItemsReturnsTrueWhenItemsAreSet(): void
     {
         $property = new SelectProperty();

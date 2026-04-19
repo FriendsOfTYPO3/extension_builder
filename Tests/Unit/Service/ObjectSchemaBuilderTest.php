@@ -44,9 +44,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         $this->objectSchemaBuilder = new ObjectSchemaBuilder($this->configurationManager);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function domainObjectHasExpectedProperties(): void
     {
         $name = 'MyDomainObject';
@@ -107,9 +105,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         self::assertEquals($expected, $actual, 'Domain Object not built correctly.');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function domainObjectHasExpectedRelations(): void
     {
         //        $this->markTestSkipped(
@@ -172,9 +168,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         self::assertEquals($actual, $expected, 'Domain Object not built correctly.');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildRelationWithMissingExcludeFieldDefaultsToFalse(): void
     {
         $className = '\\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser';
@@ -209,9 +203,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         self::assertFalse($properties[0]->getExcludeField(), 'excludeField should default to false when missing from JSON');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function manyToManyRelationReturnsCorrectRelationTable(): void
     {
         $name = 'MyDomainObject';
@@ -261,9 +253,7 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
         self::assertEquals('fe_users', $relation->getForeignDatabaseTableName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function anyToManyRelationHasExpectedProperties(): void
     {
         $domainObjectName1 = 'DomainObject1';
@@ -309,8 +299,8 @@ class ObjectSchemaBuilderTest extends BaseUnitTest
 
     /**
      * Find the mapped table for a foreign related class
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function anyToManyRelationToForeignClassBuildsCorrectRelationTableName(): void
     {
         $domainObjectName1 = 'DomainObject1';

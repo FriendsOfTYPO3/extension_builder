@@ -21,9 +21,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripCorruptFileTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getDomainModelClassFileReturnsNullForCorruptPhpFile(): void
     {
         $modelName = 'CorruptModel';
@@ -43,9 +41,7 @@ class RoundTripCorruptFileTest extends BaseFunctionalTest
         self::assertNull($result, 'Expected null for corrupt PHP file, got a File object');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getControllerClassFileReturnsNullForCorruptPhpFile(): void
     {
         $modelName = 'CorruptController';
@@ -65,9 +61,7 @@ class RoundTripCorruptFileTest extends BaseFunctionalTest
         self::assertNull($result, 'Expected null for corrupt controller PHP file, got a File object');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getRepositoryClassFileReturnsNullForCorruptPhpFile(): void
     {
         $modelName = 'CorruptRepository';
@@ -87,9 +81,7 @@ class RoundTripCorruptFileTest extends BaseFunctionalTest
         self::assertNull($result, 'Expected null for corrupt repository PHP file, got a File object');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function corruptModelFileAddsParseWarning(): void
     {
         $modelName = 'CorruptModelWarn';
@@ -112,9 +104,7 @@ class RoundTripCorruptFileTest extends BaseFunctionalTest
         self::assertStringContainsString($modelName . '.php', $warnings[0]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getDomainModelClassFileContinuesForOtherObjectsAfterCorruptFile(): void
     {
         $corruptName = 'CorruptModelA';

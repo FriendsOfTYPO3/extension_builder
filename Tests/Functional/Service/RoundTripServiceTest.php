@@ -35,8 +35,8 @@ class RoundTripServiceTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function relatedMethodsReflectRenamingAProperty(): void
     {
         $modelName = 'model7';
@@ -86,9 +86,7 @@ class RoundTripServiceTest extends BaseFunctionalTest
         self::assertTrue($classObject->methodExists('setNewProp1Name'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function relatedMethodsReflectRenamingARelation(): void
     {
         $modelName = 'Model8';
@@ -158,8 +156,8 @@ class RoundTripServiceTest extends BaseFunctionalTest
 
     /**
      * Write a simple model class for a non aggregate root domain object
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function relatedMethodsReflectRenamingARelatedModel(): void
     {
         $modelName = 'Model8';

@@ -53,9 +53,7 @@ class RoundTripControllerActionsTest extends BaseFunctionalTest
         return $domainObject;
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function addingAnActionToControllerIsReflectedInRoundtrip(): void
     {
         $modelName = 'ActionAddModel';
@@ -88,9 +86,7 @@ class RoundTripControllerActionsTest extends BaseFunctionalTest
         self::assertFalse($controllerClass->methodExists('createAction'), 'createAction not yet in file — will be added by class builder');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function removingAnActionFromControllerIsReflectedInRoundtrip(): void
     {
         $modelName = 'ActionRemoveModel';

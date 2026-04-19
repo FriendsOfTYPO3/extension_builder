@@ -23,9 +23,7 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
 class ObjectSchemaBuilderSelectItemsTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildPropertyMapsSelectItemsToSelectProperty(): void
     {
         $input = [
@@ -46,9 +44,7 @@ class ObjectSchemaBuilderSelectItemsTest extends BaseUnitTest
         ], $property->getSelectItems());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function buildPropertyDefaultsSelectItemsToEmptyArrayWhenMissing(): void
     {
         $input = [

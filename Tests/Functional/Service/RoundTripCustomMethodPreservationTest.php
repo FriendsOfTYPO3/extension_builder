@@ -48,9 +48,7 @@ class RoundTripCustomMethodPreservationTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function customMethodInModelIsPreservedOnRoundtrip(): void
     {
         $modelName = 'RoundtripModel';
@@ -99,9 +97,7 @@ class RoundTripCustomMethodPreservationTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function customMethodInControllerIsPreservedOnRoundtrip(): void
     {
         $modelName = 'RoundtripController';
@@ -143,9 +139,7 @@ class RoundTripCustomMethodPreservationTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function customMethodInRepositoryIsPreservedOnRoundtrip(): void
     {
         $modelName = 'RoundtripRepository';

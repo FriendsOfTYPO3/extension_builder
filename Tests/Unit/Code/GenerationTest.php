@@ -43,10 +43,7 @@ class GenerationTest extends BaseUnitTest
     }
 
     // --- RichTextProperty TCA template ---
-
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function richTextPropertyTemplateDoesNotContainDeprecatedEval(): void
     {
         $content = $this->readTemplate('RichTextProperty.phpt');
@@ -57,9 +54,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function richTextPropertyTemplateUsesRequiredFieldForValidation(): void
     {
         $content = $this->readTemplate('RichTextProperty.phpt');
@@ -70,9 +65,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function richTextPropertyTemplateHasEnableRichtextConfig(): void
     {
         $content = $this->readTemplate('RichTextProperty.phpt');
@@ -83,9 +76,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function richTextPropertyTemplateHasTextType(): void
     {
         $content = $this->readTemplate('RichTextProperty.phpt');
@@ -97,10 +88,7 @@ class GenerationTest extends BaseUnitTest
     }
 
     // --- SlugProperty TCA template ---
-
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function slugPropertyTemplateDoesNotContainDeprecatedEval(): void
     {
         $content = $this->readTemplate('SlugProperty.phpt');
@@ -111,9 +99,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function slugPropertyTemplateDoesNotHardcodeTitle(): void
     {
         $content = $this->readTemplate('SlugProperty.phpt');
@@ -124,9 +110,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function slugPropertyTemplateUsesDomainObjectFirstStringPropertyFieldName(): void
     {
         $content = $this->readTemplate('SlugProperty.phpt');
@@ -137,9 +121,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function slugPropertyTemplateHasGeneratorOptions(): void
     {
         $content = $this->readTemplate('SlugProperty.phpt');
@@ -150,9 +132,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function slugPropertyTemplateHasFallbackCharacter(): void
     {
         $content = $this->readTemplate('SlugProperty.phpt');
@@ -163,9 +143,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function slugPropertyTemplateHasSlugType(): void
     {
         $content = $this->readTemplate('SlugProperty.phpt');
@@ -177,10 +155,7 @@ class GenerationTest extends BaseUnitTest
     }
 
     // --- Model.phpt template ---
-
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modelTemplateIsPropertyMethodHasBoolReturnType(): void
     {
         $content = file_get_contents($this->modelTemplatePath);
@@ -191,9 +166,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modelTemplateIsPropertyMethodCastsValueToBool(): void
     {
         $content = file_get_contents($this->modelTemplatePath);
@@ -204,9 +177,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modelTemplateGetterHasStringReturnType(): void
     {
         $content = file_get_contents($this->modelTemplatePath);
@@ -217,9 +188,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modelTemplateSetterHasVoidReturnType(): void
     {
         $content = file_get_contents($this->modelTemplatePath);
@@ -230,9 +199,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modelTemplateUsesDeclareStrictTypes(): void
     {
         $content = file_get_contents($this->modelTemplatePath);
@@ -244,10 +211,7 @@ class GenerationTest extends BaseUnitTest
     }
 
     // --- Relation TCA templates ---
-
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function manyToOneRelationTemplateHasTypeSelect(): void
     {
         $content = $this->readTemplate('ManyToOneRelation.phpt');
@@ -258,9 +222,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function manyToManyRelationTemplateHasTypeSelect(): void
     {
         $content = $this->readTemplate('ManyToManyRelation.phpt');
@@ -271,9 +233,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function zeroToOneRelationTemplateHasTypeSelectForSelectRenderType(): void
     {
         $content = $this->readTemplate('ZeroToOneRelation.phpt');
@@ -284,9 +244,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function zeroToManyRelationTemplateHasTypeSelectForSelectRenderType(): void
     {
         $content = $this->readTemplate('ZeroToManyRelation.phpt');
@@ -297,9 +255,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function zeroToManyRelationTemplateHasTypeInlineForDefaultCase(): void
     {
         $content = $this->readTemplate('ZeroToManyRelation.phpt');
@@ -311,10 +267,7 @@ class GenerationTest extends BaseUnitTest
     }
 
     // --- DomainObject::getFirstStringPropertyFieldName() ---
-
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getFirstStringPropertyFieldNameReturnsFieldNameOfFirstStringProperty(): void
     {
         $domainObject = $this->buildDomainObject('TestModel');
@@ -329,9 +282,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getFirstStringPropertyFieldNameFallsBackToTitleWhenNoStringProperty(): void
     {
         $domainObject = $this->buildDomainObject('TestModel');
@@ -346,9 +297,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getFirstStringPropertyFieldNameFallsBackToTitleWhenPropertiesAreEmpty(): void
     {
         $domainObject = $this->buildDomainObject('TestModel');
@@ -360,9 +309,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getFirstStringPropertyFieldNameSkipsNonStringPropertiesBeforeStringProperty(): void
     {
         $domainObject = $this->buildDomainObject('TestModel');
@@ -386,9 +333,7 @@ class GenerationTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getFirstStringPropertyFieldNameReturnsFirstNotSubsequentStringProperty(): void
     {
         $domainObject = $this->buildDomainObject('TestModel');

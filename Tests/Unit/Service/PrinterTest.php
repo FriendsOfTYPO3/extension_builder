@@ -49,9 +49,7 @@ class PrinterTest extends BaseUnitTest
         $this->parserService = new ParserService();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printSimplePropertyClass(): void
     {
         self::assertTrue(
@@ -64,9 +62,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printClassWithMultipleProperties(): void
     {
         $fileName = 'ClassWithMultipleProperties.php';
@@ -74,9 +70,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareClasses($classFileObject, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printSimpleClassMethodWithManyParameter(): void
     {
         $fileName = 'ClassMethodWithManyParameter.php';
@@ -85,9 +79,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printSimpleClassMethodWithMissingParameterTag(): void
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
@@ -96,9 +88,7 @@ class PrinterTest extends BaseUnitTest
         // No way to detect the typeHint with Reflection...
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printClassWithIncludeStatement(): void
     {
         $fileName = 'ClassWithIncludeStatement.php';
@@ -110,9 +100,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printClassWithDefaultValuesInProperties(): void
     {
         $fileName = 'BasicClassWithDefaultValuesInProperties.php';
@@ -121,9 +109,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printClassWithPreStatements(): void
     {
         $fileName = 'ClassWithPreStatements.php';
@@ -135,9 +121,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printClassWithPostStatements(): void
     {
         $fileName = 'ClassWithPostStatements.php';
@@ -149,9 +133,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printClassWithPreAndPostStatements(): void
     {
         $fileName = 'ClassWithPreAndPostStatements.php';
@@ -163,9 +145,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printSimpleNamespacedClass(): void
     {
         $fileName = 'SimpleNamespace.php';
@@ -174,9 +154,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printSimpleNamespacedClassExtendingOtherClass(): void
     {
         $fileName = 'SimpleNamespaceExtendingOtherClass.php';
@@ -185,9 +163,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printSimpleNamespaceWithUseStatement(): void
     {
         $fileName = 'SimpleNamespaceWithUseStatement.php';
@@ -196,9 +172,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printMultipleNamespacedClass(): void
     {
         $fileName = 'MultipleNamespaces.php';
@@ -209,9 +183,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printMultipleBracedNamespacedClass(): void
     {
         $fileName = 'MultipleBracedNamespaces.php';
@@ -221,9 +193,7 @@ class PrinterTest extends BaseUnitTest
         self::assertTrue(class_exists('Parser\Test\Model2\MultipleBracedNamespaces'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printMultiLineArray(): void
     {
         $fileName = 'ClassWithArrayProperty.php';
@@ -232,9 +202,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printsClassMethodWithMissingParameterTag(): void
     {
         $fileName = 'ClassMethodWithMissingParameterTag.php';
@@ -247,9 +215,7 @@ class PrinterTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printsNamespacedClassMethodWitNamespacedParameter(): void
     {
         $fileName = 'ClassMethodWithManyParameter.php';
@@ -271,9 +237,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal('Namespaces/' . $fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function printsClassMethodWithMultilineParameter(): void
     {
         $fileName = 'ClassMethodWithMultilineParameter.php';
@@ -292,9 +256,7 @@ class PrinterTest extends BaseUnitTest
         $this->compareGeneratedCodeWithOriginal($fileName, $this->tmpDir . $fileName);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parsedFileObjectCarriesOriginalStmtsAndTokens(): void
     {
         $classFileObject = $this->parserService->parseFile($this->fixturesPath . 'SimpleProperty.php');
@@ -304,9 +266,7 @@ class PrinterTest extends BaseUnitTest
         self::assertNotEmpty($classFileObject->getOrigTokens());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function newFileObjectHasNoOrigStmtsOrTokens(): void
     {
         $fileObject = new File();
@@ -314,12 +274,7 @@ class PrinterTest extends BaseUnitTest
         self::assertNull($fileObject->getOrigTokens());
     }
 
-    /**
-     * @test
-     *
-     * Regression test for https://github.com/FriendsOfTYPO3/extension_builder/issues/628
-     * Verifies that nested method call arguments retain proper indentation after a roundtrip.
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderPreservesIndentationOfNestedMethodCalls(): void
     {
         $fileName = 'ClassWithNestedMethodCalls.php';
@@ -346,12 +301,7 @@ class PrinterTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     *
-     * Regression test for https://github.com/FriendsOfTYPO3/extension_builder/issues/628
-     * Verifies a single multiline arg (array literal) is properly indented.
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderPreservesIndentationOfMultilineArrayArg(): void
     {
         $fileName = 'ClassWithNestedMethodCalls.php';
@@ -367,13 +317,7 @@ class PrinterTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     *
-     * Regression test for https://github.com/FriendsOfTYPO3/extension_builder/issues/130
-     * Verifies that a newline is preserved after a case label, so statements appear on
-     * their own line instead of being concatenated onto the same line as the colon.
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderPreservesNewlineAfterCaseLabel(): void
     {
         $fileName = 'ClassWithSwitchStatement.php';

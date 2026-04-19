@@ -22,9 +22,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripPropertyRenameWarningTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function propertyRenameAddsDbColumnWarning(): void
     {
         $modelName = 'WarnOnPropRename';
@@ -63,9 +61,7 @@ class RoundTripPropertyRenameWarningTest extends BaseFunctionalTest
         self::assertStringContainsString('tx_dummy_domain_model_warnonproprename.headline', $combined);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function propertyRenameWarningIsAbsentWhenNameUnchanged(): void
     {
         $modelName = 'WarnPropUnchanged';

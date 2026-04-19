@@ -21,9 +21,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripDomainObjectRenameTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function domainObjectRenameUpdatesModelControllerAndRepository(): void
     {
         $oldName = 'Foo';
@@ -82,9 +80,7 @@ class RoundTripDomainObjectRenameTest extends BaseFunctionalTest
         self::assertStringNotContainsString('Foo', $repositoryClass->getName());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renameAggregateRootUpdatesInjectMethodAndActionParameters(): void
     {
         $oldName = 'Entries';
@@ -146,9 +142,7 @@ class RoundTripDomainObjectRenameTest extends BaseFunctionalTest
         }
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renameAggregateRootUpdatesInjectMethodNameAndBody(): void
     {
         $oldName = 'Foo';

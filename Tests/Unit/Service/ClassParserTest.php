@@ -43,8 +43,8 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a basic class from a file
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseBasicClass(): void
     {
         $file = $this->fixturesPath . 'ClassParser/BasicClass.php';
@@ -53,8 +53,8 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a basic class from a file
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseBasicNameSpacedClass(): void
     {
         $file = $this->fixturesPath . 'ClassParser/BasicNameSpacedClass.php';
@@ -63,8 +63,8 @@ class ClassParserTest extends BaseUnitTest
 
     /**
      * Parse a complex class from a file
-     * @test
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function parseComplexClass(): void
     {
         $file = $this->fixturesPath . 'ClassParser/ComplexClass.php';

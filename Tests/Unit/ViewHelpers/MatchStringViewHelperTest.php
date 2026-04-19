@@ -45,10 +45,8 @@ class MatchStringViewHelperTest extends ViewHelperBaseTestcase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider renderDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('renderDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function renderWithContentArgument(string $match, string $in, bool $caseSensitive, bool $expected): void
     {
         $viewHelper = new MatchStringViewHelper();

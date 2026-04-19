@@ -59,9 +59,7 @@ class RoundTripInitializeTest extends BaseFunctionalTest
         return $extension;
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function initializeWithMissingJsonTreatsAsFreshExtension(): void
     {
         $extKey = 'no_json_ext';
@@ -77,9 +75,7 @@ class RoundTripInitializeTest extends BaseFunctionalTest
         self::assertNull($this->roundTrip->_get('previousExtension'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function initializeWithMalformedJsonTreatsAsFreshExtension(): void
     {
         $extKey = 'malformed_json_ext';
@@ -97,9 +93,7 @@ class RoundTripInitializeTest extends BaseFunctionalTest
         self::assertNull($this->roundTrip->_get('previousExtension'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function initializeWithValidJsonLoadsPreviousExtension(): void
     {
         $extKey = 'valid_json_ext';

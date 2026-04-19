@@ -71,9 +71,7 @@ class RoundTripExtensionKeyRenameTest extends BaseFunctionalTest
         // Avoid deletion of the shared fixture extension directory
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function extensionKeyRenameUpdatesNamespaceInModelClass(): void
     {
         $mainObject = $this->fixtureExtension->getDomainObjectByName('Main');
@@ -95,9 +93,7 @@ class RoundTripExtensionKeyRenameTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function extensionKeyRenameUpdatesNamespaceInControllerClass(): void
     {
         $mainObject = $this->fixtureExtension->getDomainObjectByName('Main');
@@ -119,9 +115,7 @@ class RoundTripExtensionKeyRenameTest extends BaseFunctionalTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function extensionKeyRenameUpdatesNamespaceInRepositoryClass(): void
     {
         $mainObject = $this->fixtureExtension->getDomainObjectByName('Main');

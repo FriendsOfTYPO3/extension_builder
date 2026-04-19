@@ -24,17 +24,13 @@ use EBT\ExtensionBuilder\Tests\BaseUnitTest;
 
 class ValidationServiceTest extends BaseUnitTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function testForReservedWord(): void
     {
         self::assertTrue(ExtensionValidator::isReservedWord('DATABASE'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function validateExtensionWarnsForDomainObjectWithNoProperties(): void
     {
         $domainObject = $this->buildDomainObject('EmptyModel');
@@ -52,9 +48,7 @@ class ValidationServiceTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function noWarningForDomainObjectWithNoPropertiesWhenItIsInlineFkTarget(): void
     {
         $ownerObject = $this->buildDomainObject('OwnerModel', true, true);
@@ -78,9 +72,7 @@ class ValidationServiceTest extends BaseUnitTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function validateConfigurationFormatReturnsExceptionsOnDuplicatePropertyNames(): void
     {
         $fixture = [

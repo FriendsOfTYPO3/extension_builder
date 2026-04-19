@@ -21,9 +21,7 @@ use EBT\ExtensionBuilder\Tests\BaseFunctionalTest;
 
 class RoundTripDomainObjectTableWarningTest extends BaseFunctionalTest
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function domainObjectRenameAddsDbTableWarning(): void
     {
         $oldName = 'OldArticle';
@@ -51,9 +49,7 @@ class RoundTripDomainObjectTableWarningTest extends BaseFunctionalTest
         self::assertStringContainsString('TCA', $combined);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function domainObjectRenameWarningIsAbsentWhenNameUnchanged(): void
     {
         $name = 'UnchangedObject';

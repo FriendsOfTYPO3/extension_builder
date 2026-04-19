@@ -41,18 +41,14 @@ class ExtensionTest extends BaseUnitTest
         $this->persons[] = (new Person())->setName('2');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getPersonsSetPersons(): void
     {
         $this->extension->setPersons($this->persons);
         self::assertEquals($this->extension->getPersons(), $this->persons, 'Extensions Persons have been set wrong.');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function addPerson(): void
     {
         self::assertEquals([], $this->extension->getPersons(), 'Extensions Persons are not empty.');
@@ -68,17 +64,13 @@ class ExtensionTest extends BaseUnitTest
         self::assertEquals('2', $persons[2]->getName(), 'Wrong ordering of Persons in Extension.');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function generateSiteSetDefaultValueIsFalse(): void
     {
         self::assertFalse($this->extension->getGenerateSiteSet());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoReturnsCorrectConstraintsForV13(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -93,9 +85,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertSame('^9.0', $composerInfo['require-dev']['typo3/testing-framework']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getDependenciesAlwaysContainsExtbase(): void
     {
         $dependencies = $this->extension->getDependencies();
@@ -104,9 +94,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertSame('13.4.0-13.4.99', $dependencies['extbase']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getDependenciesDoesNotOverrideExistingExtbaseConstraint(): void
     {
         $this->extension->setDependencies(['extbase' => '12.0.0-12.4.99']);
@@ -116,9 +104,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertSame('12.0.0-12.4.99', $dependencies['extbase']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoDoesNotContainTerReplace(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -130,9 +116,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertArrayNotHasKey('replace', $composerInfo);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoContainsPhpConstraint(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -143,9 +127,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertArrayHasKey('php', $composerInfo['require']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoIncludesAuthorEmailWhenSet(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -159,9 +141,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertSame('john@example.com', $composerInfo['authors'][0]['email']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoOmitsEmailKeyWhenEmpty(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -174,9 +154,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertArrayNotHasKey('email', $composerInfo['authors'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoIncludesHomepageFromCompanyWhenSet(): void
     {
         $this->extension->setExtensionKey('test_extension');
@@ -189,9 +167,7 @@ class ExtensionTest extends BaseUnitTest
         self::assertSame('https://example.com', $composerInfo['authors'][0]['homepage']);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getComposerInfoIncludesAllAuthors(): void
     {
         $this->extension->setExtensionKey('test_extension');

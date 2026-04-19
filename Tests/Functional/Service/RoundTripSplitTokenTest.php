@@ -42,9 +42,7 @@ class RoundTripSplitTokenTest extends BaseFunctionalTest
         $this->fileGenerator->_set('extension', $this->extension);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function customCodeBelowSplitTokenSurvivesClassFileRegeneration(): void
     {
         $modelName = 'SplitTokenModel';
