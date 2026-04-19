@@ -32,6 +32,102 @@ of the graphical editor and not directly in the :file:`ext_emconf.php` and
 
 Make sure you configure the :ref:`overwrite-settings`.
 
+.. _yaml-configuration-for-roundtrip:
+
+YAML configuration
+==================
+
+The file :file:`Configuration/ExtensionBuilder/settings.yaml` in your
+extension controls how each file or folder is handled when the extension is
+saved again in the Extension Builder. The top-level key is
+``overwriteSettings``; its nesting mirrors the file system structure of the
+extension.
+
+Three values are available:
+
+``merge``
+   **Class files:** All properties, methods and method bodies are updated
+   individually — your custom code inside methods is preserved.
+
+   **Language files:** Existing keys and their translations are kept;
+   new keys are added.
+
+   **All other files:** A :ref:`split token <split-token>` is placed at the
+   end of the generated section. Everything *before* the token is overwritten
+   on each save; everything *after* the token is preserved.
+
+``keep``
+   The file or folder is never overwritten after its initial creation.
+
+   .. warning::
+
+      Using ``keep`` on files that the Extension Builder must update (e.g.
+      TCA or SQL) may break the ability to edit the extension in the
+      graphical editor.
+
+``skip``
+   The file or folder is never created by the Extension Builder.
+
+   .. warning::
+
+      Same risk as ``keep`` — use with care.
+
+Example :file:`Configuration/ExtensionBuilder/settings.yaml`:
+
+.. code-block:: yaml
+
+   overwriteSettings:
+     Classes:
+       Controller: merge
+       Domain:
+         Model: merge
+         Repository: merge
+
+     Configuration:
+       #TCA: merge
+       #TypoScript: keep
+
+     Resources:
+       Private:
+         Language: merge
+         #Templates: keep
+
+     Documentation: skip
+
+.. _split-token:
+
+Split token
+===========
+
+When a file's overwrite setting is ``merge``, the Extension Builder inserts a
+special marker line — the *split token* — at the end of the auto-generated
+section:
+
+.. code-block:: none
+
+   ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
+
+Everything **before** this token is regenerated on every save and must not be
+edited manually. Everything **after** this token is preserved across saves and
+is the right place for your custom additions.
+
+The token is used in non-PHP, non-language files such as TypoScript setup or
+YAML configuration files. PHP class files and language files use a more
+granular merge strategy instead (see the ``merge`` description above).
+
+**Example** — adding a custom TypoScript constant after the token:
+
+.. code-block:: typoscript
+
+   plugin.tx_myextension {
+       view.templateRootPaths.0 = EXT:my_extension/Resources/Private/Templates/
+       persistence.storagePid = 42
+   }
+   ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
+
+   # Custom override: use a different storage page on staging
+   plugin.tx_myextension.persistence.storagePid = 99
+
 .. _overview-of-the-roundtrip-features:
 
 Overview of the roundtrip features
