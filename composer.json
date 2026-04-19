@@ -37,7 +37,7 @@
 		"typo3/cms-frontend": "^13.4",
 		"typo3/cms-install": "^13.4",
 		"typo3/coding-standards": "^0.8.0",
-		"typo3/testing-framework": "^8.0"
+		"typo3/testing-framework": "^9.5"
 	},
 	"autoload": {
 		"psr-4": {
