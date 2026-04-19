@@ -5,6 +5,7 @@ export const extensionPropertiesFields = [
             name: 'name',
             label: 'name',
             typeInvite: 'extensionTitle',
+            description: 'descr_name',
             required: true,
         },
     },
@@ -64,6 +65,7 @@ export const extensionPropertiesFields = [
             name: 'description',
             label: 'description',
             typeInvite: 'description',
+            description: 'descr_description',
             cols: 30,
         },
     },
@@ -122,6 +124,7 @@ export const extensionPropertiesFields = [
                     inputParams: {
                         name: 'version',
                         label: 'version',
+                        description: 'descr_version',
                         required: false,
                         size: 5,
                         value: '1.0.0',
@@ -132,6 +135,7 @@ export const extensionPropertiesFields = [
                     inputParams: {
                         name: 'state',
                         label: 'state',
+                        description: 'descr_state',
                         selectValues: ['alpha', 'beta', 'stable', 'experimental', 'test'],
                         selectOptions: ['alpha', 'beta', 'stable', 'experimental', 'test'],
                     },
@@ -406,6 +410,7 @@ export const extensionPropertiesFields = [
                             inputParams: {
                                 label: 'tab_label',
                                 name: 'tabLabel',
+                                description: 'descr_tabLabel',
                             },
                         },
                         {
@@ -413,6 +418,7 @@ export const extensionPropertiesFields = [
                             inputParams: {
                                 label: 'mainModule',
                                 name: 'mainModule',
+                                description: 'descr_mainModule',
                                 required: true,
                                 selectValues: ['web', 'site', 'file', 'user', 'tools', 'system', 'help'],
                             },
