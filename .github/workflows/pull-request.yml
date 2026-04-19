@@ -17,15 +17,35 @@ jobs:
       - name: "Check Commit Type"
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^(|\[(!!!|WIP|POC)\])\[(BUGFIX|DOCS|FEATURE|SECURITY|TASK|RELEASE|DEVBOX)\] .+($|\n|\r|\n\r)'
+          pattern: '^(\[!!!\] )?(\[(WIP|POC)\] )?\[(BUGFIX|DOCS|FEATURE|TASK|RELEASE|DEVBOX)\] [A-Z].+'
           flags: ''
-          error: 'Your first line has to contain a commit type like "[BUGFIX]" or "[TASK]" or "[FEATURE]". See https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html#commitmessage'
-      - name: "Check Line Length"
+          error: 'Subject must start with [BUGFIX], [FEATURE], [TASK], [DOCS], [RELEASE], or [DEVBOX] (optionally prefixed with [!!!] or [WIP]/[POC]), followed by a capital letter. See https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html'
+      - name: "Check Subject Length"
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^[^#].{1,72}'
-          flags: 'gm'
-          error: 'The maximum line length of 72 characters is exceeded.'
+          pattern: '^.{1,72}$'
+          flags: ''
+          error: 'Subject line exceeds 72 characters.'
+      - name: "Check No Trailing Period"
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^[^.]*[^.]$'
+          flags: ''
+          error: 'Subject line must not end with a period.'
+
+  block_wip:
+    name: Block WIP/POC from merging
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: "Check for WIP/POC prefix"
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if echo "$PR_TITLE" | grep -qE '^\[?(WIP|POC)\]?'; then
+            echo "::error::This PR is marked as [WIP] or [POC] and cannot be merged. Remove the prefix when ready."
+            exit 1
+          fi
 
   assign_labels:
     name: Assign Labels
