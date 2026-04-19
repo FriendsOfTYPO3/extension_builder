@@ -846,7 +846,7 @@ class FileGenerator
             '',
             true,
             5,
-            '.*(rstt|ymlt)'
+            '.*(rstt|ymlt|xmlt)'
         );
         foreach ($docFiles as $docFile) {
             if (is_dir($docFile)) {
@@ -854,7 +854,7 @@ class FileGenerator
                     $this->extensionDirectory,
                     'Documentation/' . str_replace($this->getTemplatePath('Documentation/'), '', $docFile)
                 );
-            } elseif (!str_contains($docFile, '.rstt')   && !str_contains($docFile, '.ymlt')) {
+            } elseif (!str_contains($docFile, '.rstt') && !str_contains($docFile, '.ymlt') && !str_contains($docFile, '.xmlt')) {
                 $this->upload_copy_move(
                     $docFile,
                     str_replace(
@@ -867,8 +867,8 @@ class FileGenerator
         }
         $fileContents = $this->renderTemplate('Documentation/Index.rstt', ['extension' => $this->extension]);
         $this->writeFile($this->extensionDirectory . 'Documentation/Index.rst', $fileContents);
-        $fileContents = $this->renderTemplate('Documentation/Settings.cfgt', ['extension' => $this->extension]);
-        $this->writeFile($this->extensionDirectory . 'Documentation/Settings.cfg', $fileContents);
+        $fileContents = $this->renderTemplate('Documentation/guides.xmlt', ['extension' => $this->extension]);
+        $this->writeFile($this->extensionDirectory . 'Documentation/guides.xml', $fileContents);
     }
 
     protected function generateEmptyGitRepository(): void
