@@ -222,20 +222,6 @@ class BuilderModuleController extends ActionController
 
     protected function addRightButtons(): void
     {
-        $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
-
-        $this->registerAdvancedOptionsButtonToButtonBar($buttonBar, ButtonBar::BUTTON_POSITION_RIGHT, 2);
-    }
-
-    protected function registerAdvancedOptionsButtonToButtonBar(ButtonBar $buttonBar, string $position, int $group): void
-    {
-        $advancedOptionsButton = (new LinkButtonWithId())
-            ->setIcon($this->iconFactory->getIcon('content-menu-pages', IconSize::SMALL))
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:extension_builder/Resources/Private/Language/locallang.xlf:advancedOptions'))
-            ->setId('toggleAdvancedOptions')
-            ->setHref('#')
-            ->setShowLabelText(true);
-        $buttonBar->addButton($advancedOptionsButton, $position, $group);
     }
 
     protected function getLanguageService(): LanguageService
