@@ -89,6 +89,12 @@ export class EbListField extends LitElement {
                 align-items: center;
                 padding-top: 4px;
             }
+            [advanced] {
+                display: none;
+            }
+            :host([advanced-mode]) [advanced] {
+                display: block;
+            }
         `,
     ];
 
@@ -103,11 +109,16 @@ export class EbListField extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.addEventListener('field-updated', this._boundOnFieldUpdated);
+        this._onAdvancedModeChanged = (e) => {
+            this.toggleAttribute('advanced-mode', e.detail.enabled);
+        };
+        window.addEventListener('eb-advanced-mode-changed', this._onAdvancedModeChanged);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         this.removeEventListener('field-updated', this._boundOnFieldUpdated);
+        window.removeEventListener('eb-advanced-mode-changed', this._onAdvancedModeChanged);
     }
 
     _onFieldUpdated(e) {

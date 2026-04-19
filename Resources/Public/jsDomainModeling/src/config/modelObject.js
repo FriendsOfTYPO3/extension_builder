@@ -317,129 +317,119 @@ export const modelObjectModule = {
                                                     ],
                                                 },
                                             },
+                                            // --- Conditional field visibility ---
+                                            // Two mechanisms control which advanced fields are shown
+                                            // for a given property type (see eb-group.js:_applyPropertyTypeVisibility):
+                                            //
+                                            // visibleForTypes: [] — allowlist. Field is shown ONLY for the listed types.
+                                            //   Use for fields that are only relevant to a small set of types.
+                                            //   Adding a new property type: field stays hidden unless you add it here.
+                                            //
+                                            // hiddenForTypes: [] — denylist. Field is shown for ALL types EXCEPT the listed ones.
+                                            //   Use for fields that apply broadly but must be hidden for a few special types.
+                                            //   Adding a new property type: field is shown automatically. Only add it
+                                            //   to hiddenForTypes if it genuinely does not apply to the new type.
                                             {
-                                                type: 'group',
+                                                type: 'text',
                                                 inputParams: {
-                                                    collapsible: true,
-                                                    collapsed: true,
-                                                    flatten: true,
-                                                    className: 'advancedSettings',
-                                                    name: 'advancedSettings',
-                                                    legend: 'advancedOptions',
-                                                    fields: [
-                                                        // --- Conditional field visibility ---
-                                                        // Two mechanisms control which advanced fields are shown
-                                                        // for a given property type (see eb-group.js:_applyPropertyTypeVisibility):
-                                                        //
-                                                        // visibleForTypes: [] — allowlist. Field is shown ONLY for the listed types.
-                                                        //   Use for fields that are only relevant to a small set of types.
-                                                        //   Adding a new property type: field stays hidden unless you add it here.
-                                                        //
-                                                        // hiddenForTypes: [] — denylist. Field is shown for ALL types EXCEPT the listed ones.
-                                                        //   Use for fields that apply broadly but must be hidden for a few special types.
-                                                        //   Adding a new property type: field is shown automatically. Only add it
-                                                        //   to hiddenForTypes if it genuinely does not apply to the new type.
-                                                        {
-                                                            type: 'text',
-                                                            inputParams: {
-                                                                name: 'propertyDescription',
-                                                                placeholder: 'description',
-                                                                cols: 23,
-                                                                rows: 2,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'string',
-                                                            inputParams: {
-                                                                visibleForTypes: ['File'],
-                                                                label: 'allowedFileTypes',
-                                                                description: 'descr_allowedFileTypes',
-                                                                name: 'allowedFileTypes',
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'string',
-                                                            inputParams: {
-                                                                visibleForTypes: ['File', 'Image'],
-                                                                label: 'maxItems',
-                                                                name: 'maxItems',
-                                                                value: 1,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'boolean',
-                                                            inputParams: {
-                                                                label: 'isRequired',
-                                                                name: 'propertyIsRequired',
-                                                                value: false,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'boolean',
-                                                            inputParams: {
-                                                                hiddenForTypes: [
-                                                                    'File',
-                                                                    'Image',
-                                                                    'PassThrough',
-                                                                    'None',
-                                                                ],
-                                                                label: 'isNullable',
-                                                                name: 'propertyIsNullable',
-                                                                value: false,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'boolean',
-                                                            inputParams: {
-                                                                label: 'isExcludeField',
-                                                                name: 'propertyIsExcludeField',
-                                                                description: 'descr_isExcludeField',
-                                                                value: true,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'boolean',
-                                                            inputParams: {
-                                                                label: 'isL10nModeExclude',
-                                                                name: 'propertyIsL10nModeExclude',
-                                                                description: 'descr_isL10nModeExclude',
-                                                                value: false,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'list',
-                                                            inputParams: {
-                                                                visibleForTypes: ['Select'],
-                                                                label: 'selectItems',
-                                                                name: 'selectItems',
-                                                                sortable: true,
-                                                                elementType: {
-                                                                    type: 'group',
+                                                    name: 'propertyDescription',
+                                                    advancedMode: true,
+                                                    placeholder: 'description',
+                                                    cols: 23,
+                                                    rows: 2,
+                                                },
+                                            },
+                                            {
+                                                type: 'string',
+                                                inputParams: {
+                                                    visibleForTypes: ['File'],
+                                                    advancedMode: true,
+                                                    label: 'allowedFileTypes',
+                                                    description: 'descr_allowedFileTypes',
+                                                    name: 'allowedFileTypes',
+                                                },
+                                            },
+                                            {
+                                                type: 'string',
+                                                inputParams: {
+                                                    visibleForTypes: ['File', 'Image'],
+                                                    advancedMode: true,
+                                                    label: 'maxItems',
+                                                    name: 'maxItems',
+                                                    value: 1,
+                                                },
+                                            },
+                                            {
+                                                type: 'boolean',
+                                                inputParams: {
+                                                    label: 'isRequired',
+                                                    name: 'propertyIsRequired',
+                                                    advancedMode: true,
+                                                    value: false,
+                                                },
+                                            },
+                                            {
+                                                type: 'boolean',
+                                                inputParams: {
+                                                    hiddenForTypes: ['File', 'Image', 'PassThrough', 'None'],
+                                                    label: 'isNullable',
+                                                    name: 'propertyIsNullable',
+                                                    advancedMode: true,
+                                                    value: false,
+                                                },
+                                            },
+                                            {
+                                                type: 'boolean',
+                                                inputParams: {
+                                                    label: 'isExcludeField',
+                                                    name: 'propertyIsExcludeField',
+                                                    advancedMode: true,
+                                                    description: 'descr_isExcludeField',
+                                                    value: true,
+                                                },
+                                            },
+                                            {
+                                                type: 'boolean',
+                                                inputParams: {
+                                                    label: 'isL10nModeExclude',
+                                                    name: 'propertyIsL10nModeExclude',
+                                                    advancedMode: true,
+                                                    description: 'descr_isL10nModeExclude',
+                                                    value: false,
+                                                },
+                                            },
+                                            {
+                                                type: 'list',
+                                                inputParams: {
+                                                    visibleForTypes: ['Select'],
+                                                    advancedMode: true,
+                                                    label: 'selectItems',
+                                                    name: 'selectItems',
+                                                    sortable: true,
+                                                    elementType: {
+                                                        type: 'group',
+                                                        inputParams: {
+                                                            name: 'selectItem',
+                                                            fields: [
+                                                                {
+                                                                    type: 'string',
                                                                     inputParams: {
-                                                                        name: 'selectItem',
-                                                                        fields: [
-                                                                            {
-                                                                                type: 'string',
-                                                                                inputParams: {
-                                                                                    name: 'label',
-                                                                                    placeholder: 'label',
-                                                                                    required: true,
-                                                                                },
-                                                                            },
-                                                                            {
-                                                                                type: 'string',
-                                                                                inputParams: {
-                                                                                    name: 'value',
-                                                                                    placeholder: 'value',
-                                                                                    required: true,
-                                                                                },
-                                                                            },
-                                                                        ],
+                                                                        name: 'label',
+                                                                        placeholder: 'label',
+                                                                        required: true,
                                                                     },
                                                                 },
-                                                            },
+                                                                {
+                                                                    type: 'string',
+                                                                    inputParams: {
+                                                                        name: 'value',
+                                                                        placeholder: 'value',
+                                                                        required: true,
+                                                                    },
+                                                                },
+                                                            ],
                                                         },
-                                                    ],
+                                                    },
                                                 },
                                             },
                                         ],
@@ -505,98 +495,86 @@ export const modelObjectModule = {
                                                 },
                                             },
                                             {
-                                                type: 'group',
+                                                type: 'select',
                                                 inputParams: {
-                                                    collapsible: true,
-                                                    flatten: true,
-                                                    collapsed: true,
-                                                    className: 'advancedSettings',
-                                                    name: 'advancedSettings',
-                                                    fields: [
-                                                        {
-                                                            type: 'select',
-                                                            inputParams: {
-                                                                label: 'type',
-                                                                name: 'relationType',
-                                                                selectValues: [
-                                                                    'zeroToOne',
-                                                                    'zeroToMany',
-                                                                    'manyToOne',
-                                                                    'manyToMany',
-                                                                ],
-                                                                selectOptions: [
-                                                                    '1:1 (zeroToOne)',
-                                                                    '1:n (zeroToMany)',
-                                                                    'n:1 (manyToOne)',
-                                                                    'm:n (manyToMany)',
-                                                                ],
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'select',
-                                                            inputParams: {
-                                                                label: 'renderType',
-                                                                description: 'desc_renderType',
-                                                                wrapperClassName:
-                                                                    'inputEx-fieldWrapper dependant renderType',
-                                                                className: 'inputEx-Field isDependant',
-                                                                name: 'renderType',
-                                                                selectValues: [
-                                                                    'selectSingleBox',
-                                                                    'selectCheckBox',
-                                                                    'selectMultipleSideBySide',
-                                                                    'inline',
-                                                                    'selectSingle',
-                                                                ],
-                                                                selectOptions: [
-                                                                    'Single box',
-                                                                    'Checkboxes',
-                                                                    'Side by side multi select',
-                                                                    'Inline (IRRE)',
-                                                                    'Dropdown',
-                                                                ],
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'text',
-                                                            inputParams: {
-                                                                placeholder: 'description',
-                                                                name: 'relationDescription',
-                                                                cols: 20,
-                                                                rows: 2,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'boolean',
-                                                            inputParams: {
-                                                                label: 'isExcludeField',
-                                                                name: 'propertyIsExcludeField',
-                                                                advancedMode: true,
-                                                                value: true,
-                                                                description: 'descr_isExcludeField',
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'boolean',
-                                                            inputParams: {
-                                                                label: 'lazyLoading',
-                                                                name: 'lazyLoading',
-                                                                advancedMode: true,
-                                                                description: 'descr_lazyLoading',
-                                                                value: false,
-                                                            },
-                                                        },
-                                                        {
-                                                            type: 'string',
-                                                            inputParams: {
-                                                                label: 'foreignRelationClass',
-                                                                name: 'foreignRelationClass',
-                                                                placeholder: '\\Fully\\Qualified\\Classname',
-                                                                advancedMode: true,
-                                                                description: 'descr_foreignRelationClass',
-                                                            },
-                                                        },
+                                                    label: 'type',
+                                                    name: 'relationType',
+                                                    advancedMode: true,
+                                                    selectValues: [
+                                                        'zeroToOne',
+                                                        'zeroToMany',
+                                                        'manyToOne',
+                                                        'manyToMany',
                                                     ],
+                                                    selectOptions: [
+                                                        '1:1 (zeroToOne)',
+                                                        '1:n (zeroToMany)',
+                                                        'n:1 (manyToOne)',
+                                                        'm:n (manyToMany)',
+                                                    ],
+                                                },
+                                            },
+                                            {
+                                                type: 'select',
+                                                inputParams: {
+                                                    label: 'renderType',
+                                                    description: 'desc_renderType',
+                                                    name: 'renderType',
+                                                    advancedMode: true,
+                                                    selectValues: [
+                                                        'selectSingleBox',
+                                                        'selectCheckBox',
+                                                        'selectMultipleSideBySide',
+                                                        'inline',
+                                                        'selectSingle',
+                                                    ],
+                                                    selectOptions: [
+                                                        'Single box',
+                                                        'Checkboxes',
+                                                        'Side by side multi select',
+                                                        'Inline (IRRE)',
+                                                        'Dropdown',
+                                                    ],
+                                                },
+                                            },
+                                            {
+                                                type: 'text',
+                                                inputParams: {
+                                                    placeholder: 'description',
+                                                    name: 'relationDescription',
+                                                    advancedMode: true,
+                                                    cols: 20,
+                                                    rows: 2,
+                                                },
+                                            },
+                                            {
+                                                type: 'boolean',
+                                                inputParams: {
+                                                    label: 'isExcludeField',
+                                                    name: 'propertyIsExcludeField',
+                                                    advancedMode: true,
+                                                    value: true,
+                                                    description: 'descr_isExcludeField',
+                                                },
+                                            },
+                                            {
+                                                type: 'boolean',
+                                                inputParams: {
+                                                    label: 'lazyLoading',
+                                                    name: 'lazyLoading',
+                                                    advancedMode: true,
+                                                    description: 'descr_lazyLoading',
+                                                    value: false,
+                                                },
+                                            },
+                                            {
+                                                type: 'string',
+                                                inputParams: {
+                                                    label: 'foreignRelationClass',
+                                                    name: 'foreignRelationClass',
+                                                    placeholder: '\\Fully\\Qualified\\Classname',
+                                                    advancedMode: true,
+                                                    description: 'descr_foreignRelationClass',
                                                 },
                                             },
                                         ],

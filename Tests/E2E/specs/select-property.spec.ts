@@ -12,9 +12,9 @@ test.describe('SelectProperty select items', () => {
     await backend.getContentFrame().locator('#WiringEditor-newButton-button').click();
   });
 
-  // Verifies that the selectItems list field is rendered inside the advanced settings
-  // group of a property item.
-  test('selectItems list field is present in property advanced settings', async ({ page }) => {
+  // Verifies that the selectItems list field is rendered as a direct child of the
+  // property group (no longer inside a nested advancedSettings group).
+  test('selectItems list field is present in property fields', async ({ page }) => {
     const frame = new BackendPage(page).getContentFrame();
     await frame.getByRole('button', { name: '+ Model Object' }).click();
 
@@ -26,29 +26,15 @@ test.describe('SelectProperty select items', () => {
         if (!container) return null;
         await container.updateComplete;
 
-        // Reach the properties list field (eb-list-field[name="properties"]) via the
-        // container's shadow root — eb-group[name="propertyGroup"] renders it as a
-        // light-DOM slotted child, but container.shadowRoot.querySelector traverses
-        // into slotted light DOM here.
         const listField = container.shadowRoot?.querySelector('[name="properties"]') as any;
         if (!listField) return null;
 
         listField._addItem();
         await listField.updateComplete;
 
-        // advancedSettings eb-group is rendered as a light-DOM child of the property
-        // eb-group, which is itself a light-DOM child inside an .item-content div in
-        // the list field's shadow root.
-        const advGroup = listField.shadowRoot?.querySelector('[name="advancedSettings"]') as any;
-        if (!advGroup) return null;
-        await advGroup.updateComplete;
-
-        // The selectItems list field is a light-DOM child of the advancedSettings
-        // eb-group (slotted into its card-body). querySelector walks light DOM.
-        const selectItemsList =
-          advGroup.querySelector('[name="selectItems"]') ??
-          advGroup.shadowRoot?.querySelector('[name="selectItems"]');
-
+        // selectItems is now a direct child in the property group (light DOM),
+        // reachable via the list field's shadow root.
+        const selectItemsList = listField.shadowRoot?.querySelector('[name="selectItems"]');
         return selectItemsList !== null;
       }
     );
@@ -70,32 +56,24 @@ test.describe('SelectProperty select items', () => {
         if (!container) return null;
         await container.updateComplete;
 
+        // Enable advanced mode so the selectItems field is visible
+        el._toggleAdvancedMode();
+        await el.updateComplete;
+        await new Promise(r => requestAnimationFrame(r));
+
         const listField = container.shadowRoot?.querySelector('[name="properties"]') as any;
         if (!listField) return null;
 
         listField._addItem();
         await listField.updateComplete;
 
-        const advGroup = listField.shadowRoot?.querySelector('[name="advancedSettings"]') as any;
-        if (!advGroup) return null;
-        await advGroup.updateComplete;
-
-        // Expand the advanced settings group so its content is reachable.
-        advGroup.collapsed = false;
-        advGroup.requestUpdate();
-        await advGroup.updateComplete;
-
-        const selectItemsList =
-          (advGroup.querySelector('[name="selectItems"]') ??
-          advGroup.shadowRoot?.querySelector('[name="selectItems"]')) as any;
+        const selectItemsList = listField.shadowRoot?.querySelector('[name="selectItems"]') as any;
         if (!selectItemsList) return null;
 
         // Add one item to the selectItems list.
         selectItemsList._addItem();
         await selectItemsList.updateComplete;
 
-        // The item's content lives inside .item-content > eb-group[name="selectItem"].
-        // The eb-group renders label/value string fields as light-DOM slotted children.
         const itemContent = selectItemsList.shadowRoot?.querySelector('.item-content');
         if (!itemContent) return null;
 
@@ -130,6 +108,11 @@ test.describe('SelectProperty select items', () => {
         if (!container) return null;
         await container.updateComplete;
 
+        // Enable advanced mode so the selectItems field is visible
+        el._toggleAdvancedMode();
+        await el.updateComplete;
+        await new Promise(r => requestAnimationFrame(r));
+
         // Add a property
         const listField = container.shadowRoot?.querySelector('[name="properties"]') as any;
         if (!listField) return null;
@@ -153,19 +136,8 @@ test.describe('SelectProperty select items', () => {
           propertyTypeField.setValue('Select');
         }
 
-        // Expand advanced settings
-        const advGroup = listField.shadowRoot?.querySelector('[name="advancedSettings"]') as any;
-        if (!advGroup) return null;
-        await advGroup.updateComplete;
-
-        advGroup.collapsed = false;
-        advGroup.requestUpdate();
-        await advGroup.updateComplete;
-
         // Locate and populate the selectItems list
-        const selectItemsList =
-          (advGroup.querySelector('[name="selectItems"]') ??
-          advGroup.shadowRoot?.querySelector('[name="selectItems"]')) as any;
+        const selectItemsList = listField.shadowRoot?.querySelector('[name="selectItems"]') as any;
         if (!selectItemsList) return null;
 
         selectItemsList._addItem();

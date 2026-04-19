@@ -98,7 +98,12 @@ export function renderFieldDef(fieldDef) {
 
         case 'list':
             return html` ${p.label
-                    ? html`<label class="form-label" style="display:block;font-weight:600;margin-top:0.5rem"
+                    ? html`<label
+                          class="form-label"
+                          style="display:block;font-weight:600;margin-top:0.5rem"
+                          ?advanced="${p.advancedMode || false}"
+                          data-visible-for="${p.visibleForTypes?.join(' ') ?? ''}"
+                          data-hidden-for="${p.hiddenForTypes?.join(' ') ?? ''}"
                           >${translate(p.label)}</label
                       >`
                     : ''}
@@ -108,6 +113,8 @@ export function renderFieldDef(fieldDef) {
                     ?sortable="${p.sortable}"
                     add-label="${translate('add')}"
                     element-type="${JSON.stringify(p.elementType ?? {})}"
+                    data-visible-for="${p.visibleForTypes?.join(' ') ?? ''}"
+                    data-hidden-for="${p.hiddenForTypes?.join(' ') ?? ''}"
                 ></eb-list-field>`;
 
         case 'inplaceedit':

@@ -26,6 +26,7 @@ export class EbContainer extends LitElement {
         _name: { state: true },
         _resizeWidth: { state: true },
         _resizeHeight: { state: true },
+        _advancedMode: { state: true },
     };
 
     static styles = [
@@ -106,6 +107,12 @@ export class EbContainer extends LitElement {
                     transparent 60%
                 );
             }
+            [advanced] {
+                display: none;
+            }
+            :host([advanced-mode]) [advanced] {
+                display: block;
+            }
         `,
     ];
 
@@ -115,6 +122,7 @@ export class EbContainer extends LitElement {
         this.posY = 10;
         this.moduleData = {};
         this._name = '';
+        this._advancedMode = false;
         this._dragging = false;
         this._dragOffsetX = 0;
         this._dragOffsetY = 0;
@@ -151,6 +159,16 @@ export class EbContainer extends LitElement {
         this.addEventListener('pointerdown', this._onPointerDown.bind(this));
         this.addEventListener('pointermove', this._onPointerMove.bind(this));
         this.addEventListener('pointerup', this._onPointerUp.bind(this));
+        this._onAdvancedModeChanged = (e) => {
+            this._advancedMode = e.detail.enabled;
+            this.toggleAttribute('advanced-mode', e.detail.enabled);
+        };
+        window.addEventListener('eb-advanced-mode-changed', this._onAdvancedModeChanged);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener('eb-advanced-mode-changed', this._onAdvancedModeChanged);
     }
 
     _onPointerDown(e) {
