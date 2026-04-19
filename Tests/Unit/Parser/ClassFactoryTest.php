@@ -26,6 +26,7 @@ use PhpParser\BuilderFactory;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
 
 class ClassFactoryTest extends BaseUnitTest
 {

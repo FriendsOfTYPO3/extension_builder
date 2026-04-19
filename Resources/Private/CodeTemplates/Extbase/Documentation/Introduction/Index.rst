@@ -1,4 +1,4 @@
-.. include:: /Includes.rst.txt
+.. include:: ../Includes.txt
 
 .. _introduction:
 
@@ -33,8 +33,8 @@ install and use this extension.
 
 .. important::
 
-   Don't forget to set the extension's version number in :file:`guides.xml`,
-   in the :code:`release` attribute of the :code:`<project>` element.
+   Don't forget to set extension's version number in :file:`Settings.cfg` file,
+   in the :code:`release` property.
    It will be automatically picked up on the cover page by the :code:`|release|` substitution.
 
 .. _screenshots:

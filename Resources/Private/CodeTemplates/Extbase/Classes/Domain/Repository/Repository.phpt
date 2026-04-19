@@ -12,6 +12,9 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class DomainObjectRepository extends Repository
 {
 
+    /**
+     * @var array<mixed>
+     */
     protected array $defaultOrderings = [
         'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     ];
