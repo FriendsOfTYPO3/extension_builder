@@ -31,6 +31,16 @@ class LinkButtonWithId extends LinkButton
     }
 
     /**
+     * Validates the button
+     * Parent checks getType() === static::class which fails for subclasses
+     */
+    public function isValid(): bool
+    {
+        return trim($this->getHref()) !== ''
+            && trim($this->getTitle()) !== '';
+    }
+
+    /**
      * onClick attribute (removed from parent in TYPO3 v12)
      */
     protected string $onClick = '';
