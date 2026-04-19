@@ -1,7 +1,6 @@
 import { html, css } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
-import { translate } from './translate.js';
 
 /**
  * Multi-line textarea field.
@@ -77,7 +76,7 @@ export class EbTextareaField extends EbField {
                 >
 ${this.value ?? ''}</textarea
                 >
-                ${this.description ? html`<small class="help-text">${translate(this.description)}</small>` : ''}
+                ${this.description ? html`<small class="help-text">${this.description}</small>` : ''}
             </div>
         `;
     }

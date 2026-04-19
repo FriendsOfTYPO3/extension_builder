@@ -1,7 +1,7 @@
 var Xe = Object.defineProperty;
 var Ge = (a, e, t) => e in a ? Xe(a, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : a[e] = t;
 var g = (a, e, t) => Ge(a, typeof e != "symbol" ? e + "" : e, t);
-import $ from "@typo3/backend/notification.js";
+import _ from "@typo3/backend/notification.js";
 import v from "@typo3/backend/modal.js";
 import A from "@typo3/backend/severity.js";
 /**
@@ -28,7 +28,7 @@ let Oe = class {
     return this.cssText;
   }
 };
-const Je = (a) => new Oe(typeof a == "string" ? a : a + "", void 0, ye), w = (a, ...e) => {
+const Je = (a) => new Oe(typeof a == "string" ? a : a + "", void 0, ye), $ = (a, ...e) => {
   const t = a.length === 1 ? a[0] : e.reduce((i, r, s) => i + ((n) => {
     if (n._$cssResult$ === !0) return n.cssText;
     if (typeof n == "number") return n;
@@ -527,7 +527,7 @@ const mt = (a, e, t) => {
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const L = globalThis;
-let x = class extends O {
+let w = class extends O {
   constructor() {
     super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
@@ -553,11 +553,11 @@ let x = class extends O {
   }
 };
 var Re;
-x._$litElement$ = !0, x.finalized = !0, (Re = L.litElementHydrateSupport) == null || Re.call(L, { LitElement: x });
+w._$litElement$ = !0, w.finalized = !0, (Re = L.litElementHydrateSupport) == null || Re.call(L, { LitElement: w });
 const ee = L.litElementPolyfillSupport;
-ee == null || ee({ LitElement: x });
+ee == null || ee({ LitElement: w });
 (L.litElementVersions ?? (L.litElementVersions = [])).push("4.2.2");
-class se extends x {
+class se extends w {
   connectedCallback() {
     super.connectedCallback(), this.addEventListener("pointerdown", this._onPointerDown.bind(this));
   }
@@ -602,7 +602,7 @@ g(se, "properties", {
   terminalId: { type: String, attribute: "terminal-id" },
   uid: { type: String },
   droppable: { type: Boolean }
-}), g(se, "styles", w`
+}), g(se, "styles", $`
         :host {
             display: block;
             width: 12px;
@@ -641,7 +641,7 @@ g(se, "properties", {
         }
     `);
 customElements.define("eb-terminal", se);
-class ne extends x {
+class ne extends w {
   getPath() {
     const { x1: e, y1: t, x2: i, y2: r } = this, s = t + 80, n = r - 80;
     return `M ${e} ${t} C ${e} ${s}, ${i} ${n}, ${i} ${r}`;
@@ -675,7 +675,7 @@ g(ne, "properties", {
   tgtTerminal: { type: String, attribute: "tgt-terminal" },
   srcModuleId: { type: Number, attribute: "src-module-id" },
   tgtModuleId: { type: Number, attribute: "tgt-module-id" }
-}), g(ne, "styles", w`
+}), g(ne, "styles", $`
         :host {
             display: contents;
         }
@@ -684,7 +684,7 @@ g(ne, "properties", {
         }
     `);
 customElements.define("eb-wire", ne);
-function _(a) {
+function x(a) {
   var i, r, s;
   if (!a)
     return "";
@@ -702,10 +702,10 @@ function Fe(a) {
     case "string":
       return p`<eb-string-field
                 name="${e.name}"
-                label="${_(e.label ?? "")}"
+                label="${x(e.label ?? "")}"
                 ?required="${e.required}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${_(e.description ?? "")}"
+                description="${x(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 type-invite="${e.typeInvite ?? ""}"
                 placeholder="${e.placeholder ?? ""}"
@@ -728,9 +728,9 @@ function Fe(a) {
     case "text":
       return p`<eb-textarea-field
                 name="${e.name}"
-                label="${_(e.label ?? "")}"
+                label="${x(e.label ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${_(e.description ?? "")}"
+                description="${x(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 placeholder="${e.placeholder ?? ""}"
                 .value="${e.value ?? ""}"
@@ -738,9 +738,9 @@ function Fe(a) {
     case "select":
       return p`<eb-select-field
                 name="${e.name}"
-                label="${_(e.label ?? "")}"
+                label="${x(e.label ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${_(e.description ?? "")}"
+                description="${x(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 .selectValues="${e.selectValues ?? []}"
                 .selectOptions="${e.selectOptions ?? []}"
@@ -749,9 +749,9 @@ function Fe(a) {
     case "boolean":
       return p`<eb-boolean-field
                 name="${e.name}"
-                label="${_(e.label ?? "")}"
+                label="${x(e.label ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${_(e.description ?? "")}"
+                description="${x(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 .value="${e.value ?? !1}"
                 data-visible-for="${((l = e.visibleForTypes) == null ? void 0 : l.join(" ")) ?? ""}"
@@ -760,7 +760,7 @@ function Fe(a) {
     case "group":
       return p`<eb-group
                 name="${e.name ?? ""}"
-                legend="${_(e.legend ?? "")}"
+                legend="${x(e.legend ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
                 ?collapsible="${e.collapsible}"
                 ?collapsed="${e.collapsed}"
@@ -774,13 +774,13 @@ function Fe(a) {
                           ?advanced="${e.advancedMode || !1}"
                           data-visible-for="${((c = e.visibleForTypes) == null ? void 0 : c.join(" ")) ?? ""}"
                           data-hidden-for="${((b = e.hiddenForTypes) == null ? void 0 : b.join(" ")) ?? ""}"
-                          >${_(e.label)}</label
+                          >${x(e.label)}</label
                       >` : ""}
                 <eb-list-field
                     name="${e.name}"
                     ?advanced="${e.advancedMode || !1}"
                     ?sortable="${e.sortable}"
-                    add-label="${_("add")}"
+                    add-label="${x("add")}"
                     element-type="${JSON.stringify(e.elementType ?? {})}"
                     data-visible-for="${((d = e.visibleForTypes) == null ? void 0 : d.join(" ")) ?? ""}"
                     data-hidden-for="${((h = e.hiddenForTypes) == null ? void 0 : h.join(" ")) ?? ""}"
@@ -788,7 +788,7 @@ function Fe(a) {
     case "inplaceedit":
       return p`<eb-inplace-edit name="${e.name ?? ""}" .value="${e.value ?? ""}"></eb-inplace-edit>`;
     default:
-      return p`<eb-string-field name="${e.name}" label="${_(e.label ?? "")}"></eb-string-field>`;
+      return p`<eb-string-field name="${e.name}" label="${x(e.label ?? "")}"></eb-string-field>`;
   }
 }
 function _e(a) {
@@ -1400,7 +1400,7 @@ const je = {
       }
     ]
   }
-}, P = w`
+}, P = $`
     eb-string-field,
     eb-textarea-field,
     eb-select-field,
@@ -1546,7 +1546,7 @@ const je = {
         color: var(--bs-danger, #dc3545);
     }
 `;
-class ae extends x {
+class ae extends w {
   constructor() {
     super(), this.posX = 10, this.posY = 10, this.moduleData = {}, this._name = "", this._advancedMode = !1, this._dragging = !1, this._dragOffsetX = 0, this._dragOffsetY = 0, this._resizeWidth = null, this._resizeHeight = null, this._resizing = !1, this._resizeStartX = 0, this._resizeStartY = 0, this._resizeStartW = 0, this._resizeStartH = 0;
   }
@@ -1678,7 +1678,7 @@ g(ae, "properties", {
   _advancedMode: { state: !0 }
 }), g(ae, "styles", [
   P,
-  w`
+  $`
             :host {
                 display: block;
                 position: absolute;
@@ -1763,7 +1763,7 @@ g(ae, "properties", {
         `
 ]);
 customElements.define("eb-container", ae);
-class oe extends x {
+class oe extends w {
   constructor() {
     super(), this._wires = [], this._containers = [], this._drawingWire = null, this._tempWire = null, this._hoveredWireId = null, this._panOffset = { x: 0, y: 0 }, this._isPanning = !1, this._panStartX = 0, this._panStartY = 0;
   }
@@ -2062,7 +2062,7 @@ g(oe, "properties", {
   _tempWire: { state: !0 },
   _hoveredWireId: { state: !0 },
   _panOffset: { state: !0 }
-}), g(oe, "styles", w`
+}), g(oe, "styles", $`
         :host {
             display: flex;
             flex-direction: column;
@@ -2128,7 +2128,7 @@ g(oe, "properties", {
         }
     `);
 customElements.define("eb-layer", oe);
-const He = w`
+const He = $`
     .btn {
         display: inline-block;
         font-weight: 400;
@@ -2213,7 +2213,7 @@ const He = w`
         border-color: color-mix(in srgb, var(--bs-warning, #ffc107) 80%, #000);
     }
 `;
-class C extends x {
+class C extends w {
   /**
    * Dispatches a `field-updated` CustomEvent that bubbles through Shadow DOM
    * boundaries so parent components can collect updated values.
@@ -2314,7 +2314,7 @@ class le extends C {
                 @input="${this._onInput}"
             />
             ${this._error ? p`<div id="${i}" class="invalid-feedback" role="alert">${this._error}</div>` : ""}
-            ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
+            ${this.description ? p`<small class="help-text">${this.description}</small>` : ""}
         `;
   }
 }
@@ -2339,7 +2339,7 @@ g(le, "properties", {
   _error: { state: !0 }
 }), g(le, "styles", [
   P,
-  w`
+  $`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2388,7 +2388,7 @@ class de extends C {
                 >
 ${this.value ?? ""}</textarea
                 >
-                ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
+                ${this.description ? p`<small class="help-text">${this.description}</small>` : ""}
             </div>
         `;
   }
@@ -2401,7 +2401,7 @@ g(de, "properties", {
   helpLink: { type: String, attribute: "help-link" }
 }), g(de, "styles", [
   P,
-  w`
+  $`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2572,7 +2572,7 @@ class ce extends C {
                         `
     )}
                 </select>
-                ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
+                ${this.description ? p`<small class="help-text">${this.description}</small>` : ""}
             </div>
         `;
   }
@@ -2589,7 +2589,7 @@ g(ce, "properties", {
   helpLink: { type: String, attribute: "help-link" }
 }), g(ce, "styles", [
   P,
-  w`
+  $`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2634,7 +2634,7 @@ class pe extends C {
                 <label class="form-check-label" for="eb-bool-${this.name}"> ${this.label || ""} </label>
                 ${this.helpLink ? p`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>` : ""}
             </div>
-            ${this.description ? p`<small class="help-text">${_(this.description)}</small>` : ""}
+            ${this.description ? p`<small class="help-text">${this.description}</small>` : ""}
         `;
   }
 }
@@ -2644,7 +2644,7 @@ g(pe, "properties", {
   helpLink: { type: String, attribute: "help-link" }
 }), g(pe, "styles", [
   P,
-  w`
+  $`
             .help-link {
                 font-size: 0.75em;
                 color: var(--bs-secondary-color, #6c757d);
@@ -2678,13 +2678,13 @@ class ue extends C {
 }
 g(ue, "properties", {
   ...C.properties
-}), g(ue, "styles", w`
+}), g(ue, "styles", $`
         :host {
             display: none;
         }
     `);
 customElements.define("eb-hidden-field", ue);
-class he extends x {
+class he extends w {
   connectedCallback() {
     super.connectedCallback(), this.addEventListener("field-updated", this._onFieldUpdated), this._onAdvancedModeChanged = (e) => {
       this.advancedMode = e.detail.enabled;
@@ -2833,7 +2833,7 @@ g(he, "properties", {
    * expected to spread these values into its own result object.
    */
   flatten: { type: Boolean }
-}), g(he, "styles", w`
+}), g(he, "styles", $`
         :host {
             display: block;
         }
@@ -2895,7 +2895,7 @@ function q(a) {
     ` : p`<span aria-hidden="true">${xt[a] ?? a}</span>`;
 }
 const Ct = /* @__PURE__ */ new Set(["propertyName", "relationName", "customAction", "name", "label"]);
-class me extends x {
+class me extends w {
   constructor() {
     super(), this.sortable = !0, this.addLabel = "add", this._items = [], this._boundOnFieldUpdated = this._onFieldUpdated.bind(this);
   }
@@ -3074,7 +3074,7 @@ g(me, "properties", {
 }), g(me, "styles", [
   He,
   P,
-  w`
+  $`
             :host {
                 display: block;
             }
@@ -3580,7 +3580,7 @@ const kt = [
     }
   }
 ];
-class be extends x {
+class be extends w {
   constructor() {
     super(), this.smdUrl = "", this.extensionName = "", this.initialWarnings = [], this.composerWarning = "", this._loading = !1, this._extensionData = null, this._advancedMode = !1, this._leftCollapsed = !1, this._isDirty = !1;
   }
@@ -3607,7 +3607,7 @@ class be extends x {
   }
   async connectedCallback() {
     var e;
-    super.connectedCallback(), ((e = this.initialWarnings) == null ? void 0 : e.length) > 0 && this.initialWarnings.forEach((t) => $.warning("Configuration", t)), this.addEventListener("field-updated", this._onFieldUpdated), this._boundMarkDirty = this._markDirty.bind(this), this.addEventListener("container-moved", this._boundMarkDirty), this.addEventListener("container-removed", this._boundMarkDirty), this.addEventListener("container-resized", this._boundMarkDirty), this.addEventListener("eb-layer-changed", this._boundMarkDirty), this._beforeUnload = (t) => {
+    super.connectedCallback(), ((e = this.initialWarnings) == null ? void 0 : e.length) > 0 && this.initialWarnings.forEach((t) => _.warning("Configuration", t)), this.addEventListener("field-updated", this._onFieldUpdated), this._boundMarkDirty = this._markDirty.bind(this), this.addEventListener("container-moved", this._boundMarkDirty), this.addEventListener("container-removed", this._boundMarkDirty), this.addEventListener("container-resized", this._boundMarkDirty), this.addEventListener("eb-layer-changed", this._boundMarkDirty), this._beforeUnload = (t) => {
       this._isDirty && t.preventDefault();
     }, window.addEventListener("beforeunload", this._beforeUnload), this.extensionName && await this.load();
   }
@@ -3675,7 +3675,7 @@ class be extends x {
           throw new Error(`Extension "${this.extensionName}" not found`);
         this._extensionData = JSON.parse(r.working);
       } catch (e) {
-        $.error("Load failed", e.message);
+        _.error("Load failed", e.message);
       } finally {
         this._loading = !1;
       }
@@ -3793,11 +3793,11 @@ Files that will be deleted:
       })
     })).json();
     if ((s = r.errors) != null && s.length) {
-      r.errors.forEach((n) => $.error("Validation error", n));
+      r.errors.forEach((n) => _.error("Validation error", n));
       return;
     }
     if (r.error) {
-      $.error("Error", r.error);
+      _.error("Error", r.error);
       return;
     }
     if (r.confirm) {
@@ -3813,7 +3813,7 @@ Files that will be deleted:
       ]);
       return;
     }
-    r.warning && $.warning("Warning", r.warning), (r.warnings ?? []).forEach((n) => $.warning("Roundtrip warning", n)), r.success && ($.success("Saved", r.success), this._isDirty = !1, (r.installationHints ?? []).forEach((n) => $.info("Next steps", n)));
+    r.warning && _.warning("Warning", r.warning), (r.warnings ?? []).forEach((n) => _.warning("Roundtrip warning", n)), r.success && (_.success("Saved", r.success), this._isDirty = !1, (r.installationHints ?? []).forEach((n) => _.info("Next steps", n)));
   }
   _saveWithConfirmation(e) {
     this.save({ [e]: !0 });
@@ -3876,7 +3876,7 @@ g(be, "properties", {
 }), g(be, "styles", [
   He,
   P,
-  w`
+  $`
             :host {
                 display: flex;
                 flex-direction: column;
@@ -3969,7 +3969,7 @@ g(be, "properties", {
         `
 ]);
 customElements.define("eb-wiring-editor", be);
-class fe extends x {
+class fe extends w {
   constructor() {
     super(), this._editing = !1;
   }
@@ -4049,7 +4049,7 @@ function Ue() {
       body: JSON.stringify({ method: "listWirings", params: {} })
     })).json()).result ?? [];
     if (d.length === 0) {
-      $.info("Open Extension", "No extensions found.");
+      _.info("Open Extension", "No extensions found.");
       return;
     }
     const h = document.createElement("select");
@@ -4089,12 +4089,12 @@ function Ue() {
     n.preventDefault();
     const l = a.getAttribute("smd-url");
     if (!a.extensionName) {
-      $.info("Restore backup", "Please load an extension first.");
+      _.info("Restore backup", "Please load an extension first.");
       return;
     }
     const o = a._serializeWorking();
     if (!o) {
-      $.info("Restore backup", "No extension loaded.");
+      _.info("Restore backup", "No extension loaded.");
       return;
     }
     const d = (await (await fetch(l, {
@@ -4103,7 +4103,7 @@ function Ue() {
       body: JSON.stringify({ method: "listBackups", params: { name: a.extensionName, working: o } })
     })).json()).result ?? [];
     if (d.length === 0) {
-      $.info("Restore backup", "No backups found for this extension.");
+      _.info("Restore backup", "No backups found for this extension.");
       return;
     }
     const h = document.createElement("select");
@@ -4147,7 +4147,7 @@ function Ue() {
                         params: { name: a.extensionName, working: o, backupDirectory: u }
                       })
                     })).json();
-                    R.error ? $.error("Restore failed", R.error) : $.success(
+                    R.error ? _.error("Restore failed", R.error) : _.success(
                       "Backup restored",
                       R.success ?? "Extension restored."
                     );

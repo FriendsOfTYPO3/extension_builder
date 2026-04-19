@@ -2,7 +2,6 @@ import { html, css } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
-import { translate } from './translate.js';
 
 /**
  * Dropdown select field with optional value filtering.
@@ -108,7 +107,7 @@ export class EbSelectField extends EbField {
                         `
                     )}
                 </select>
-                ${this.description ? html`<small class="help-text">${translate(this.description)}</small>` : ''}
+                ${this.description ? html`<small class="help-text">${this.description}</small>` : ''}
             </div>
         `;
     }
