@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: "Label bug reports"
         if: contains(github.event.issue.body, 'Describe the bug')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.issues.addLabels({
@@ -27,7 +27,7 @@ jobs:
 
       - name: "Label feature requests"
         if: contains(github.event.issue.body, 'feature request related to a problem')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.issues.addLabels({
