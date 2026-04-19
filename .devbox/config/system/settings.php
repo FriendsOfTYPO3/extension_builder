@@ -2,8 +2,8 @@
 return [
     'BE' => [
         'debug' => false,
-        'installToolPassword' => '$argon2i$v=19$m=65536,t=16,p=1$RVROeGc0R21iU2M4UC43Wg$gEQqOxR8Y3Pa4ds9xRZY0dLpI0Mbu3EWA61b+9wzBW0',
-        'loginRateLimit' => 0,
+        'explicitADmode' => 'explicitAllow',
+        'installToolPassword' => '$argon2i$v=19$m=16384,t=16,p=2$NHRRakR4a1VIaXhwcXVtYQ$pt8ySy8esoakVxigXIHjSIq7TMWKOGyeJmq6BvUPv1g',
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
@@ -26,6 +26,12 @@ return [
             ],
         ],
     ],
+    'EXT' => [],
+    'EXTCONF' => [
+        'helhum-typo3-console' => [
+            'initialUpgradeDone' => '9.5',
+        ],
+    ],
     'EXTENSIONS' => [
         'backend' => [
             'backendFavicon' => '',
@@ -36,6 +42,17 @@ return [
             'loginLogo' => '',
             'loginLogoAlt' => '',
         ],
+        'bootstrap_package' => [
+            'disableCssProcessing' => '0',
+            'disableFontLoader' => '0',
+            'disableGoogleFontCaching' => '0',
+            'disablePageTsBackendLayouts' => '0',
+            'disablePageTsContentElements' => '0',
+            'disablePageTsRTE' => '0',
+            'disablePageTsTCADefaults' => '0',
+            'disablePageTsTCEFORM' => '0',
+            'disablePageTsTCEMAIN' => '0',
+        ],
         'extension_builder' => [
             'backupDir' => 'var/tx_extensionbuilder/backups',
             'backupExtension' => '1',
@@ -43,78 +60,47 @@ return [
         ],
         'extensionmanager' => [
             'automaticInstallation' => '1',
-            'offlineMode' => '0',
+            'offlineMode' => '1',
         ],
-        'redirects' => [
-            'showCheckIntegrityInfoInReports' => '1',
-            'showCheckIntegrityInfoInReportsSeconds' => '86400',
-        ],
-        'scheduler' => [
-            'maxLifetime' => '1440',
-        ],
-        'styleguide' => [
-            'boolean_1' => '0',
-            'boolean_2' => '1',
-            'boolean_3' => '',
-            'boolean_4' => '0',
-            'color_1' => 'black',
-            'color_2' => '#000000',
-            'color_3' => '000000',
-            'color_4' => '',
-            'compat_default_1' => 'value',
-            'compat_default_2' => '',
-            'compat_input_1' => 'value',
-            'compat_input_2' => '',
-            'int_1' => '1',
-            'int_2' => '',
-            'int_3' => '-100',
-            'int_4' => '2',
-            'intplus_1' => '1',
-            'intplus_2' => '',
-            'intplus_3' => '2',
-            'nested' => [
-                'input_1' => 'aDefault',
-                'input_2' => '',
-            ],
-            'offset_1' => 'x,y',
-            'offset_2' => 'x',
-            'offset_3' => ',y',
-            'offset_4' => '',
-            'options_1' => 'default',
-            'options_2' => 'option_2',
-            'options_3' => '',
-            'predefined' => [
-                'boolean_1' => '1',
-                'int_1' => '42',
-            ],
-            'small_1' => 'value',
-            'small_2' => '',
-            'string_1' => 'value',
-            'string_2' => '',
-            'user_1' => '0',
-            'wrap_1' => 'value',
-            'wrap_2' => '',
-            'zeroorder_input_1' => 'value',
-            'zeroorder_input_2' => '',
-            'zeroorder_input_3' => '',
+        'indexed_search' => [
+            'catdoc' => '/usr/bin/',
+            'debugMode' => '0',
+            'deleteFromIndexAfterEditing' => '1',
+            'disableFrontendIndexing' => '0',
+            'enableMetaphoneSearch' => '1',
+            'flagBitMask' => '192',
+            'fullTextDataLength' => '0',
+            'ignoreExtensions' => '',
+            'indexExternalURLs' => '0',
+            'maxAge' => '0',
+            'maxExternalFiles' => '5',
+            'minAge' => '24',
+            'pdf_mode' => '20',
+            'pdftools' => '/usr/bin/',
+            'ppthtml' => '/usr/bin/',
+            'trackIpInStatistic' => '2',
+            'unrtf' => '/usr/bin/',
+            'unzip' => '/usr/bin/',
+            'useCrawlerForExternalFiles' => '0',
+            'useMysqlFulltext' => '0',
+            'xlhtml' => '/usr/bin/',
         ],
     ],
     'FE' => [
-        'cacheHash' => [
-            'enforceValidation' => true,
-        ],
         'debug' => false,
-        'disableNoCacheParameter' => true,
         'passwordHashing' => [
             'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
         ],
     ],
     'GFX' => [
-        'processor' => 'GraphicsMagick',
-        'processor_effects' => false,
+        'processor' => 'ImageMagick',
+        'processor_allowTemporaryMasksAsPng' => false,
+        'processor_colorspace' => 'sRGB',
+        'processor_effects' => true,
         'processor_enabled' => true,
         'processor_path' => '/usr/bin/',
+        'processor_path_lzw' => '/usr/bin/',
     ],
     'LOG' => [
         'TYPO3' => [
@@ -133,10 +119,13 @@ return [
     ],
     'MAIL' => [
         'transport' => 'sendmail',
-        'transport_sendmail_command' => '/usr/local/bin/mailpit sendmail -t --smtp-addr 127.0.0.1:1025',
+        'transport_sendmail_command' => '/usr/local/bin/mailhog sendmail test@example.org --smtp-addr 127.0.0.1:1025',
+        'transport_smtp_encrypt' => '',
+        'transport_smtp_password' => '',
+        'transport_smtp_server' => '',
+        'transport_smtp_username' => '',
     ],
     'SYS' => [
-        'UTF8filesystem' => true,
         'caching' => [
             'cacheConfigurations' => [
                 'hash' => [
@@ -144,33 +133,26 @@ return [
                 ],
                 'imagesizes' => [
                     'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\Typo3DatabaseBackend',
-                    'options' => [
-                        'compression' => true,
-                    ],
                 ],
                 'pages' => [
                     'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\Typo3DatabaseBackend',
-                    'options' => [
-                        'compression' => true,
-                    ],
+                ],
+                'pagesection' => [
+                    'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\Typo3DatabaseBackend',
                 ],
                 'rootline' => [
                     'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\Typo3DatabaseBackend',
-                    'options' => [
-                        'compression' => true,
-                    ],
                 ],
             ],
         ],
         'devIPmask' => '',
         'displayErrors' => 0,
-        'encryptionKey' => 'a6ce4db53bfc96e540abf8a057e3af08ae9256d7f90772ae41effc9c1a725ff0d76c597681ba69e426307b6e859af69f',
+        'encryptionKey' => '3a5826140e97e15e5f2f6de051e7e0f903958cb8d9a9caadaf6b237be88f53bde31462ef070939161e30e8ac101e2f3f',
         'exceptionalErrors' => 4096,
         'features' => [
-            'security.backend.enforceContentSecurityPolicy' => true,
-            'security.system.enforceAllowedFileExtensions' => true,
+            'unifiedPageTranslationHandling' => true,
         ],
-        'sitename' => 'ExtensionBuilder Devbox',
+        'sitename' => 'Extension Builder Devbox',
         'systemMaintainers' => [
             1,
         ],

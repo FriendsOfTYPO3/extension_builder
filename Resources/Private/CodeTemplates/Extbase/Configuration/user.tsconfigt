@@ -1,3 +1,0 @@
-{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:for each="{extension.BackendModules}" as="backendModule">module.{extension.extensionKey}_{backendModule.key} {
-}
-</f:for>
