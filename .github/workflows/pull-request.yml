@@ -15,20 +15,20 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: "Check Commit Type"
-        uses: gsactions/commit-message-checker@v1
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '^(\[!!!\] )?(\[(WIP|POC)\] )?\[(BUGFIX|DOCS|FEATURE|TASK|RELEASE|DEVBOX)\] [A-Z].+'
           flags: ''
           error: 'Subject must start with [BUGFIX], [FEATURE], [TASK], [DOCS], [RELEASE], or [DEVBOX] (optionally prefixed with [!!!] or [WIP]/[POC]), followed by a capital letter. See https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html'
       - name: "Check Subject Length"
-        uses: gsactions/commit-message-checker@v1
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '^.{1,72}$'
           flags: ''
           error: 'Subject line exceeds 72 characters.'
           excludeDescription: 'true'
       - name: "Check No Trailing Period"
-        uses: gsactions/commit-message-checker@v1
+        uses: gsactions/commit-message-checker@v2
         with:
           pattern: '^[^.]*[^.]$'
           flags: ''
