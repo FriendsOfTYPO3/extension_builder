@@ -118,8 +118,8 @@ class BuilderModuleController extends ActionController
         $this->addLeftButtons();
         $this->addRightButtons();
 
-        $this->pageRenderer->loadJavaScriptModule('@ebt/extension-builder/domain-modeling.js');
-        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/JavaScript/domain-modeling.css');
+        $this->pageRenderer->loadJavaScriptModule('@ebt/extension-builder/extension-builder.js');
+        $this->pageRenderer->addCssFile('EXT:extension_builder/Resources/Public/JavaScript/extension-builder.css');
 
         $this->setLocallangSettings();
         $this->pageRenderer->addInlineSetting(

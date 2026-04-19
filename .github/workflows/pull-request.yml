@@ -56,6 +56,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: "Assign and check labels"
-        uses: fuxingloh/multi-labeler@v1
+        uses: fuxingloh/multi-labeler@v4
         with:
           config-path: .github/pr-labeler.yml

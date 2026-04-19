@@ -2,6 +2,7 @@
     "name": "extension-builder",
     "version": "1.0.0",
     "description": "Extension-Builder",
+    "type": "module",
     "main": "public/index.php",
     "scripts": {
         "build": "vite build",
@@ -23,14 +24,16 @@
     "author": "Philipp Kuhlmay",
     "license": "GPL-2.0-or-later",
     "devDependencies": {
-        "@playwright/test": "^1.58.2",
+        "@eslint/js": "^10.0.1",
+        "@playwright/test": "^1.59.1",
         "@storybook/web-components-vite": "^10.3.5",
         "@types/node": "^20.19.39",
-        "eslint": "^8.57.0",
-        "prettier": "^3.3.3",
+        "eslint": "^10.2.1",
+        "globals": "^17.5.0",
+        "prettier": "^3.8.3",
         "storybook": "^10.3.5",
-        "stylelint": "^16.9.0",
-        "stylelint-config-standard": "^36.0.0",
-        "vite": "^5.4.0"
+        "stylelint": "^17.8.0",
+        "stylelint-config-standard": "^40.0.0",
+        "vite": "^8.0.8"
     }
 }

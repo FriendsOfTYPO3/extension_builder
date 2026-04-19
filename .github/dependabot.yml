@@ -7,6 +7,10 @@ updates:
     labels:
       - "maintenance"
     open-pull-requests-limit: 5
+    groups:
+      all-composer:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -15,6 +19,10 @@ updates:
     labels:
       - "maintenance"
     open-pull-requests-limit: 5
+    groups:
+      all-npm:
+        patterns:
+          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -23,3 +31,7 @@ updates:
     labels:
       - "maintenance"
     open-pull-requests-limit: 5
+    groups:
+      all-actions:
+        patterns:
+          - "*"
