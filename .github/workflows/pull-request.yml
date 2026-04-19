@@ -26,12 +26,14 @@ jobs:
           pattern: '^.{1,72}$'
           flags: ''
           error: 'Subject line exceeds 72 characters.'
+          excludeDescription: 'true'
       - name: "Check No Trailing Period"
         uses: gsactions/commit-message-checker@v1
         with:
           pattern: '^[^.]*[^.]$'
           flags: ''
           error: 'Subject line must not end with a period.'
+          excludeDescription: 'true'
 
   block_wip:
     name: Block WIP/POC from merging
