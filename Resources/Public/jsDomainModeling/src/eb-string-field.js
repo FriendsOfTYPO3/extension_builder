@@ -1,7 +1,6 @@
 import { html, css } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
-import { translate } from './translate.js';
 
 /**
  * Single-line text input with built-in string transformation and validation.
@@ -151,7 +150,7 @@ export class EbStringField extends EbField {
                 @input="${this._onInput}"
             />
             ${this._error ? html`<div id="${errorId}" class="invalid-feedback" role="alert">${this._error}</div>` : ''}
-            ${this.description ? html`<small class="help-text">${translate(this.description)}</small>` : ''}
+            ${this.description ? html`<small class="help-text">${this.description}</small>` : ''}
         `;
     }
 }

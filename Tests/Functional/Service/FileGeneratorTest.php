@@ -451,7 +451,6 @@ class FileGeneratorTest extends BaseFunctionalTest
     /**
      * This test is too generic, since it creates the required classes
      * with a whole fileGenerator->build call
-     *
      */
     #[\PHPUnit\Framework\Attributes\Test]
     public function writeAggregateRootClassesFromDomainObject(): void

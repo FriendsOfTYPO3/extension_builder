@@ -37,6 +37,9 @@
 			<trans-unit id="extensionKey" resname="extensionKey">
 				<source>Extension Key</source>
 			</trans-unit>
+			<trans-unit id="descr_name" resname="descr_name">
+				<source>The human-readable title of your extension, displayed in the Extension Manager and TER.</source>
+			</trans-unit>
 			<trans-unit id="descr_extensionKey" resname="descr_extensionKey">
 				<source>The extensionkey should be lowercase and without spaces. It will be the unique identifier for
 					this extension.
@@ -48,6 +51,9 @@
 			<trans-unit id="descr_vendorName" resname="descr_vendorName">
 				<source>The vendor name is the first part of the new package identifier</source>
 			</trans-unit>
+			<trans-unit id="descr_description" resname="descr_description">
+				<source>A short summary of what your extension does. Shown in the Extension Manager and on TER.</source>
+			</trans-unit>
 			<trans-unit id="short_description" resname="short_description">
 				<source>Description</source>
 			</trans-unit>
@@ -57,6 +63,9 @@
 			<trans-unit id="version" resname="version">
 				<source>Version</source>
 			</trans-unit>
+			<trans-unit id="descr_version" resname="descr_version">
+				<source>Use semantic versioning (major.minor.patch), e.g. 1.0.0. Increment major for breaking changes, minor for new features, patch for bugfixes.</source>
+			</trans-unit>
 			<trans-unit id="target_version" resname="target_version">
 				<source>Target version</source>
 			</trans-unit>
@@ -65,6 +74,9 @@
 			</trans-unit>
 			<trans-unit id="state" resname="state">
 				<source>State</source>
+			</trans-unit>
+			<trans-unit id="descr_state" resname="descr_state">
+				<source>The development state of your extension. Use "alpha" or "beta" for early development, "stable" for production-ready releases.</source>
 			</trans-unit>
 			<trans-unit id="alpha" resname="alpha">
 				<source>Alpha</source>
@@ -176,6 +188,9 @@
 			<trans-unit id="persons" resname="persons">
 				<source>Extension authors</source>
 			</trans-unit>
+			<trans-unit id="descr_persons" resname="descr_persons">
+				<source>Author information is written to ext_emconf.php and composer.json of the generated extension.</source>
+			</trans-unit>
 			<trans-unit id="role" resname="role">
 				<source>Role</source>
 			</trans-unit>
@@ -220,6 +235,12 @@
 			<trans-unit id="mainModule" resname="mainModule">
 				<source>Main module</source>
 			</trans-unit>
+			<trans-unit id="descr_mainModule" resname="descr_mainModule">
+				<source>The TYPO3 backend main module area where your module will appear (e.g. "web" for page-related modules, "system" for admin tools).</source>
+			</trans-unit>
+			<trans-unit id="descr_tabLabel" resname="descr_tabLabel">
+				<source>The label shown on the module tab in the backend navigation. If empty, the module name is used.</source>
+			</trans-unit>
 			<trans-unit id="uniqueInThisModel" resname="uniqueInThisModel">
 				<source>Should be unique for this model</source>
 			</trans-unit>
@@ -253,6 +274,9 @@
 			<trans-unit id="manyToMany" resname="manyToMany">
 				<source>m:n</source>
 			</trans-unit>
+			<trans-unit id="descr_relationType" resname="descr_relationType">
+				<source>Defines the cardinality of the relation. 1:1 maps one record to one related record, 1:n to multiple, n:1 is a back-reference, and m:n allows multiple records on both sides.</source>
+			</trans-unit>
 			<trans-unit id="renderType" resname="renderType">
 				<source>Render type</source>
 			</trans-unit>
@@ -278,19 +302,19 @@
 				<source>Is nullable?</source>
 			</trans-unit>
 			<trans-unit id="descr_isNullable" resname="descr_isNullable">
-				<source>If set to true, this field can be null</source>
+				<source>Allows the property to be null in the domain model. The getter may return null and the database column allows NULL values.</source>
 			</trans-unit>
 			<trans-unit id="isExcludeField" resname="isExcludeField">
 				<source>Is exclude field?</source>
 			</trans-unit>
 			<trans-unit id="descr_isExcludeField" resname="descr_isExcludeField">
-				<source>If set to true, this field will only be visible for admin users per default</source>
+				<source>Exclude fields are hidden from non-admin users by default. Editors need explicit access via their backend user group permissions.</source>
 			</trans-unit>
 			<trans-unit id="isL10nModeExclude" resname="isL10nModeExclude">
 				<source>Is l10n_mode = exclude?</source>
 			</trans-unit>
 			<trans-unit id="descr_isL10nModeExclude" resname="descr_isL10nModeExclude">
-				<source>If set to true, this field will be set to l10n_mode = exclude</source>
+				<source>If enabled, this field is not translatable. The value from the default language record is used for all translations.</source>
 			</trans-unit>
 		<trans-unit id="selectItems" resname="selectItems">
 			<source>Select items</source>
@@ -305,7 +329,7 @@
 				<source>Object type</source>
 			</trans-unit>
 			<trans-unit id="descr_objectType" resname="descr_objectType">
-				<source>Value objects are simple objects that are defined by their value and have no 'identity'</source>
+				<source>Entities have a unique identity and lifecycle (e.g. a blog post). Value objects are defined only by their properties and have no identity (e.g. a tag or color).</source>
 			</trans-unit>
 			<trans-unit id="entity" resname="entity">
 				<source>Entity</source>
@@ -317,13 +341,13 @@
 				<source>Is aggregate root?</source>
 			</trans-unit>
 			<trans-unit id="descr_isAggregateRoot" resname="descr_isAggregateRoot">
-				<source>If true, the Extension Builder will generate a repository for this model</source>
+				<source>Aggregate roots are the main entry points for querying. A repository class is generated to find, add, and remove these objects. Enable this for top-level domain objects that are queried directly.</source>
 			</trans-unit>
 			<trans-unit id="enableSorting" resname="enableSorting">
 				<source>Enable sorting?</source>
 			</trans-unit>
 			<trans-unit id="descr_enableSorting" resname="descr_enableSorting">
-				<source>If true, sorting in the backend is enabled</source>
+				<source>Enables manual drag-and-drop ordering of records in the backend. Adds a "sorting" column to the database table.</source>
 			</trans-unit>
 			<trans-unit id="addDeletedField" resname="addDeletedField">
 				<source>Add deleted field</source>
@@ -356,13 +380,13 @@
 				<source>Map to existing table</source>
 			</trans-unit>
 			<trans-unit id="descr_mapToTable" resname="descr_mapToTable">
-				<source>If the model should extend an existing table, you can configure this here</source>
+				<source>Map this model to an existing database table instead of creating a new one. Useful for extending core tables like fe_users or pages.</source>
 			</trans-unit>
 			<trans-unit id="parentClass" resname="parentClass">
 				<source>Extend existing model class</source>
 			</trans-unit>
 			<trans-unit id="descr_parentClass" resname="descr_parentClass">
-				<source>If this model should extend an existing other model, name it here</source>
+				<source>Extend an existing Extbase model class. Enter the fully qualified class name (e.g. \TYPO3\CMS\Extbase\Domain\Model\FrontendUser). Use together with "Map to existing table".</source>
 			</trans-unit>
 			<trans-unit id="defaultActions" resname="defaultActions">
 				<source>Default actions</source>
@@ -407,7 +431,7 @@
 				<source>Property type</source>
 			</trans-unit>
 			<trans-unit id="descr_propertyType" resname="descr_propertyType">
-				<source>All types with * are not yet supported by the frontend form generation/validation</source>
+				<source>Determines the PHP type, TCA column configuration, and database column type for this property.</source>
 			</trans-unit>
 			<trans-unit id="string" resname="string">
 				<source>String</source>
@@ -490,8 +514,14 @@
 			<trans-unit id="maxItems" resname="maxItems">
 				<source>Allowed number of files</source>
 			</trans-unit>
+			<trans-unit id="descr_maxItems" resname="descr_maxItems">
+				<source>Maximum number of files that can be attached to this field. Set to 1 for a single file reference.</source>
+			</trans-unit>
 			<trans-unit id="isRequired" resname="isRequired">
 				<source>Is required?</source>
+			</trans-unit>
+			<trans-unit id="descr_isRequired" resname="descr_isRequired">
+				<source>If enabled, the field must be filled in when editing a record in the backend. Adds an Extbase validation annotation.</source>
 			</trans-unit>
 			<trans-unit id="relations" resname="relations">
 				<source>Relations</source>
@@ -512,7 +542,7 @@
 				<source>Lazy loading</source>
 			</trans-unit>
 			<trans-unit id="descr_lazyLoading" resname="descr_lazyLoading">
-				<source>Make this relation lazy loading</source>
+				<source>Related objects are only loaded from the database when accessed. Improves performance for relations that are not always needed.</source>
 			</trans-unit>
 			<trans-unit id="foreignRelationClass" resname="foreignRelationClass">
 				<source>Relation to external class</source>

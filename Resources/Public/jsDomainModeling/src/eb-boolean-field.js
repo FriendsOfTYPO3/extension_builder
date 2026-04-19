@@ -1,7 +1,6 @@
 import { html, css } from 'lit';
 import { EbField } from './eb-field.js';
 import { formStyles } from './styles/form-styles.js';
-import { translate } from './translate.js';
 
 /**
  * Checkbox field for boolean values.
@@ -69,7 +68,7 @@ export class EbBooleanField extends EbField {
                     ? html`<a href="${this.helpLink}" target="_blank" class="help-link" title="Documentation">?</a>`
                     : ''}
             </div>
-            ${this.description ? html`<small class="help-text">${translate(this.description)}</small>` : ''}
+            ${this.description ? html`<small class="help-text">${this.description}</small>` : ''}
         `;
     }
 }
