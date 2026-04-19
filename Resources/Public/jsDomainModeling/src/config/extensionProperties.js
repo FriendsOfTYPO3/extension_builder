@@ -225,7 +225,7 @@ export const extensionPropertiesFields = [
                         description: 'descr_dependsOn',
                         cols: 20,
                         rows: 6,
-                        value: 'typo3 => 12.4.0-12.4.99\n',
+                        value: 'typo3 => 13.4.0-13.4.99\n',
                     },
                 },
             ],
