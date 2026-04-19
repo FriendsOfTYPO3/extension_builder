@@ -527,7 +527,7 @@ const mt = (a, e, t) => {
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const L = globalThis;
-let w = class extends O {
+let x = class extends O {
   constructor() {
     super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
@@ -553,11 +553,11 @@ let w = class extends O {
   }
 };
 var Re;
-w._$litElement$ = !0, w.finalized = !0, (Re = L.litElementHydrateSupport) == null || Re.call(L, { LitElement: w });
+x._$litElement$ = !0, x.finalized = !0, (Re = L.litElementHydrateSupport) == null || Re.call(L, { LitElement: x });
 const ee = L.litElementPolyfillSupport;
-ee == null || ee({ LitElement: w });
+ee == null || ee({ LitElement: x });
 (L.litElementVersions ?? (L.litElementVersions = [])).push("4.2.2");
-class se extends w {
+class se extends x {
   connectedCallback() {
     super.connectedCallback(), this.addEventListener("pointerdown", this._onPointerDown.bind(this));
   }
@@ -641,7 +641,7 @@ g(se, "properties", {
         }
     `);
 customElements.define("eb-terminal", se);
-class ne extends w {
+class ne extends x {
   getPath() {
     const { x1: e, y1: t, x2: i, y2: r } = this, s = t + 80, n = r - 80;
     return `M ${e} ${t} C ${e} ${s}, ${i} ${n}, ${i} ${r}`;
@@ -684,7 +684,7 @@ g(ne, "properties", {
         }
     `);
 customElements.define("eb-wire", ne);
-function x(a) {
+function w(a) {
   var i, r, s;
   if (!a)
     return "";
@@ -702,10 +702,10 @@ function Fe(a) {
     case "string":
       return p`<eb-string-field
                 name="${e.name}"
-                label="${x(e.label ?? "")}"
+                label="${w(e.label ?? "")}"
                 ?required="${e.required}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${x(e.description ?? "")}"
+                description="${w(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 type-invite="${e.typeInvite ?? ""}"
                 placeholder="${e.placeholder ?? ""}"
@@ -728,9 +728,9 @@ function Fe(a) {
     case "text":
       return p`<eb-textarea-field
                 name="${e.name}"
-                label="${x(e.label ?? "")}"
+                label="${w(e.label ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${x(e.description ?? "")}"
+                description="${w(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 placeholder="${e.placeholder ?? ""}"
                 .value="${e.value ?? ""}"
@@ -738,9 +738,9 @@ function Fe(a) {
     case "select":
       return p`<eb-select-field
                 name="${e.name}"
-                label="${x(e.label ?? "")}"
+                label="${w(e.label ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${x(e.description ?? "")}"
+                description="${w(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 .selectValues="${e.selectValues ?? []}"
                 .selectOptions="${e.selectOptions ?? []}"
@@ -749,9 +749,9 @@ function Fe(a) {
     case "boolean":
       return p`<eb-boolean-field
                 name="${e.name}"
-                label="${x(e.label ?? "")}"
+                label="${w(e.label ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
-                description="${x(e.description ?? "")}"
+                description="${w(e.description ?? "")}"
                 help-link="${e.helpLink ?? ""}"
                 .value="${e.value ?? !1}"
                 data-visible-for="${((l = e.visibleForTypes) == null ? void 0 : l.join(" ")) ?? ""}"
@@ -760,7 +760,7 @@ function Fe(a) {
     case "group":
       return p`<eb-group
                 name="${e.name ?? ""}"
-                legend="${x(e.legend ?? "")}"
+                legend="${w(e.legend ?? "")}"
                 ?advanced="${e.advancedMode || !1}"
                 ?collapsible="${e.collapsible}"
                 ?collapsed="${e.collapsed}"
@@ -774,13 +774,17 @@ function Fe(a) {
                           ?advanced="${e.advancedMode || !1}"
                           data-visible-for="${((c = e.visibleForTypes) == null ? void 0 : c.join(" ")) ?? ""}"
                           data-hidden-for="${((b = e.hiddenForTypes) == null ? void 0 : b.join(" ")) ?? ""}"
-                          >${x(e.label)}</label
+                          >${w(e.label)}</label
+                      >` : ""}
+                ${e.description ? p`<small
+                          style="display:block;margin-bottom:0.4rem;font-size:0.8em;color:var(--bs-secondary-color, #6c757d)"
+                          >${w(e.description)}</small
                       >` : ""}
                 <eb-list-field
                     name="${e.name}"
                     ?advanced="${e.advancedMode || !1}"
                     ?sortable="${e.sortable}"
-                    add-label="${x("add")}"
+                    add-label="${w("add")}"
                     element-type="${JSON.stringify(e.elementType ?? {})}"
                     data-visible-for="${((d = e.visibleForTypes) == null ? void 0 : d.join(" ")) ?? ""}"
                     data-hidden-for="${((h = e.hiddenForTypes) == null ? void 0 : h.join(" ")) ?? ""}"
@@ -788,7 +792,7 @@ function Fe(a) {
     case "inplaceedit":
       return p`<eb-inplace-edit name="${e.name ?? ""}" .value="${e.value ?? ""}"></eb-inplace-edit>`;
     default:
-      return p`<eb-string-field name="${e.name}" label="${x(e.label ?? "")}"></eb-string-field>`;
+      return p`<eb-string-field name="${e.name}" label="${w(e.label ?? "")}"></eb-string-field>`;
   }
 }
 function _e(a) {
@@ -1546,7 +1550,7 @@ const je = {
         color: var(--bs-danger, #dc3545);
     }
 `;
-class ae extends w {
+class ae extends x {
   constructor() {
     super(), this.posX = 10, this.posY = 10, this.moduleData = {}, this._name = "", this._advancedMode = !1, this._dragging = !1, this._dragOffsetX = 0, this._dragOffsetY = 0, this._resizeWidth = null, this._resizeHeight = null, this._resizing = !1, this._resizeStartX = 0, this._resizeStartY = 0, this._resizeStartW = 0, this._resizeStartH = 0;
   }
@@ -1763,7 +1767,7 @@ g(ae, "properties", {
         `
 ]);
 customElements.define("eb-container", ae);
-class oe extends w {
+class oe extends x {
   constructor() {
     super(), this._wires = [], this._containers = [], this._drawingWire = null, this._tempWire = null, this._hoveredWireId = null, this._panOffset = { x: 0, y: 0 }, this._isPanning = !1, this._panStartX = 0, this._panStartY = 0;
   }
@@ -2213,7 +2217,7 @@ const He = $`
         border-color: color-mix(in srgb, var(--bs-warning, #ffc107) 80%, #000);
     }
 `;
-class C extends w {
+class C extends x {
   /**
    * Dispatches a `field-updated` CustomEvent that bubbles through Shadow DOM
    * boundaries so parent components can collect updated values.
@@ -2684,7 +2688,7 @@ g(ue, "properties", {
         }
     `);
 customElements.define("eb-hidden-field", ue);
-class he extends w {
+class he extends x {
   connectedCallback() {
     super.connectedCallback(), this.addEventListener("field-updated", this._onFieldUpdated), this._onAdvancedModeChanged = (e) => {
       this.advancedMode = e.detail.enabled;
@@ -2895,7 +2899,7 @@ function q(a) {
     ` : p`<span aria-hidden="true">${xt[a] ?? a}</span>`;
 }
 const Ct = /* @__PURE__ */ new Set(["propertyName", "relationName", "customAction", "name", "label"]);
-class me extends w {
+class me extends x {
   constructor() {
     super(), this.sortable = !0, this.addLabel = "add", this._items = [], this._boundOnFieldUpdated = this._onFieldUpdated.bind(this);
   }
@@ -3364,6 +3368,7 @@ const kt = [
     inputParams: {
       label: "persons",
       name: "persons",
+      description: "descr_persons",
       sortable: !0,
       className: "persons mainGroup",
       elementType: {
@@ -3580,7 +3585,7 @@ const kt = [
     }
   }
 ];
-class be extends w {
+class be extends x {
   constructor() {
     super(), this.smdUrl = "", this.extensionName = "", this.initialWarnings = [], this.composerWarning = "", this._loading = !1, this._extensionData = null, this._advancedMode = !1, this._leftCollapsed = !1, this._isDirty = !1;
   }
@@ -3969,7 +3974,7 @@ g(be, "properties", {
         `
 ]);
 customElements.define("eb-wiring-editor", be);
-class fe extends w {
+class fe extends x {
   constructor() {
     super(), this._editing = !1;
   }

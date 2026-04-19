@@ -107,6 +107,12 @@ export function renderFieldDef(fieldDef) {
                           >${translate(p.label)}</label
                       >`
                     : ''}
+                ${p.description
+                    ? html`<small
+                          style="display:block;margin-bottom:0.4rem;font-size:0.8em;color:var(--bs-secondary-color, #6c757d)"
+                          >${translate(p.description)}</small
+                      >`
+                    : ''}
                 <eb-list-field
                     name="${p.name}"
                     ?advanced="${p.advancedMode || false}"

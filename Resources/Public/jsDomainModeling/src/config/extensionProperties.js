@@ -236,6 +236,7 @@ export const extensionPropertiesFields = [
         inputParams: {
             label: 'persons',
             name: 'persons',
+            description: 'descr_persons',
             sortable: true,
             className: 'persons mainGroup',
             elementType: {

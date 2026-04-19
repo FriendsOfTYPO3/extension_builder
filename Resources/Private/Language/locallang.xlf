@@ -188,6 +188,9 @@
 			<trans-unit id="persons" resname="persons">
 				<source>Extension authors</source>
 			</trans-unit>
+			<trans-unit id="descr_persons" resname="descr_persons">
+				<source>Author information is written to ext_emconf.php and composer.json of the generated extension.</source>
+			</trans-unit>
 			<trans-unit id="role" resname="role">
 				<source>Role</source>
 			</trans-unit>
