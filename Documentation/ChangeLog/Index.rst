@@ -6,6 +6,21 @@
 Change log
 ==========
 
+Version 13.3.0
+--------------
+
+* [FEATURE] Warn before deleting a model object that has connected relations — a confirmation dialog now lists affected relations and lets the user cancel or proceed.
+* [FEATURE] Warn before discarding unsaved changes when switching extensions — a confirmation dialog prevents accidental data loss.
+* [FEATURE] Introduce Storybook for isolated Lit component development.
+* [FEATURE] Replace unmaintained ``Sho_Inflect`` with ``doctrine/inflector`` for pluralization and singularization.
+* [BUGFIX] ``composer.json`` is now updated on each save and includes author email and company fields.
+* [DOCS] Extend Roundtrip mode chapter with YAML config, split token, and operational guides.
+* [DOCS] Replace ``Settings.cfg`` with ``guides.xml`` in generated documentation.
+* [TASK] Improve GitHub workflows, issue templates and CI config.
+* [TASK] Add commit message validation hook and tighten CI checks.
+* [TASK] Add scheduled cleanup of old workflow runs.
+* [TASK] Add regression test for newline after case label.
+
 Version 13.2.0
 --------------
 
