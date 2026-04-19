@@ -105,7 +105,7 @@ class Extension
     /**
      * the lowest required TYPO3 version
      */
-    private float $targetVersion = 13.0;
+    private float $targetVersion = 14.0;
     protected string $previousExtensionDirectory = '';
     protected string $previousExtensionKey = '';
     protected ?string $storagePath;
@@ -570,7 +570,7 @@ class Extension
     {
         $dependencies = $this->dependencies;
         if (!array_key_exists('extbase', $dependencies)) {
-            $dependencies['extbase'] = '13.4.0-13.4.99';
+            $dependencies['extbase'] = '14.0.0-14.3.99';
         }
         return $dependencies;
     }
@@ -716,9 +716,9 @@ class Extension
     private function getVersionConstraints(): array
     {
         return [
-            'php' => '>=8.2',
-            'typo3/cms-core' => '^13.4',
-            'typo3/cms-extbase' => '^13.4',
+            'php' => '>=8.4',
+            'typo3/cms-core' => '^14.0',
+            'typo3/cms-extbase' => '^14.0',
             'typo3/testing-framework' => '^9.0',
         ];
     }

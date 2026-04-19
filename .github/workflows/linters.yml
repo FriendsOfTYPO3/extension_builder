@@ -3,8 +3,6 @@ name: codechecking
 on:
   push:
     branches-ignore:
-      - main
-      - master
       - develop
 
   workflow_dispatch:
@@ -28,14 +26,14 @@ jobs:
       - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
 
       - name: "Cache Composer dependencies"
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
-          key: composer-php8.3-${{ hashFiles('composer.json') }}
+          key: composer-php8.4-${{ hashFiles('composer.json') }}
 
       - name: "Install dependencies"
         run: composer install --prefer-dist --no-progress --no-interaction
@@ -54,14 +52,14 @@ jobs:
       - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
 
       - name: "Cache Composer dependencies"
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
-          key: composer-php8.3-${{ hashFiles('composer.json') }}
+          key: composer-php8.4-${{ hashFiles('composer.json') }}
 
       - name: "Install dependencies"
         run: composer install --prefer-dist --no-progress --no-interaction
@@ -130,14 +128,14 @@ jobs:
       - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
 
       - name: "Cache Composer dependencies"
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
-          key: composer-php8.3-${{ hashFiles('composer.json') }}
+          key: composer-php8.4-${{ hashFiles('composer.json') }}
 
       - name: "Install dependencies"
         run: composer install --prefer-dist --no-progress --no-interaction

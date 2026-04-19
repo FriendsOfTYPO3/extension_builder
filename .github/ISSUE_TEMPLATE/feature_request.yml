@@ -36,8 +36,8 @@ body:
       label: Target TYPO3 Version
       description: Which TYPO3 version should this feature target?
       options:
-        - "13.x"
         - "14.x"
+        - "13.x"
         - "any"
 
   - type: textarea

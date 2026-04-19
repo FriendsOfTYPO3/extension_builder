@@ -69,7 +69,7 @@ const FIXTURE: object = {
       disableVersioning: false, disableLocalization: false,
       generateDocumentationTemplate: false, generateEmptyGitRepository: false,
       generateEditorConfig: false, sourceLanguage: 'en',
-      targetVersion: '13.4.0-13.4.99', dependsOn: 'typo3 => 13.4.0-13.4.99\n',
+      targetVersion: '14.0.0-14.3.99', dependsOn: 'typo3 => 14.0.0-14.3.99\n',
     },
   },
 };

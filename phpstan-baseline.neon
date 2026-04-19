@@ -721,18 +721,6 @@ parameters:
 			path: Classes/Utility/SpycYAMLParser.php
 
 		-
-			message: '#^Method EBT\\ExtensionBuilder\\ViewHelpers\\DomainObjectChecksViewHelper\:\:render\(\) should return string but returns false\.$#'
-			identifier: return.type
-			count: 3
-			path: Classes/ViewHelpers/DomainObjectChecksViewHelper.php
-
-		-
-			message: '#^Method EBT\\ExtensionBuilder\\ViewHelpers\\DomainObjectChecksViewHelper\:\:render\(\) should return string but returns true\.$#'
-			identifier: return.type
-			count: 3
-			path: Classes/ViewHelpers/DomainObjectChecksViewHelper.php
-
-		-
 			message: '#^Property EBT\\ExtensionBuilder\\ViewHelpers\\DomainObjectChecksViewHelper\:\:\$configurationManager is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1

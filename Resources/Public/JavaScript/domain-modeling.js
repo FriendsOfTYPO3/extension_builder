@@ -3297,9 +3297,9 @@ const Ct = [
             id: "targetVersionSelector",
             label: "target_version",
             description: "descr_target_version",
-            selectValues: ["13.4.0-13.4.99"],
-            selectOptions: ["TYPO3 v13.4"],
-            value: "13.4.0-13.4.99"
+            selectValues: ["14.0.0-14.3.99"],
+            selectOptions: ["TYPO3 v14.3"],
+            value: "14.0.0-14.3.99"
           }
         },
         {
@@ -3311,7 +3311,7 @@ const Ct = [
             description: "descr_dependsOn",
             cols: 20,
             rows: 6,
-            value: `typo3 => 13.4.0-13.4.99
+            value: `typo3 => 14.0.0-14.3.99
 `
           }
         }

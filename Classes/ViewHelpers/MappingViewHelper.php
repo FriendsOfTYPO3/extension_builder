@@ -36,10 +36,8 @@ class MappingViewHelper extends AbstractConditionViewHelper
 
     /**
      * Helper function to verify various conditions around possible mapping/inheritance configurations
-     *
-     * @return string
      */
-    public function render()
+    public function render(): mixed
     {
         /** @var DomainObject $domainObject */
         $domainObject = $this->arguments['domainObject'];

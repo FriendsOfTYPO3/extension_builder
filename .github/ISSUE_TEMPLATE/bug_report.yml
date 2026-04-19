@@ -46,8 +46,8 @@ body:
     attributes:
       label: TYPO3 Version
       options:
+        - "14.3"
         - "13.4"
-        - "12.4"
         - "other"
     validations:
       required: true
@@ -57,7 +57,7 @@ body:
     attributes:
       label: Extension Builder Version
       description: Git branch, commit hash or TER version
-      placeholder: "e.g. master, 13.0.1"
+      placeholder: "e.g. main, 14.0.0"
     validations:
       required: true
 

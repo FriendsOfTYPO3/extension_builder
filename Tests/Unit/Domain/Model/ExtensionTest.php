@@ -71,17 +71,17 @@ class ExtensionTest extends BaseUnitTest
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function getComposerInfoReturnsCorrectConstraintsForV13(): void
+    public function getComposerInfoReturnsCorrectConstraintsForV14(): void
     {
         $this->extension->setExtensionKey('test_extension');
         $this->extension->setVendorName('TestVendor');
-        $this->extension->setTargetVersion(13.4);
+        $this->extension->setTargetVersion(14.0);
 
         $composerInfo = $this->extension->getComposerInfo();
 
-        self::assertSame('>=8.2', $composerInfo['require']['php']);
-        self::assertSame('^13.4', $composerInfo['require']['typo3/cms-core']);
-        self::assertSame('^13.4', $composerInfo['require']['typo3/cms-extbase']);
+        self::assertSame('>=8.4', $composerInfo['require']['php']);
+        self::assertSame('^14.0', $composerInfo['require']['typo3/cms-core']);
+        self::assertSame('^14.0', $composerInfo['require']['typo3/cms-extbase']);
         self::assertSame('^9.0', $composerInfo['require-dev']['typo3/testing-framework']);
     }
 
@@ -91,7 +91,7 @@ class ExtensionTest extends BaseUnitTest
         $dependencies = $this->extension->getDependencies();
 
         self::assertArrayHasKey('extbase', $dependencies);
-        self::assertSame('13.4.0-13.4.99', $dependencies['extbase']);
+        self::assertSame('14.0.0-14.3.99', $dependencies['extbase']);
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
@@ -109,7 +109,7 @@ class ExtensionTest extends BaseUnitTest
     {
         $this->extension->setExtensionKey('test_extension');
         $this->extension->setVendorName('TestVendor');
-        $this->extension->setTargetVersion(13.4);
+        $this->extension->setTargetVersion(14.0);
 
         $composerInfo = $this->extension->getComposerInfo();
 
