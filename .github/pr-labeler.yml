@@ -42,6 +42,20 @@ labels:
       title: '\[!!!\]\[.+'
       commits: '\[!!!\]\[.+'
 
+  - label: 'release'
+    sync: true
+    matcher:
+      title: '\[RELEASE\] .+'
+      commits: '\[RELEASE\] .+'
+      branch: '^release/.+'
+
+  - label: 'devbox'
+    sync: true
+    matcher:
+      title: '\[DEVBOX\] .+'
+      commits: '\[DEVBOX\] .+'
+      branch: '^devbox/.+'
+
 checks:
   - context: "Semantic Pull Request"
     url: "https://docs.typo3.org/m/typo3/guide-contributionworkflow/main/en-us/Appendix/CommitMessage.html"
@@ -55,3 +69,6 @@ checks:
         - enhancement
         - maintenance
         - security
+        - breaking
+        - release
+        - devbox

@@ -8,10 +8,17 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tests:
-
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       fail-fast: true
       matrix:
@@ -25,7 +32,7 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v4
 
-      - name: "Cache dependencies"
+      - name: "Cache Composer dependencies"
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
