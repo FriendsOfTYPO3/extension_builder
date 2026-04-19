@@ -214,9 +214,87 @@ Consequences of various actions:
 
 *  TCA files and SQL definitions are new generated, modifications will be LOST
 
-.. hint::
+**If you delete a domain object:**
 
-   By default, in case changes lead to unexpected results, Extension Builder
-   saves a backup every time the extension is saved, which can be used to
-   restore a previous state. More about backup configuration can be found on the
-   ":doc:`/Configuration/Index`" page.
+*  the model class (:file:`Classes/Domain/Model/{Name}.php`) is deleted
+
+*  the TCA file (:file:`Configuration/TCA/{Name}.php`) is deleted
+
+*  if the domain object is an aggregate root: the controller and repository
+   class files are deleted
+
+*  language files for context-sensitive help (``locallang_csh_*``) are deleted
+
+*  the database table and any existing data are **NOT** removed automatically;
+   you need to drop the table manually if it is no longer needed
+
+**If you delete a property:**
+
+*  the class property is removed from the domain model
+
+*  the corresponding getter and setter methods are removed
+
+*  for relation properties: the ``add*()`` and ``remove*()`` methods are removed
+   instead
+
+*  for boolean properties: the ``is*()`` method is removed
+
+*  TCA and SQL definitions are regenerated, any manual modifications will be LOST
+
+*  the database column and any existing data are **NOT** removed automatically
+
+.. _change-preview:
+
+Change preview
+==============
+
+When you save an existing extension, the Extension Builder detects whether any
+structural changes would affect files on disk. If changes are detected, a
+confirmation dialog is shown **before** any files are written:
+
+*  **Files that will be modified** — lists each affected file, together with
+   which methods will be added, renamed or removed
+
+*  **Files that will be deleted** — lists files that will be permanently removed
+   from disk (e.g. after deleting a domain object)
+
+The dialog has two buttons:
+
+*  **Cancel** — aborts the save; no files are changed
+
+*  **Generate** — confirms and writes all changes
+
+If no structural changes are detected the dialog is skipped and the extension
+is saved immediately.
+
+.. _backup-and-restore:
+
+Backup and restore
+==================
+
+The Extension Builder can create a full backup of an extension every time it
+is saved. This is enabled by default and can be configured under
+:ref:`global-configuration`.
+
+**Creating a backup**
+
+A backup is created automatically on each save when the *Backup on save* option
+is active. The backup is stored as a timestamped copy of the entire extension
+folder in the configured backup directory
+(default: :file:`var/tx_extensionbuilder/backups`).
+
+**Restoring a backup**
+
+Click the :guilabel:`Restore backup` button in the Extension Builder toolbar
+(top-left area, next to the Save button). A modal opens with a list of all
+available backups for the currently loaded extension. Each entry shows a
+timestamp label and the number of files in that backup snapshot.
+
+Select the desired backup from the list and click :guilabel:`Restore`. The
+entire extension folder is replaced with the contents of the selected backup.
+
+.. warning::
+
+   Restoring a backup overwrites all current files of the extension without
+   further confirmation. Make sure to load the correct extension before
+   clicking :guilabel:`Restore backup`.
