@@ -224,6 +224,10 @@ class ExtensionSchemaBuilder implements SingletonInterface
             $extension->setGenerateSiteSet(true);
         }
 
+        if ($propertyConfiguration['emConf']['generateCiSetup'] ?? false) {
+            $extension->setGenerateCiSetup(true);
+        }
+
         // various extension properties
         $extension->setVersion($propertyConfiguration['emConf']['version'] ?? '1.0.0');
 

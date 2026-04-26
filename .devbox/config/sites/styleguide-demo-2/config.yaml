@@ -1,0 +1,81 @@
+base: 'http://localhost/styleguide-demo-2'
+baseVariants: {  }
+dependencies: {  }
+errorHandling: {  }
+languages:
+  -
+    title: English
+    enabled: true
+    languageId: 0
+    base: /
+    locale: en_US.UTF-8
+    navigationTitle: English
+    flag: us
+    typo3Language: default
+    iso-639-1: en
+    hreflang: en-us
+    direction: ltr
+    websiteTitle: ''
+  -
+    title: 'styleguide demo language danish'
+    enabled: true
+    base: /da/
+    typo3Language: da
+    locale: da_DK.UTF-8
+    iso-639-1: da
+    websiteTitle: ''
+    navigationTitle: ''
+    hreflang: da-dk
+    direction: ''
+    fallbackType: strict
+    fallbacks: ''
+    flag: dk
+    languageId: 1
+  -
+    title: 'styleguide demo language german'
+    enabled: true
+    base: /de/
+    typo3Language: de
+    locale: de_DE.UTF-8
+    iso-639-1: de
+    websiteTitle: ''
+    navigationTitle: ''
+    hreflang: de-de
+    direction: ''
+    fallbackType: strict
+    fallbacks: ''
+    flag: de
+    languageId: 2
+  -
+    title: 'styleguide demo language french'
+    enabled: true
+    base: /fr/
+    typo3Language: fr
+    locale: fr_FR.UTF-8
+    iso-639-1: fr
+    websiteTitle: ''
+    navigationTitle: ''
+    hreflang: fr-fr
+    direction: ''
+    fallbackType: strict
+    fallbacks: ''
+    flag: fr
+    languageId: 3
+  -
+    title: 'styleguide demo language spanish'
+    enabled: true
+    base: /es/
+    typo3Language: es
+    locale: es_ES.UTF-8
+    iso-639-1: es
+    websiteTitle: ''
+    navigationTitle: ''
+    hreflang: es-es
+    direction: ''
+    fallbackType: strict
+    fallbacks: ''
+    flag: es
+    languageId: 4
+rootPageId: 2
+routes: {  }
+websiteTitle: 'styleguide demo 2'

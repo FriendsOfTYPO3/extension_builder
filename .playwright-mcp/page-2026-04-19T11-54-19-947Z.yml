@@ -1,0 +1,14 @@
+- generic [ref=e6]:
+  - banner [ref=e7]:
+    - heading "Login" [level=1] [ref=e8]
+    - img "TYPO3 CMS logo" [ref=e10]
+  - main [ref=e11]:
+    - text:    
+    - generic [ref=e13]:
+      - textbox "Username" [active] [ref=e18]
+      - textbox "Password" [ref=e23]
+      - button "Login" [ref=e25] [cursor=pointer]
+  - contentinfo [ref=e26]:
+    - generic [ref=e27]:
+      - button "More about TYPO3" [ref=e28] [cursor=pointer]
+      - text:  
