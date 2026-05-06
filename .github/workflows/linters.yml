@@ -30,7 +30,7 @@ jobs:
           coverage: none
 
       - name: "Cache Composer dependencies"
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.composer/cache/files
           key: composer-php8.4-${{ hashFiles('composer.json') }}
@@ -56,7 +56,7 @@ jobs:
           coverage: none
 
       - name: "Cache Composer dependencies"
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.composer/cache/files
           key: composer-php8.4-${{ hashFiles('composer.json') }}
@@ -81,7 +81,7 @@ jobs:
           version: latest
 
       - name: "Setup Node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22.x
           cache: 'pnpm'
@@ -106,7 +106,7 @@ jobs:
           version: latest
 
       - name: "Setup Node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22.x
           cache: 'pnpm'
@@ -132,7 +132,7 @@ jobs:
           coverage: none
 
       - name: "Cache Composer dependencies"
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.composer/cache/files
           key: composer-php8.4-${{ hashFiles('composer.json') }}
@@ -157,7 +157,7 @@ jobs:
           version: latest
 
       - name: "Setup Node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22.x
           cache: 'pnpm'
