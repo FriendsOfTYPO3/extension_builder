@@ -30,10 +30,10 @@ jobs:
 
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: "Cache Composer dependencies"
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache/files
           key: dependencies-typo3-${{ matrix.typo3 }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
